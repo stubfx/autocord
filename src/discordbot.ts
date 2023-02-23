@@ -1,16 +1,12 @@
 import Discord, {Events, IntentsBitField} from "discord.js";
 import * as dbAdapter from "./dbAdapter.js";
 import * as LoggerHelper from "./loggerHelper.js";
-import updateCommands from "./commandHandler.js";
 
-export function initBot() {
+export function init(onReady: (client: Discord.Client) => {}) {
     const client = new Discord.Client({intents: [IntentsBitField.Flags.Guilds]});
     client.on(Events.ClientReady, async () => {
-        LoggerHelper.init(client)
-        // await dbAdapter.init()
-        // LoggerHelper.dev(`Logged in as ${client.user.tag}!`);
-        // await updateCommands(client)
-        // LoggerHelper.info("TheJournalino ready!")
+        LoggerHelper.dev(`Logged in as ${client.user.tag}!`);
+        onReady(client)
     });
 
     client.on(Events.GuildCreate, guild => {

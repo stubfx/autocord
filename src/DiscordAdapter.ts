@@ -1,11 +1,19 @@
 import fetch from "node-fetch";
-import {REST, RouteLike} from "discord.js";
+import Discord, {REST, RouteLike} from "discord.js";
 import {Routes} from "discord-api-types/v10";
+import * as LoggerHelper from "./loggerHelper.js";
 
-export class DiscordApi {
+let client = null
+
+export function init(discordClient: Discord.Client) {
+    client = discordClient
+}
+
+
+export class DiscordAdapter {
     private readonly bearerToken: string;
 
-    constructor(bearerToken: string) {
+    constructor(bearerToken: string = null) {
         this.bearerToken = bearerToken
     }
 
@@ -23,5 +31,15 @@ export class DiscordApi {
 
     async getUserOwnedGuilds() {
         return await this.get(Routes.userGuilds()) as Array<PartialGuild>
+    }
+
+    async checkServer(guildId: string) : Promise<boolean> {
+        let guild = null
+        try {
+            guild = await client.guilds.fetch(guildId)
+        } catch (e) {
+            LoggerHelper.error(e)
+        }
+        return !!guild
     }
 }

@@ -1,6 +1,16 @@
 <template>
-  <div class="flex bg-red"></div>
-    <guild-card v-for="guild in guilds" :guild=guild></guild-card>
+  <div class="py-24 sm:py-32 text-white">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Choose your server</h2>
+        <p class="mt-2 text-lg leading-8">This is gonna be fun. Hopefully?</p>
+      </div>
+      <div
+          class="mx-auto mt-16 flex flex-col items-center md:justify-center md:flex-row justify-items-stretch md:items-stretch">
+        <guild-card v-for="guild in guilds" :guild=guild></guild-card>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -12,6 +22,7 @@
 // "features": Array<string> //["COMMUNITY", "NEWS"]
 import {NetworkAdapter} from "../../network.js";
 import GuildCard from "./guildCard.vue";
+
 export default {
   name: "guildsSelector",
   components: {GuildCard},

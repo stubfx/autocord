@@ -1,4 +1,0 @@
-export const AUTHENTICATED = 'AUTHENTICATED';
-export const AUTHORIZATION_TOKEN = 'AUTHENTICATION_TOKEN';
-export const AUTHORIZATION_TOKEN_TYPE = 'AUTHORIZATION_TOKEN_TYPE';
-//# sourceMappingURL=sessionVariables.js.map
