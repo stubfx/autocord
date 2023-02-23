@@ -11,25 +11,41 @@ import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import fastifyJwt from "@fastify/jwt";
+import fastifySession from "@fastify/session";
+import fastifyCookie from "@fastify/cookie";
+import { getSessionExpirationDate } from "./utils.js";
 import authApi from './api/auth.js';
-import { DiscordApi } from "./discordApi.js";
+import * as sessionV from "./sessionVariables.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const fastify = Fastify({
-    logger: true
+    logger: false
 });
-fastify.register(fastifyJwt, {
-    secret: "81cc5b17018674b401b42fe46546wrewr23424232asdf435fgdfgedntertnerngrerasdfasdfasdhtyr45646456456ge658da1577e3e646877",
-    sign: {
-        expiresIn: '10h'
+fastify.register(fastifyCookie);
+fastify.register(fastifySession, {
+    secret: process.env.secret,
+    cookie: {
+        domain: !process.env.dev ? 'autocord.io' : 'localhost',
+        expires: getSessionExpirationDate(),
+        secure: !process.env.dev,
+        // sameSite: !process.env.dev ? "strict" : "none"
     }
+});
+fastify.addHook('preHandler', (req, reply, done) => {
+    reply.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    reply.header('Access-Control-Allow-Credentials', true);
+    done();
 });
 // Setup our static files
 fastify.register(fastifyStatic, {
     root: path.join(__dirname, "../site/dist"),
-    prefix: "/", // optional: default '/'
+    prefix: "/dashboard", // optional: default '/'
 });
 fastify.register(authApi, { prefix: '/auth' });
+fastify.get("/", async (request, reply) => {
+    // redirect the browser to the discord login!
+    reply.redirect('https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogin&response_type=code&scope=identify%20guilds');
+    return null;
+});
 fastify.get("/login", async (request, reply) => {
     let code = request.query["code"];
     if (code) {
@@ -50,11 +66,9 @@ fastify.get("/login", async (request, reply) => {
             const oauthData = await tokenResponseData.json();
             // let tokenType = `${oauthData["token_type"]}`
             let accessToken = `${oauthData["access_token"]}`;
-            console.log(accessToken);
-            let userinfo = await new DiscordApi(accessToken).getUserInfo();
-            let jwt = fastify.jwt.sign({ userId: userinfo.id });
-            reply.redirect(`/index.html?sx=${jwt}`);
-            return;
+            request.session[sessionV.AUTHENTICATED] = true;
+            request.session[sessionV.AUTHORIZATION_TOKEN] = accessToken;
+            console.log(JSON.stringify(request.cookies));
         }
         catch (error) {
             // NOTE: An unauthorized token will not throw an error
@@ -62,8 +76,8 @@ fastify.get("/login", async (request, reply) => {
             console.error(error);
         }
     }
-    reply.code(401);
-    return null;
+    reply.redirect('http://localhost:5173/index.html');
+    return;
 });
 fastify.get("/help", async (request, reply) => {
     reply.redirect("/help.html");
