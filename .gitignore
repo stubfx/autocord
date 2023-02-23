@@ -1,0 +1,12 @@
+.env
+/dist/db/*.json
+# Project exclude paths
+/src/handlerData/discord-commands.js
+/src/handlerData/discord-cta.js
+/src/commandHandler.js
+/src/dbAdapter.js
+/src/discordbot.js
+/src/loggerHelper.js
+/src/schemas.js
+/src/server.js
+/src/utils.js
