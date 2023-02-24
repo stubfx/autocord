@@ -1,5 +1,6 @@
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
+import * as dbAdapter from "../dbAdapter.js";
 
 export default function (api, opts, done) {
     api.decorateRequest('userId', '')
@@ -29,6 +30,14 @@ export default function (api, opts, done) {
         let guildId = request.query["guildId"];
         let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=http://localhost:3000/login`}
+    })
+
+    api.get("/getGuildJobs", async (request) => {
+        let guildId = request.query["guildId"];
+        let guild = await dbAdapter.getGuildJobs(guildId)
+        return {
+            jobs: guild.jobs
+        }
     })
 
     // only for authenticated users with role.

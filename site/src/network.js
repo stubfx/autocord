@@ -3,9 +3,9 @@ export class NetworkAdapter {
     static async _get(route) {
         try {
             return (await fetch('http://localhost:3000' + route, {
+                // credentials are required for the session
                 credentials: 'include'
             })).json()
-            // return (await fetch(route)).json()
         } catch (e) {
             window.location.href = '/'
         }
@@ -19,9 +19,13 @@ export class NetworkAdapter {
         if (!await this._get(`/auth/checkBotInGuild?guildId=${guildId}`)) {
             // bot is not in the server prompt the user!
             window.location.href = (await this._get(`/auth/getAddBotToGuildInvite?guildId=${guildId}`))['url']
-            return
+            return false
         }
-        // in this case we are safe to go.
-
+        return true
     }
+
+    static async getGuildJobs(guildId) {
+        return ((await this._get(`/auth/getGuildJobs?guildId=${guildId}`))['jobs'])
+    }
+
 }

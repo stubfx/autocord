@@ -8,7 +8,8 @@ const routes = [
         component: guildsSelector,
     },
     {
-        path: '/dashboard',
+        path: '/dashboard/:guildId',
+        name: 'dashboard',
         component: guildDashboardView,
     }
 ]

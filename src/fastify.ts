@@ -29,8 +29,10 @@ export function init() {
     });
 
     fastify.addHook('preHandler', (req, reply, done) => {
-        reply.header("Access-Control-Allow-Origin", "http://localhost:5173")
-        reply.header('Access-Control-Allow-Credentials', true);
+        if (process.env.dev) {
+            reply.header("Access-Control-Allow-Origin", "http://localhost:5173")
+            reply.header('Access-Control-Allow-Credentials', true);
+        }
         done()
     })
 
@@ -44,7 +46,7 @@ export function init() {
 
     fastify.get("/", async (request, reply) => {
         // redirect the browser to the discord login!
-        reply.redirect('https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogin&response_type=code&scope=identify%20guilds')
+        reply.redirect('https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds')
         return null
     })
 
@@ -77,7 +79,8 @@ export function init() {
                 console.error(error)
             }
         }
-        reply.redirect('http://localhost:5173/index.html')
+        // after login, send the user to the guild selection
+        reply.redirect('http://localhost:5173/selectguild')
         return
     })
 

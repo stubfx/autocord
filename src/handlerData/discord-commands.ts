@@ -2,7 +2,6 @@ import {ChatInputCommandInteraction, Client, PermissionsBitField, SlashCommandBu
 
 import locales from '../datamodels/locales.js'
 import * as dbAdapter from "../dbAdapter.js";
-import {disableGuildPromo} from "../dbAdapter.js";
 import topicsData from "../datamodels/topicsData.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import * as Utils from "../utils.js";
@@ -24,55 +23,55 @@ function getTopicDataAsCommandChoices() {
 const languages = locales
 
 async function addNewsChannelInteraction(interaction) {
-    let language = interaction.options.get('language');
-    let topic = interaction.options.get('topic');
-    // check if the bot has permissions to write in the channel.
-    let me = interaction.guild.members.me;
-    if (Utils.sendMessagesPermissionsInFetchedChannel(me, interaction.channel)) {
-        // add this channel to the news queue!
-        await dbAdapter.addNewsChannel(interaction.guild,
-            interaction.channel,
-            interaction.user,
-            topic.value,
-            language.value)
-        await interaction.reply({
-            content: `Aight ${interaction.user.username}, ${Utils.getNameFromTopicValue(topic.value)} news will be here soon!`,
-            ephemeral: false
-        });
-        LoggerHelper.success(`Feed added:`,
-            `Server: ${interaction.guild.name} (${interaction.guild.id}) `,
-            `Channel: ${interaction.channel.name} (${interaction.channel.id})`,
-            `User: ${interaction.user.username} (${interaction.user.id})`,
-            `Topic: ${Utils.getNameFromTopicValue(topic.value)}`,
-            `language: ${Utils.getNameFromLanguageValue(language.value)}`)
-    } else {
-        // no permissions in this channel, pls try again.
-        await interaction.reply({
-            content: `I have no permissions to send messages in this channel!`,
-            ephemeral: true
-        });
-    }
+    // let language = interaction.options.get('language');
+    // let topic = interaction.options.get('topic');
+    // // check if the bot has permissions to write in the channel.
+    // let me = interaction.guild.members.me;
+    // if (Utils.sendMessagesPermissionsInFetchedChannel(me, interaction.channel)) {
+    //     // add this channel to the news queue!
+    //     await dbAdapter.addNewsChannel(interaction.guild,
+    //         interaction.channel,
+    //         interaction.user,
+    //         topic.value,
+    //         language.value)
+    //     await interaction.reply({
+    //         content: `Aight ${interaction.user.username}, ${Utils.getNameFromTopicValue(topic.value)} news will be here soon!`,
+    //         ephemeral: false
+    //     });
+    //     LoggerHelper.success(`Feed added:`,
+    //         `Server: ${interaction.guild.name} (${interaction.guild.id}) `,
+    //         `Channel: ${interaction.channel.name} (${interaction.channel.id})`,
+    //         `User: ${interaction.user.username} (${interaction.user.id})`,
+    //         `Topic: ${Utils.getNameFromTopicValue(topic.value)}`,
+    //         `language: ${Utils.getNameFromLanguageValue(language.value)}`)
+    // } else {
+    //     // no permissions in this channel, pls try again.
+    //     await interaction.reply({
+    //         content: `I have no permissions to send messages in this channel!`,
+    //         ephemeral: true
+    //     });
+    // }
 }
 
 async function removeNewsChannelInteraction(interaction) {
-    let topic = interaction.options.get('topic');
-    let removed;
-    let successContent = "You wont receive news in this channel anymore.";
-    let errorContent = "This channel is not listed for any tipe of TheJournalino";
-    if (topic.value !== "all") {
-        let codeTopicNameText = `**${Utils.getNameFromTopicValue(topic.value)}**`;
-        successContent = `You wont receive news about ${codeTopicNameText} in this channel anymore.`;
-        errorContent = `I'm sorry but looks like that this channel is not listed for ${codeTopicNameText} news.`;
-    }
-    removed = await dbAdapter.removeNewsChannel(interaction.channel, topic.value !== 'all' ? topic.value : null);
-    if (removed) {
-        await interaction.reply({
-            content: successContent,
-            ephemeral: false
-        });
-    } else {
-        await interaction.reply({content: errorContent, ephemeral: true});
-    }
+    // let topic = interaction.options.get('topic');
+    // let removed;
+    // let successContent = "You wont receive news in this channel anymore.";
+    // let errorContent = "This channel is not listed for any tipe of TheJournalino";
+    // if (topic.value !== "all") {
+    //     let codeTopicNameText = `**${Utils.getNameFromTopicValue(topic.value)}**`;
+    //     successContent = `You wont receive news about ${codeTopicNameText} in this channel anymore.`;
+    //     errorContent = `I'm sorry but looks like that this channel is not listed for ${codeTopicNameText} news.`;
+    // }
+    // removed = await dbAdapter.removeNewsChannel(interaction.channel, topic.value !== 'all' ? topic.value : null);
+    // if (removed) {
+    //     await interaction.reply({
+    //         content: successContent,
+    //         ephemeral: false
+    //     });
+    // } else {
+    //     await interaction.reply({content: errorContent, ephemeral: true});
+    // }
 }
 
 /**

@@ -3,13 +3,14 @@
   overflow-hidden h-100 hover:scale-110 hover:bg-discord-1 hover:text-discord-5"
   @click="selectGuild()">
     <object :data="getImageUrl()" type="image/png" class="rounded-2xl w-full h-auto" v-if="guild.icon">
-      <img
-          alt=""
-          class="rounded-2xl w-80 h-80" src="https://images.unsplash.com/photo-1622428051717-dcd8412959de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"/>
     </object>
-    <img v-else
-        src="https://images.unsplash.com/photo-1622428051717-dcd8412959de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-         class="rounded-2xl w-full h-auto"/>
+<!--    <object v-else data="/src/assets/broken_image_rounded.svg" type="image/png" class="rounded-2xl w-full h-auto fill-discord-2">-->
+<!--      <img src="/src/assets/broken_image_rounded.svg"-->
+<!--           class="rounded-2xl w-full h-auto"/>-->
+<!--    </object>-->
+    <div class="w-full h-full" v-else>
+      <broken_image_rounded class="fill-discord-2 group-hover:fill-black"></broken_image_rounded>
+    </div>
     <div class="flex w-full flex-col items-center h-full justify-center">
       <h1 class="mt-3 px-2 text-2xl overflow-ellipsis">{{guild.name}}</h1>
     </div>
@@ -27,9 +28,11 @@
 // "permissions": string //"36953089",
 // "features": Array<string> //["COMMUNITY", "NEWS"]
 import {NetworkAdapter} from "../../network.js";
+import Broken_image_rounded from "../../assets/broken_image_rounded.vue";
 
 export default {
   name: "guildCard",
+  components: {Broken_image_rounded},
   props: {
     guild: Object
   },
@@ -39,7 +42,9 @@ export default {
     },
     selectGuild() {
       // check if the bot is in the guild.
-      NetworkAdapter.openGuild(this.guild.id)
+      if (NetworkAdapter.openGuild(this.guild.id)) {
+        this.$router.push({name: 'dashboard', params: {guildId: this.guild.id}})
+      }
     }
   }
 }

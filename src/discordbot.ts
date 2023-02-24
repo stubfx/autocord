@@ -1,5 +1,4 @@
 import Discord, {Events, IntentsBitField} from "discord.js";
-import * as dbAdapter from "./dbAdapter.js";
 import * as LoggerHelper from "./loggerHelper.js";
 
 export function init(onReady: (client: Discord.Client) => {}) {
@@ -17,11 +16,11 @@ export function init(onReady: (client: Discord.Client) => {}) {
     client.on(Events.GuildDelete, async guild => {
         // bot left a build
         LoggerHelper.error(`just left: ${guild.id} ${guild.name}`)
-        await dbAdapter.removeGuild(guild)
+        // await dbAdapter.removeGuild(guild)
     })
 
     client.on(Events.ChannelDelete, async channel => {
-        await dbAdapter.removeNewsChannel(channel)
+        // await dbAdapter.removeNewsChannel(channel)
     })
 
     client.login(process.env.discord_token).catch(reason => {
