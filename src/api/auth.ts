@@ -34,7 +34,7 @@ export default function (api, opts, done) {
 
     api.get("/getGuildJobs", async (request) => {
         let guildId = request.query["guildId"];
-        let guild = await dbAdapter.getGuildJobs(guildId)
+        let guild = await dbAdapter.getGuild(guildId)
         return {
             jobs: guild.jobs
         }

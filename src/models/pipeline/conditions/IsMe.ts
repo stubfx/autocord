@@ -6,7 +6,7 @@ export class IsMe extends Condition {
     params: Array<string>;
 
     async exec(...args): Promise<TaskResult> {
-        let cond = false
+        let cond = true
         console.log(`CONDITION ${cond}`)
         return {data: undefined, result: cond}
     }

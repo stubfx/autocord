@@ -5,13 +5,14 @@ import {ChainLinkInterface} from "../ChainLinkInterface";
 
 export class Job {
 
+    readonly guildId: string
     readonly name: string
     firedOn: string
     private chain: Chain = new Chain()
 
-    constructor(name: string) {
+    constructor(name: string, event: string) {
         this.name = name
-        this.firedOn = "messageEvent"
+        this.firedOn = event
     }
 
     setFiredOn(eventName: string) {
@@ -22,16 +23,16 @@ export class Job {
         this.chain.addLink(chainLink)
     }
 
-    getChainLinks() : Array<ChainLink> {
+    getChainLinks(): Array<ChainLink> {
         return this.chain.chainLinks
     }
 
-    run(...args) {
-        this.chain.run()
+    async run(guildId: string, ...args) {
+        await this.chain.run(guildId)
     }
 
-    toJobInterface() : JobInterface {
-        let chain : Array<ChainLinkInterface> = []
+    toJobInterface(): JobInterface {
+        let chain: Array<ChainLinkInterface> = []
         for (let chainLink of this.chain.chainLinks) {
             chain.push({
                 name: chainLink.name,
@@ -42,7 +43,7 @@ export class Job {
         return {
             name: this.name,
             firedOn: this.firedOn,
-            chain : chain
+            chain: chain
         }
     }
 

@@ -10,16 +10,16 @@ export class Chain {
 
     public chainLinks: Array<ChainLink> = []
 
-    async run() {
+    async run(guildId: string) {
         for (let chainLink of this.chainLinks) {
             let taskResult : TaskResult
             console.log(chainLink.type)
             switch (chainLink.type) {
                 case "CONDITION":
-                    taskResult = await chainLink.exec()
+                    taskResult = await chainLink.exec(guildId)
                     break;
                 case "TASK":
-                    taskResult = await chainLink.exec()
+                    taskResult = await chainLink.exec(guildId)
             }
             if (!taskResult.result) {
                 LoggerHelper.dev("ENDING CHAIN")

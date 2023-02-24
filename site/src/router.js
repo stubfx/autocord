@@ -1,6 +1,7 @@
 import guildsSelector from "./components/guilds/guildsSelector.vue";
 import {createRouter, createWebHistory} from 'vue-router'
 import guildDashboardView from "./components/dashboard/guildDashboardView.vue";
+import jobView from "./components/job/jobView.vue";
 
 const routes = [
     {
@@ -11,6 +12,11 @@ const routes = [
         path: '/dashboard/:guildId',
         name: 'dashboard',
         component: guildDashboardView,
+    },
+    {
+        path: '/dashboard/:guildId/:jobName',
+        name: 'jobView',
+        component: jobView,
     }
 ]
 

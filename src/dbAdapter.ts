@@ -4,6 +4,7 @@ import * as LoggerHelper from "./loggerHelper.js";
 import mongoose from "mongoose"
 import {Job} from "./models/pipeline/Job.js";
 import {JobGuildModel} from "./schemas/guild.js";
+import {GuildInterface} from "./models/GuildInterface";
 
 
 const DEFAULT_TOPIC = "top";
@@ -14,14 +15,40 @@ export async function init() {
     mongooseConnection = await mongoose.connect(process.env.db_conn_string, {dbName: process.env.db_collection_name});
 }
 
-export async function saveJob(guildId,  job: Job) {
-    await JobGuildModel.findOneAndUpdate({guildId: guildId}, {
-        "$push": {jobs: job.toJobInterface()}
-    }, {new: true, upsert: true})
+export async function saveJob(guildId, job: Job): Promise<Boolean> {
+    let guild = await getGuild(guildId)
+    if (guild) {
+        if (guild.jobs.length > 3) {
+            return false
+        }
+        guild.jobs.push(job.toJobInterface())
+        // ok, just update it then.
+        guild.save()
+        return true
+    }
+    // in this case the guild does not exist.
+    await new JobGuildModel({
+        guildId: guildId,
+        jobs: job.toJobInterface()
+    }).save()
+    return true
 }
 
-export async function getGuildJobs(guildId: string) {
+export async function withGuild(guildId: string, func: (guildInterface: GuildInterface) => Promise<void>) {
+    let guild = JobGuildModel.findOne({guildId: guildId});
+    if (guild) {
+        // @ts-ignore
+        await func(guild as GuildInterface)
+    }
+}
+
+export async function getGuild(guildId: string) {
     return JobGuildModel.findOne({guildId: guildId})
+}
+
+export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: GuildInterface) => Promise<void>) {
+    let guild = await JobGuildModel.findOne({guildId: guildId, "jobs.firedOn": eventName})
+    await func(guild as GuildInterface)
 }
 
 let invitesCache = {};
@@ -44,7 +71,6 @@ export function clearTopicsCache() {
 export function clearInvitesCache() {
     invitesCache = {}
 }
-
 
 
 export function clearCurrentArticlesCache() {
