@@ -1,2 +1,3 @@
-export const JOBGUILD = "jobguild";
+export const GUILD = "jobguild";
+export const JOB = "job";
 //# sourceMappingURL=schemas.js.map

@@ -1,8 +1,21 @@
 <template>
   <div class="flex flex-col w-full h-full">
-    <h1 class="text-9xl font-bold mb-20 text-white">New Flow</h1>
+    <div class="flex flex-row items-baseline w-full mb-20 justify-self-stretch">
+      <h1 class="text-9xl font-bold text-white">New Flow</h1>
+      <div class="flex justify-center">
+        <div class="group cursor-pointer p-5 bg-discord-2 w-fit h-fit rounded-xl hover:bg-discord-success
+                   transition-colors duration-100" @click="saveJob()">
+          <div class="flex flex-row items-center">
+            <save_rounded class="fill-gray-400 w-10 group-hover:fill-black"></save_rounded>
+            <div class="flex flex-col ml-2">
+              <span class="font-semibold text-white tracking-wide group-hover:text-black">save</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="flex flex-row">
-      <div>
+      <div class="flex flex-col items-center">
         <guild-job :job="job"></guild-job>
       </div>
       <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
@@ -18,10 +31,12 @@ import GuildJob from "../dashboard/guildJob.vue";
 import ChainLinkElement from "../chainLinkElement.vue";
 import {NetworkAdapter} from "../../network.js";
 import EventListSelection from "./eventListSelection.vue";
+import Sensor_rounded from "../../assets/sensor_rounded.vue";
+import Save_rounded from "../../assets/save_rounded.vue";
 
 export default {
-  name: "newJobView",
-  components: {EventListSelection, ChainLinkElement, GuildJob},
+  name: "jobView",
+  components: {Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},
   data() {
     return {
       job: {
@@ -34,6 +49,11 @@ export default {
     }
   },
   async mounted() {
+    // is there a job in the store?
+    let currentJob = this.$store.state.currentJob;
+    if (currentJob) {
+      this.job = currentJob
+    }
     this.events = await NetworkAdapter.getAvailableEventNames()
     this.tasks = await NetworkAdapter.getAvailableJobTasks()
     this.conditions = await NetworkAdapter.getAvailableJobTasks()
@@ -47,6 +67,11 @@ export default {
           this.job.chain.push(event)
         }
       }
+    },
+    async saveJob() {
+      let guildId = this.$route.params.guildId
+      await NetworkAdapter.saveJob(guildId, this.job)
+      this.$router.push({name: 'dashboard', params: {guildId: guildId}})
     }
   }
 }

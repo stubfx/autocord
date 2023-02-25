@@ -2,6 +2,9 @@ import fetch from "node-fetch";
 import Discord, {REST, RouteLike} from "discord.js";
 import {Routes} from "discord-api-types/v10";
 import * as LoggerHelper from "./loggerHelper.js";
+import * as sessionV from "./sessionVariables";
+import {PipelineFactory} from "./models/PipelineFactory";
+import * as dbAdapter from "./dbAdapter";
 
 let client = null
 
@@ -30,7 +33,7 @@ export class DiscordAdapter {
     }
 
     async getUserOwnedGuilds() {
-        return await this.get(Routes.userGuilds()) as Array<PartialGuild>
+        return (await this.get(Routes.userGuilds()) as Array<PartialGuild>).filter(value => value.owner)
     }
 
     async checkServer(guildId: string) : Promise<boolean> {

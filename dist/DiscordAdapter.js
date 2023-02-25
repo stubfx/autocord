@@ -21,7 +21,7 @@ export class DiscordAdapter {
         return await this.get(Routes.user('@me'));
     }
     async getUserOwnedGuilds() {
-        return await this.get(Routes.userGuilds());
+        return (await this.get(Routes.userGuilds())).filter(value => value.owner);
     }
     async checkServer(guildId) {
         let guild = null;

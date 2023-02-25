@@ -9,6 +9,7 @@ import fastifyCookie from "@fastify/cookie";
 import { getSessionExpirationDate } from "./utils.js";
 import authApi from './api/auth.js';
 import * as sessionV from "./sessionVariables.js";
+import cors from '@fastify/cors';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export function init() {
     const fastify = Fastify({
@@ -24,14 +25,13 @@ export function init() {
             // sameSite: !process.env.dev ? "strict" : "none"
         }
     });
-    fastify.addHook('preHandler', (req, reply, done) => {
-        if (process.env.dev) {
-            reply.header("Access-Control-Allow-Origin", "http://localhost:5173");
-            reply.header('Access-Control-Allow-Credentials', true);
-        }
-        done();
+    fastify.register(cors, {
+        // put your options here
+        methods: ['POST', "GET"],
+        allowedHeaders: ["Content-Type"],
+        credentials: true,
+        origin: process.env.dev ? "http://localhost:5173" : "autocord.io"
     });
-    // Setup our static files
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
         prefix: "/dashboard", // optional: default '/'
@@ -63,7 +63,7 @@ export function init() {
                 // let tokenType = `${oauthData["token_type"]}`
                 let accessToken = `${oauthData["access_token"]}`;
                 request.session[sessionV.AUTHENTICATED] = true;
-                request.session[sessionV.AUTHORIZATION_TOKEN] = accessToken;
+                request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN] = accessToken;
                 console.log(JSON.stringify(request.cookies));
             }
             catch (error) {

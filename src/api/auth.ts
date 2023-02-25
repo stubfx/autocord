@@ -3,51 +3,71 @@ import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
 import {ChainLinkInterface} from "../models/ChainLinkInterface.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
+import {PipelineFactory} from "../models/PipelineFactory.js";
+import * as LoggerHelper from "../loggerHelper.js";
 
 export default function (api, opts, done) {
-    api.decorateRequest('userId', '')
     api.addHook('preHandler', async (request, reply) => {
         console.log(JSON.stringify(request.cookies))
         if (!request.session[sessionV.AUTHENTICATED]) {
             reply.code(401)
             return null
         }
+        let guildId = request.body["guildId"];
+        if (guildId) {
+            // if the body contains a guild id, check it.
+            try {
+                // check if the user is actually the owner of the guild passed as param
+                if (!request.session.ownedGuilds.includes(guildId)) {
+                    reply.code(401)
+                    return
+                }
+            } catch (e) {
+                LoggerHelper.error(e)
+                reply.code(401)
+                return
+            }
+        }
     })
 
-    api.get("/ownedGuilds", async (request) => {
-        let userGuilds = await new DiscordAdapter(request.session[sessionV.AUTHORIZATION_TOKEN]).getUserOwnedGuilds();
-        return userGuilds.filter(value => value.owner);
+    api.post("/ownedGuilds", async (request) => {
+        let partialGuilds = await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserOwnedGuilds();
+        request.session.ownedGuilds = partialGuilds.filter(value => value.owner).map(value => value.id)
+        return partialGuilds;
     });
 
-    api.get("/user", async (request) => {
-        return await new DiscordAdapter(request.session[sessionV.AUTHORIZATION_TOKEN]).getUserInfo();
+    api.post("/user", async (request) => {
+        return await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserInfo();
     })
 
-    api.get("/checkBotInGuild", async (request) => {
-        let guildId = request.query["guildId"];
+    api.post("/checkBotInGuild", async (request) => {
+        let guildId = request.body["guildId"];
         return await new DiscordAdapter().checkServer(guildId)
     })
 
-    api.get("/getAddBotToGuildInvite", async (request) => {
-        let guildId = request.query["guildId"];
+    api.post("/getAddBotToGuildInvite", async (request) => {
+        let guildId = request.body["guildId"];
         let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=http://localhost:3000/login`}
     })
 
-    api.get("/getGuildJobs", async (request) => {
-        let guildId = request.query["guildId"];
+    api.post("/getGuildJobs", async (request) => {
+        let guildId = request.body["guildId"];
         let guild = await dbAdapter.getGuild(guildId)
         return {
-            jobs: guild.jobs
+            jobs: guild ? guild.jobs : []
         }
     })
 
-    api.get("/getAvailableEventNames", async (request) : Promise<{ links: Array<ChainLinkInterface> }> => {
-        // let guildId = request.query["guildId"];
-        // let guild = await dbAdapter.getGuild(guildId)
-        // return {
-        //     jobs: guild.jobs
-        // }
+    api.post("/saveJob", async (request) => {
+        let guildId = request.body["guildId"];
+        let rawJob = request.body["job"];
+        let jobInstance = PipelineFactory.createJob(rawJob)
+        await dbAdapter.saveJob(guildId, jobInstance)
+        return {}
+    })
+
+    api.post("/getAvailableEventNames", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
                 {
@@ -71,12 +91,7 @@ export default function (api, opts, done) {
         }
     })
 
-    api.get("/getAvailableJobConditions", async (request) : Promise<{ links: Array<ChainLinkInterface> }> => {
-        // let guildId = request.query["guildId"];
-        // let guild = await dbAdapter.getGuild(guildId)
-        // return {
-        //     jobs: guild.jobs
-        // }
+    api.post("/getAvailableJobConditions", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
                 {
@@ -100,55 +115,50 @@ export default function (api, opts, done) {
         }
     })
 
-    api.get("/getAvailableJobTasks", async (request) : Promise<{ links: Array<ChainLinkInterface> }> => {
-        // let guildId = request.query["guildId"];
-        // let guild = await dbAdapter.getGuild(guildId)
-        // return {
-        //     jobs: guild.jobs
-        // }
+    api.post("/getAvailableJobTasks", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
                 {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
-                },{
+                }, {
                     type: ChainLinkTypes.LinkType.TASK,
                     name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]

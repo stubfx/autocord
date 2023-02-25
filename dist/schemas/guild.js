@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { JOBGUILD } from "./schemas.js";
 const Schema = new mongoose.Schema({
+    _id: String,
     guildId: String,
     jobs: (Array)
 });

@@ -4,13 +4,13 @@ import {JobInterface} from "../JobInterface.js";
 import {ChainLinkInterface} from "../ChainLinkInterface";
 
 export class Job {
-
-    readonly guildId: string
+    readonly id: string
     readonly name: string
     firedOn: string
     private chain: Chain = new Chain()
 
-    constructor(name: string, event: string) {
+    constructor(id: string, name: string, event: string) {
+        this.id = id
         this.name = name
         this.firedOn = event
     }
@@ -41,6 +41,7 @@ export class Job {
             })
         }
         return {
+            id : this.id,
             name: this.name,
             firedOn: this.firedOn,
             chain: chain

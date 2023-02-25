@@ -8,8 +8,8 @@
       </div>
       <div
           class="mt-10 flex flex-row flex-wrap justify-center w-full">
-        <guild-job v-for="job in jobs" :job="job"></guild-job>
-        <guild-job-add-card></guild-job-add-card>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)"></guild-job>
+        <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
     </div>
   </div>
@@ -29,7 +29,20 @@ export default {
     }
   },
   async mounted() {
+    // reset current job
+    this.$store.state.currentJob = null
     this.jobs = await NetworkAdapter.getGuildJobs(this.$route.params.guildId)
+  },
+  methods: {
+    addJob() {
+      let guildId = this.$route.params.guildId
+      this.$router.push({name: 'jobView', params: {guildId: guildId}})
+    },
+    addJobLink(job) {
+      let guildId = this.$route.params.guildId
+      this.$store.state.currentJob = job
+      this.$router.push({name: 'jobView', params: {guildId: guildId}})
+    }
   }
 }
 </script>

@@ -11,8 +11,8 @@
       </div>
     </div>
     <chain-link-element :link="link" v-for="link in job.chain"></chain-link-element>
-    <div class="flex flex-row justify-center group w-full cursor-pointer bg-discord-4 rounded-xl py-4 hover:bg-discord-2
-transition-colors" v-if="job.chain.length < 4">
+    <div class="group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded-xl py-4 hover:bg-discord-2
+transition-colors" v-if="job.chain.length < 4" @click="onAddLink()">
       <add_rounded class="rounded-full bg-discord-2 fill-discord-1 w-[48px]
   group-hover:bg-discord-1 group-hover:fill-white transition-colors"></add_rounded>
     </div>
@@ -31,6 +31,11 @@ export default {
   components: {ChainLinkElement, Sensor_rounded, Psicology_rounded, Task_rounded, Add_rounded},
   props: {
     job: Object
+  },
+  methods: {
+    onAddLink() {
+      this.$emit("onAddLink")
+    }
   }
 }
 </script>

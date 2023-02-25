@@ -1,10 +1,11 @@
 import { Chain } from "./Chain.js";
 export class Job {
-    guildId;
+    id;
     name;
     firedOn;
     chain = new Chain();
-    constructor(name, event) {
+    constructor(id, name, event) {
+        this.id = id;
         this.name = name;
         this.firedOn = event;
     }
@@ -30,6 +31,7 @@ export class Job {
             });
         }
         return {
+            id: this.id,
             name: this.name,
             firedOn: this.firedOn,
             chain: chain
