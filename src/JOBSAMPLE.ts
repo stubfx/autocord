@@ -6,7 +6,7 @@ import {DiscordEvents} from "./eventLifecycle/EventHandler.js";
 
 export function getSampleJob() {
     // define job
-    let job = new Job("JOB " + (new Date().getTime()).toString(), DiscordEvents.MESSAGE_EVENT)
+    let job = new Job("JOB " + (new Date().getTime()).toString(), DiscordEvents.MessageCreate)
     job.addChainLink(new SendMessage())
     job.addChainLink(new IsMe())
     job.addChainLink(new BanUser())
@@ -14,9 +14,4 @@ export function getSampleJob() {
         job.addChainLink(new SendMessage())
     }
     return job;
-}
-
-export async function test() {
-    let job = getSampleJob();
-    job.run()
 }

@@ -17,8 +17,8 @@ export class Job {
     getChainLinks() {
         return this.chain.chainLinks;
     }
-    run(...args) {
-        this.chain.run();
+    async run(guildId, ...args) {
+        await this.chain.run(guildId);
     }
     toJobInterface() {
         let chain = [];

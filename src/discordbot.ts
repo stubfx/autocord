@@ -25,7 +25,20 @@ export function init(onReady: (client: Discord.Client) => {}) {
 
     client.on(Events.MessageCreate, async data => {
         LoggerHelper.dev(data.content)
-        await EventHandler.runEventForGuilds(data.guild.id, EventHandler.DiscordEvents.MESSAGE_EVENT)
+        await EventHandler.runEventForGuilds(data.guild.id, EventHandler.DiscordEvents.MessageCreate)
+    })
+
+    client.on(Events.MessageReactionAdd, async data => {
+        await EventHandler.runEventForGuilds(data.message.guild.id, EventHandler.DiscordEvents.MessageCreate)
+    })
+
+    // random user joins voice channel, (we cannot check the user unfortunately.)
+    client.on(Events.VoiceStateUpdate, async data => {
+        await EventHandler.runEventForGuilds(data.guild.id,EventHandler.DiscordEvents.MessageCreate)
+    })
+
+    client.on(Events.ChannelCreate, async data => {
+        await EventHandler.runEventForGuilds(data.guild.id, EventHandler.DiscordEvents.MessageCreate)
     })
 
     client.login(process.env.discord_token).catch(reason => {

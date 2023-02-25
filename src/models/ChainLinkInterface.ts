@@ -1,5 +1,7 @@
+import {ChainLinkType} from "./pipeline/chain/ChainLink.js";
+
 export interface ChainLinkInterface {
-    type: "CONDITION" | "TASK"
+    type: ChainLinkType
     params: Array<string>
     name: string
 }

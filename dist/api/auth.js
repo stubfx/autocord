@@ -1,6 +1,8 @@
 import { DiscordAdapter } from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
+import { DiscordEvents } from "../eventLifecycle/EventHandler.js";
+import { ChainLinkType } from "../models/pipeline/chain/ChainLink.js";
 export default function (api, opts, done) {
     api.decorateRequest('userId', '');
     api.addHook('preHandler', async (request, reply) => {
@@ -31,6 +33,90 @@ export default function (api, opts, done) {
         let guild = await dbAdapter.getGuild(guildId);
         return {
             jobs: guild.jobs
+        };
+    });
+    api.get("/getAvailableEventNames", async (request) => {
+        // let guildId = request.query["guildId"];
+        // let guild = await dbAdapter.getGuild(guildId)
+        // return {
+        //     jobs: guild.jobs
+        // }
+        return {
+            events: [
+                {
+                    type: ChainLinkType.EVENT,
+                    name: DiscordEvents.MessageCreate,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.EVENT,
+                    name: DiscordEvents.MessageReactionAdd,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.EVENT,
+                    name: DiscordEvents.ChannelCreate,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.EVENT,
+                    name: DiscordEvents.VoiceStateUpdate,
+                    params: ["1", "1", "1", "1", "1"]
+                }
+            ]
+        };
+    });
+    api.get("/getAvailableJobTasks", async (request) => {
+        // let guildId = request.query["guildId"];
+        // let guild = await dbAdapter.getGuild(guildId)
+        // return {
+        //     jobs: guild.jobs
+        // }
+        return {
+            links: [
+                {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkType.TASK,
+                    name: "test",
+                    params: ["1", "1", "1", "1", "1"]
+                },
+            ]
         };
     });
     // only for authenticated users with role.

@@ -25,7 +25,15 @@ export class NetworkAdapter {
     }
 
     static async getGuildJobs(guildId) {
-        return ((await this._get(`/auth/getGuildJobs?guildId=${guildId}`))['jobs'])
+        return (await this._get(`/auth/getGuildJobs?guildId=${guildId}`))['jobs']
+    }
+
+    static async getAvailableJobTasks() {
+        return (await this._get(`/auth/getAvailableJobTasks`))['links']
+    }
+
+    static async getAvailableEventNames() {
+        return (await this._get(`/auth/getAvailableEventNames`))['events']
     }
 
 }

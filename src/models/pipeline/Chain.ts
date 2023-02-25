@@ -1,4 +1,4 @@
-import {ChainLink} from "./chain/ChainLink.js";
+import {ChainLink, ChainLinkType} from "./chain/ChainLink.js";
 import {TaskResult} from "./TaskResult";
 import * as LoggerHelper from "../../loggerHelper.js";
 
@@ -15,10 +15,10 @@ export class Chain {
             let taskResult : TaskResult
             console.log(chainLink.type)
             switch (chainLink.type) {
-                case "CONDITION":
+                case ChainLinkType.CONDITION:
                     taskResult = await chainLink.exec(guildId)
                     break;
-                case "TASK":
+                case ChainLinkType.TASK:
                     taskResult = await chainLink.exec(guildId)
             }
             if (!taskResult.result) {

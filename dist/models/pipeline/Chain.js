@@ -1,18 +1,19 @@
+import { ChainLinkType } from "./chain/ChainLink.js";
 import * as LoggerHelper from "../../loggerHelper.js";
 export class Chain {
     guildId;
     store;
     chainLinks = [];
-    async run() {
+    async run(guildId) {
         for (let chainLink of this.chainLinks) {
             let taskResult;
             console.log(chainLink.type);
             switch (chainLink.type) {
-                case "CONDITION":
-                    taskResult = await chainLink.exec();
+                case ChainLinkType.CONDITION:
+                    taskResult = await chainLink.exec(guildId);
                     break;
-                case "TASK":
-                    taskResult = await chainLink.exec();
+                case ChainLinkType.TASK:
+                    taskResult = await chainLink.exec(guildId);
             }
             if (!taskResult.result) {
                 LoggerHelper.dev("ENDING CHAIN");

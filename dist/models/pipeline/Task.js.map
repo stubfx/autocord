@@ -1,1 +1,1 @@
-{"version":3,"file":"Task.js","sourceRoot":"","sources":["../../../src/models/pipeline/Task.ts"],"names":[],"mappings":"AAGA,MAAM,OAAgB,IAAI;IAEb,IAAI,GAAG,MAAM,CAAC;IAEvB,MAAM,GAAkB,EAAE,CAAC;CAO9B"}
+{"version":3,"file":"Task.js","sourceRoot":"","sources":["../../../src/models/pipeline/Task.ts"],"names":[],"mappings":"AAAA,OAAO,EAAY,aAAa,EAAC,MAAM,sBAAsB,CAAC;AAG9D,MAAM,OAAgB,IAAI;IAEb,IAAI,GAAG,aAAa,CAAC,IAAI,CAAC;IAEnC,MAAM,GAAkB,EAAE,CAAC;CAO9B"}

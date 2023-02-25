@@ -37,8 +37,9 @@ export async function withGuild(guildId, func) {
 export async function getGuild(guildId) {
     return JobGuildModel.findOne({ guildId: guildId });
 }
-export function getAllGuildsListeningForEvent(eventName) {
-    return JobGuildModel.find({ "jobs.firedOn": eventName });
+export async function forGuildListeningForEvent(guildId, eventName, func) {
+    let guild = await JobGuildModel.findOne({ guildId: guildId, "jobs.firedOn": eventName });
+    await func(guild);
 }
 let invitesCache = {};
 let topicsCache = {};

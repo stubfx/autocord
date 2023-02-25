@@ -2,7 +2,10 @@ import * as dbAdapter from "../dbAdapter.js";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 
 export enum DiscordEvents {
-    MESSAGE_EVENT = "MESSAGE_EVENT"
+    MessageCreate = "MessageCreate",
+    MessageReactionAdd = "MessageReactionAdd",
+    ChannelCreate = "ChannelCreate",
+    VoiceStateUpdate = "VoiceStateUpdate"
 }
 
 export async function runEventForGuilds(guildId: string, eventName: string) {
@@ -11,7 +14,7 @@ export async function runEventForGuilds(guildId: string, eventName: string) {
             // find the right job
             if (job.firedOn === eventName) {
                 // found it!
-                PipelineFactory.createJob(job).run()
+                PipelineFactory.createJob(job).run(guildId)
             }
         }
     })
