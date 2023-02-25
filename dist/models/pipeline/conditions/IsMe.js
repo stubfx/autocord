@@ -1,6 +1,7 @@
 import { Condition } from "../Condition.js";
+import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 export class IsMe extends Condition {
-    name = "IsMe";
+    name = ChainLinkTypes.Condition.IsMe;
     params;
     async exec(...args) {
         let cond = true;

@@ -1,6 +1,6 @@
-import { ChainLinkType } from "./chain/ChainLink.js";
+import { ChainLinkTypes } from "./chain/ChainLinkTypes.js";
 export class Task {
-    type = ChainLinkType.TASK;
+    type = ChainLinkTypes.LinkType.TASK;
     params = [];
 }
 //# sourceMappingURL=Task.js.map

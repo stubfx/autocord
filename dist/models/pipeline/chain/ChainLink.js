@@ -1,7 +1,2 @@
-export var ChainLinkType;
-(function (ChainLinkType) {
-    ChainLinkType["EVENT"] = "EVENT";
-    ChainLinkType["CONDITION"] = "CONDITION";
-    ChainLinkType["TASK"] = "TASK";
-})(ChainLinkType || (ChainLinkType = {}));
+export {};
 //# sourceMappingURL=ChainLink.js.map

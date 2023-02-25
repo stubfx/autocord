@@ -1,12 +1,12 @@
 <template>
-  <div class="group cursor-pointer p-5 bg-discord-2 my-3 w-full rounded-xl hover:bg-discord-1
+  <div class="group cursor-pointer p-5 bg-discord-2 w-full rounded-xl hover:bg-discord-1
   hover:text-discord-5 transition-colors duration-100">
     <div class="flex flex-row items-center">
       <sensor_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
       <task_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
       <psicology_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
       <div class="flex flex-col ml-2">
-        <span>{{link.name}}</span>
+        <span class="font-semibold text-white tracking-wide">{{link.name}}</span>
         <div class="flex flex-row" v-if="link.params">
           <span class="text-gray-400 group-hover:text-white">{{link.params.join(",")}}</span>
         </div>

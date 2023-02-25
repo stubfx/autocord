@@ -1,15 +1,10 @@
 import {TaskResult} from "../TaskResult";
-
-export enum ChainLinkType {
-    EVENT = "EVENT",
-    CONDITION = "CONDITION",
-    TASK = "TASK"
-}
+import {ChainLinkTypes} from "./ChainLinkTypes.js";
 
 export interface ChainLink {
 
-    name: string;
-    type: ChainLinkType
+    name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event;
+    type: ChainLinkTypes.LinkType
     params: Array<string>
     exec(guildId : string, ...args): Promise<TaskResult>
 

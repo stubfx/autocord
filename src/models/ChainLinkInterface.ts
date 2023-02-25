@@ -1,7 +1,8 @@
-import {ChainLinkType} from "./pipeline/chain/ChainLink.js";
+import {ChainLinkTypes} from "./pipeline/chain/ChainLinkTypes.js";
+
 
 export interface ChainLinkInterface {
-    type: ChainLinkType
+    type: ChainLinkTypes.LinkType
     params: Array<string>
-    name: string
+    name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event
 }

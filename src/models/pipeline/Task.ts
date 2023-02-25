@@ -1,9 +1,10 @@
-import {ChainLink, ChainLinkType} from "./chain/ChainLink.js";
+import {ChainLink} from "./chain/ChainLink.js";
 import {TaskResult} from "./TaskResult.js";
+import {ChainLinkTypes} from "./chain/ChainLinkTypes.js";
 
 export abstract class Task implements ChainLink {
-    abstract name: string;
-    readonly type = ChainLinkType.TASK;
+    abstract name: ChainLinkTypes.Task;
+    readonly type = ChainLinkTypes.LinkType.TASK;
 
     params: Array<string> = [];
 

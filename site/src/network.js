@@ -32,8 +32,12 @@ export class NetworkAdapter {
         return (await this._get(`/auth/getAvailableJobTasks`))['links']
     }
 
+    static async getAvailableJobConditions() {
+        return (await this._get(`/auth/getAvailableJobConditions`))['links']
+    }
+
     static async getAvailableEventNames() {
-        return (await this._get(`/auth/getAvailableEventNames`))['events']
+        return (await this._get(`/auth/getAvailableEventNames`))['links']
     }
 
 }

@@ -1,8 +1,7 @@
 import { DiscordAdapter } from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
-import { DiscordEvents } from "../eventLifecycle/EventHandler.js";
-import { ChainLinkType } from "../models/pipeline/chain/ChainLink.js";
+import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 export default function (api, opts, done) {
     api.decorateRequest('userId', '');
     api.addHook('preHandler', async (request, reply) => {
@@ -42,22 +41,50 @@ export default function (api, opts, done) {
         //     jobs: guild.jobs
         // }
         return {
-            events: [
+            links: [
                 {
-                    type: ChainLinkType.EVENT,
-                    name: DiscordEvents.MessageCreate,
+                    type: ChainLinkTypes.LinkType.EVENT,
+                    name: ChainLinkTypes.Event.MessageCreate,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.EVENT,
-                    name: DiscordEvents.MessageReactionAdd,
+                    type: ChainLinkTypes.LinkType.EVENT,
+                    name: ChainLinkTypes.Event.MessageReactionAdd,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.EVENT,
-                    name: DiscordEvents.ChannelCreate,
+                    type: ChainLinkTypes.LinkType.EVENT,
+                    name: ChainLinkTypes.Event.ChannelCreate,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.EVENT,
-                    name: DiscordEvents.VoiceStateUpdate,
+                    type: ChainLinkTypes.LinkType.EVENT,
+                    name: ChainLinkTypes.Event.VoiceStateUpdate,
+                    params: ["1", "1", "1", "1", "1"]
+                }
+            ]
+        };
+    });
+    api.get("/getAvailableJobConditions", async (request) => {
+        // let guildId = request.query["guildId"];
+        // let guild = await dbAdapter.getGuild(guildId)
+        // return {
+        //     jobs: guild.jobs
+        // }
+        return {
+            links: [
+                {
+                    type: ChainLinkTypes.LinkType.CONDITION,
+                    name: ChainLinkTypes.Condition.IsMe,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkTypes.LinkType.CONDITION,
+                    name: ChainLinkTypes.Condition.IsMe,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkTypes.LinkType.CONDITION,
+                    name: ChainLinkTypes.Condition.IsMe,
+                    params: ["1", "1", "1", "1", "1"]
+                }, {
+                    type: ChainLinkTypes.LinkType.CONDITION,
+                    name: ChainLinkTypes.Condition.IsMe,
                     params: ["1", "1", "1", "1", "1"]
                 }
             ]
@@ -72,48 +99,48 @@ export default function (api, opts, done) {
         return {
             links: [
                 {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 }, {
-                    type: ChainLinkType.TASK,
-                    name: "test",
+                    type: ChainLinkTypes.LinkType.TASK,
+                    name: ChainLinkTypes.Task.SendMessage,
                     params: ["1", "1", "1", "1", "1"]
                 },
             ]

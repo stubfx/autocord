@@ -1,19 +1,13 @@
 <template>
   <div class="flex flex-col w-full h-full">
-    <h1 class="text-9xl font-bold mb-20 text-white">Create a new job</h1>
+    <h1 class="text-9xl font-bold mb-20 text-white">New Flow</h1>
     <div class="flex flex-row">
-      <div class="">
+      <div>
         <guild-job :job="job"></guild-job>
       </div>
-      <div class="flex flex-row p-6">
-        <div class="flex flex-row bg-discord-5 p-6 shadow-2xl rounded-xl flex-wrap">
-          <div class="m-2" v-for="event in events">
-            <chain-link-element :link="event" @click="addLink(event)"></chain-link-element>
-          </div>
-          <div class="m-2" v-for="task in tasks">
-            <chain-link-element :link="task" @click="addLink(task)"></chain-link-element>
-          </div>
-        </div>
+      <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
+        <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
+        <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
       </div>
     </div>
   </div>
@@ -23,10 +17,11 @@
 import GuildJob from "../dashboard/guildJob.vue";
 import ChainLinkElement from "../chainLinkElement.vue";
 import {NetworkAdapter} from "../../network.js";
+import EventListSelection from "./eventListSelection.vue";
 
 export default {
-  name: "jobView",
-  components: {ChainLinkElement, GuildJob},
+  name: "newJobView",
+  components: {EventListSelection, ChainLinkElement, GuildJob},
   data() {
     return {
       job: {
@@ -41,6 +36,7 @@ export default {
   async mounted() {
     this.events = await NetworkAdapter.getAvailableEventNames()
     this.tasks = await NetworkAdapter.getAvailableJobTasks()
+    this.conditions = await NetworkAdapter.getAvailableJobTasks()
   },
   methods: {
     addLink(event) {

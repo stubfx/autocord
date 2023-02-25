@@ -1,14 +1,6 @@
 import * as dbAdapter from "../dbAdapter.js";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 
-export enum DiscordEvents {
-    MessageCreate = "MessageCreate",
-    MessageReactionAdd = "MessageReactionAdd",
-    ChannelCreate = "ChannelCreate",
-    VoiceStateUpdate = "VoiceStateUpdate",
-    GuildMemberAdd = "GuildMemberAdd",
-}
-
 export async function runEventForGuilds(guildId: string, eventName: string) {
     await dbAdapter.forGuildListeningForEvent(guildId, eventName, async guildInterface => {
         for (let job of guildInterface.jobs) {

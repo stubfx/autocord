@@ -1,5 +1,5 @@
-import { ChainLinkType } from "./chain/ChainLink.js";
+import { ChainLinkTypes } from "./chain/ChainLinkTypes.js";
 export class Condition {
-    type = ChainLinkType.CONDITION;
+    type = ChainLinkTypes.LinkType.CONDITION;
 }
 //# sourceMappingURL=Condition.js.map
