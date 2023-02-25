@@ -3,6 +3,7 @@ import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
 import {DiscordEvents} from "../eventLifecycle/EventHandler.js";
 import {ChainLinkType} from "../models/pipeline/chain/ChainLink.js";
+import {ChainLinkInterface} from "../models/ChainLinkInterface.js";
 
 export default function (api, opts, done) {
     api.decorateRequest('userId', '')
@@ -42,7 +43,7 @@ export default function (api, opts, done) {
         }
     })
 
-    api.get("/getAvailableEventNames", async (request) => {
+    api.get("/getAvailableEventNames", async (request) : Promise<{ events: Array<ChainLinkInterface> }> => {
         // let guildId = request.query["guildId"];
         // let guild = await dbAdapter.getGuild(guildId)
         // return {
@@ -71,7 +72,7 @@ export default function (api, opts, done) {
         }
     })
 
-    api.get("/getAvailableJobTasks", async (request) => {
+    api.get("/getAvailableJobTasks", async (request) : Promise<{ links: Array<ChainLinkInterface> }> => {
         // let guildId = request.query["guildId"];
         // let guild = await dbAdapter.getGuild(guildId)
         // return {

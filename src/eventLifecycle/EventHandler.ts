@@ -5,7 +5,8 @@ export enum DiscordEvents {
     MessageCreate = "MessageCreate",
     MessageReactionAdd = "MessageReactionAdd",
     ChannelCreate = "ChannelCreate",
-    VoiceStateUpdate = "VoiceStateUpdate"
+    VoiceStateUpdate = "VoiceStateUpdate",
+    GuildMemberAdd = "GuildMemberAdd",
 }
 
 export async function runEventForGuilds(guildId: string, eventName: string) {
