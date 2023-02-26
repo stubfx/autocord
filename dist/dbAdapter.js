@@ -20,7 +20,7 @@ export async function saveJob(guildId, job) {
         // only if the guild exists
         // and has the job inside.
         if (guild && !!guild.jobs.find(el => el._id.toString() === job.id)) {
-            let result = await JobModel.findOneAndReplace({ _id: job.id }, job.toJobInterface());
+            await JobModel.findOneAndReplace({ _id: job.id }, job.toJobInterface());
             return true;
         }
         // mmmm, sketchy stuff here.

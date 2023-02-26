@@ -21,6 +21,7 @@ export class Job {
         for (let chainLink of this.chain.chainLinks) {
             chain.push({
                 name: chainLink.name,
+                description: chainLink.description,
                 params: chainLink.params,
                 type: chainLink.type
             });

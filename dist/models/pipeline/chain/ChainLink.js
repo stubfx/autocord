@@ -1,7 +1,8 @@
 export class ChainLink {
     name;
     type;
-    params;
+    description = "Missing description :P";
+    params = [];
     run(guildId, ...args) {
         return this.behavior();
     }

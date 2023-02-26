@@ -6,6 +6,10 @@ import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import ChainLinkParamType = ChainLinkTypes.ChainLinkParamType;
+import {MessageCreate} from "../models/pipeline/Events/MessageCreate.js";
+import {IsMe} from "../models/pipeline/conditions/IsMe.js";
+import {BanUser} from "../models/pipeline/tasks/BanUser.js";
+import {SendMessage} from "../models/pipeline/tasks/SendMessage.js";
 
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
@@ -71,55 +75,11 @@ export default function (api, opts, done) {
     api.post("/getAvailableEventNames", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
-                {
-                    type: ChainLinkTypes.LinkType.EVENT,
-                    name: ChainLinkTypes.Event.MessageCreate,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.EVENT,
-                    name: ChainLinkTypes.Event.MessageReactionAdd,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.EVENT,
-                    name: ChainLinkTypes.Event.ChannelCreate,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.EVENT,
-                    name: ChainLinkTypes.Event.VoiceStateUpdate,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }
+                new MessageCreate(),
+                new MessageCreate(),
+                new MessageCreate(),
+                new MessageCreate(),
+                new MessageCreate()
             ]
         }
     })
@@ -127,55 +87,7 @@ export default function (api, opts, done) {
     api.post("/getAvailableJobConditions", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
-                {
-                    type: ChainLinkTypes.LinkType.CONDITION,
-                    name: ChainLinkTypes.Condition.IsMe,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.CONDITION,
-                    name: ChainLinkTypes.Condition.IsMe,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.CONDITION,
-                    name: ChainLinkTypes.Condition.IsMe,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.CONDITION,
-                    name: ChainLinkTypes.Condition.IsMe,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }
+                new IsMe()
             ]
         }
     })
@@ -183,139 +95,16 @@ export default function (api, opts, done) {
     api.post("/getAvailableJobTasks", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
-                {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                }, {
-                    type: ChainLinkTypes.LinkType.TASK,
-                    name: ChainLinkTypes.Task.SendMessage,
-                    params: [{name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}, {
-                        name: "p1",
-                        type: ChainLinkParamType.STRING,
-                        description: "aa"
-                    }, {name: "p1", type: ChainLinkParamType.STRING, description: "aa"}]
-                },
+                new BanUser(),
+                new SendMessage(),
+                new BanUser(),
+                new SendMessage(),
+                new BanUser(),
+                new SendMessage(),
+                new BanUser(),
+                new SendMessage(),
+                new BanUser(),
+                new SendMessage()
             ]
         }
     })

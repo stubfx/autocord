@@ -9,6 +9,7 @@ const Schema = new mongoose.Schema<JobInterface>({
         name: String,
         chain: Array<{
             type: ChainLinkTypes.LinkType,
+            // description: String, // do not save in db.
             params: Array<String>,
             name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event
         }>

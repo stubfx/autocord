@@ -1,4 +1,7 @@
 <template>
+  <simple-dialog ref="modal">
+    <p v-for="param in currentItem.params">{{param.name}}</p>
+  </simple-dialog>
   <div class="flex flex-col w-full h-full">
     <div class="flex flex-row items-baseline w-full mb-20 justify-self-stretch">
       <h1 class="text-9xl font-bold text-white">New Flow</h1>
@@ -34,10 +37,11 @@ import {NetworkAdapter} from "../../network.js";
 import EventListSelection from "./eventListSelection.vue";
 import Sensor_rounded from "../../assets/sensor_rounded.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
+import SimpleDialog from "../simpleDialog.vue";
 
 export default {
   name: "jobView",
-  components: {Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},
+  components: {SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},
   data() {
     return {
       job: {
@@ -47,7 +51,8 @@ export default {
       },
       events: [],
       tasks: [],
-      conditions: []
+      conditions: [],
+      currentItem: {params: []}
     }
   },
   async mounted() {
@@ -61,22 +66,33 @@ export default {
     this.conditions = await NetworkAdapter.getAvailableJobConditions()
   },
   methods: {
-    addLink(event) {
-      if (event.type === "EVENT") {
+    addLink(item) {
+      if (item.type === "EVENT") {
         this.job.chain = this.job.chain.filter(el => el.type !== 'EVENT')
         // then add the new one :P
-        this.job.chain.unshift(event)
-      } else if (event.type === "TASK" || event.type === "CONDITION") {
+        this.job.chain.unshift(item)
+        this.onLinkAdded(item)
+      } else if (item.type === "TASK" || item.type === "CONDITION") {
         // count events in chain (max 4)
         let count = this.job.chain.reduce((accumulator, currentValue) => {
               if (currentValue.type !== 'EVENT') {
                 return ++accumulator
               }
+              return accumulator
             }, 0)
-        console.log(count)
         if (count < 4) {
-          this.job.chain.push(event)
+          console.log("adding")
+          this.job.chain.push(item)
+          this.onLinkAdded(item)
         }
+      }
+    },
+    onLinkAdded(item) {
+      // open modal
+      this.currentItem = item
+      // open only if it has params!
+      if (item.params.length > 0) {
+        this.$refs.modal.open()
       }
     },
     async saveJob() {
