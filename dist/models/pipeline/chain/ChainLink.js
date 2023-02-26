@@ -22,11 +22,10 @@ export class ChainLink {
     }
     resolveStringEmbeds(toResolve) {
         const str = toResolve;
-        const regex = /\{\{(\w+)\}\}/g;
-        const replacedStr = str.replace(regex, (match, variable) => {
+        const regex = /\{\{(\w+)}}/g;
+        return str.replace(regex, (match, variable) => {
             return this.getEventArg(variable) || match;
         });
-        return replacedStr;
     }
     run(guildId, eventArgs) {
         this.guildId = guildId;

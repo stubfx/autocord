@@ -8,7 +8,7 @@ export class Job {
     readonly name: string
     private chain: Chain
 
-    readonly eventArgs: any
+    private readonly eventArgs: any
 
     constructor(id: string, name: string, eventArgs: any = {}) {
         this.id = id

@@ -14,9 +14,9 @@ export function init(discordClient) {
         LoggerHelper.error(`just left: ${guild.id} ${guild.name}`);
         // await dbAdapter.removeGuild(guild)
     });
-    client.on(Discord.Events.ChannelDelete, async (channel) => {
-        // await dbAdapter.removeNewsChannel(channel)
-    });
+    // client.on(Discord.Events.ChannelDelete, async channel => {
+    //     // await dbAdapter.removeNewsChannel(channel)
+    // })
     client.on(Discord.Events.MessageCreate, async (data) => {
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
             userId: data.author.id,

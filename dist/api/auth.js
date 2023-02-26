@@ -82,7 +82,8 @@ export default function (api, opts, done) {
     api.post("/getAvailableJobConditions", async (request) => {
         return {
             links: [
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe)
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe),
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals)
             ]
         };
     });

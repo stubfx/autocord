@@ -76,7 +76,7 @@ export default function (api, opts, done) {
         return {}
     })
 
-    api.post("/getAvailableEventNames", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableEventNames", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
                 PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageCreate),
@@ -88,15 +88,16 @@ export default function (api, opts, done) {
         }
     })
 
-    api.post("/getAvailableJobConditions", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe)
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe),
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals)
             ]
         }
     })
 
-    api.post("/getAvailableJobTasks", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
         return {
             links: [
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),

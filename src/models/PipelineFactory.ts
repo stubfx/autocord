@@ -13,7 +13,8 @@ import {VoiceStateUpdate} from "./pipeline/Events/VoiceStateUpdate.js";
 import {ChannelCreate} from "./pipeline/Events/ChannelCreate.js";
 import {GuildMemberAdd} from "./pipeline/Events/GuildMemberAdd.js";
 import {MessageReactionAdd} from "./pipeline/Events/MessageReactionAdd.js";
-import {ChainLinkParam} from "./ChainLinkInterface";
+import {ChainLinkParam} from "./ChainLinkInterface.js";
+import {Equals} from "./pipeline/conditions/Equals.js";
 
 export class PipelineFactory {
 
@@ -76,6 +77,8 @@ export class PipelineFactory {
         switch (chainLinkConditionName) {
             case ChainLinkTypes.Condition.IsMe:
                 return new IsMe(params)
+            case ChainLinkTypes.Condition.Equals:
+                return new Equals(params)
             default:
                 throw new Error(`Unknown condition name: ${chainLinkConditionName}`)
         }

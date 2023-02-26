@@ -29,7 +29,8 @@ export namespace ChainLinkTypes {
     }
 
     export enum Condition {
-        IsMe= "IsMe"
+        IsMe= "IsMe",
+        Equals= "Equals",
     }
 
 }
