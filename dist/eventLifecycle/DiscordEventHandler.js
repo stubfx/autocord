@@ -20,11 +20,16 @@ export function init(discordClient) {
     client.on(Discord.Events.MessageCreate, async (data) => {
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
             userId: data.author.id,
-            username: data.author.username
+            username: data.author.username,
+            messageContent: data.content
         });
     });
-    client.on(Discord.Events.MessageReactionAdd, async (data) => {
-        await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd);
+    client.on(Discord.Events.MessageReactionAdd, async (data, user) => {
+        await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
+            userId: user.id,
+            username: user.username,
+            emojiName: data.emoji.name
+        });
     });
     // user joins a guild
     client.on(Discord.Events.GuildMemberAdd, async (data) => {

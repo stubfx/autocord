@@ -1,13 +1,14 @@
 import Discord, { Events, GatewayIntentBits, IntentsBitField, Partials } from "discord.js";
 import * as LoggerHelper from "./loggerHelper.js";
+export let discordClient;
 export function init(onReady) {
-    const client = new Discord.Client({ intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages, GatewayIntentBits.MessageContent,
+    discordClient = new Discord.Client({ intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages, GatewayIntentBits.MessageContent,
             IntentsBitField.Flags.GuildVoiceStates, IntentsBitField.Flags.GuildMessageReactions], partials: [Partials.Message, Partials.Reaction, Partials.Channel] });
-    client.on(Events.ClientReady, async () => {
-        LoggerHelper.dev(`Logged in as ${client.user.tag}!`);
-        onReady(client);
+    discordClient.on(Events.ClientReady, async () => {
+        LoggerHelper.dev(`Logged in as ${discordClient.user.tag}!`);
+        onReady(discordClient);
     });
-    client.login(process.env.discord_token).catch(reason => {
+    discordClient.login(process.env.discord_token).catch(reason => {
         LoggerHelper.info(reason);
     });
 }

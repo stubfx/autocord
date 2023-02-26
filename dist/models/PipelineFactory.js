@@ -9,6 +9,7 @@ import { ChannelCreate } from "./pipeline/Events/ChannelCreate.js";
 import { GuildMemberAdd } from "./pipeline/Events/GuildMemberAdd.js";
 import { MessageReactionAdd } from "./pipeline/Events/MessageReactionAdd.js";
 import { Equals } from "./pipeline/conditions/Equals.js";
+import { MatchesRegex } from "./pipeline/conditions/MatchesRegex.js";
 export class PipelineFactory {
     static createJob(jobInterface, eventArgs = {}) {
         let job = new Job(jobInterface.id, jobInterface.name, eventArgs);
@@ -64,6 +65,8 @@ export class PipelineFactory {
                 return new IsMe(params);
             case ChainLinkTypes.Condition.Equals:
                 return new Equals(params);
+            case ChainLinkTypes.Condition.MatchesRegex:
+                return new MatchesRegex(params);
             default:
                 throw new Error(`Unknown condition name: ${chainLinkConditionName}`);
         }

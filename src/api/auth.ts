@@ -5,6 +5,7 @@ import {ChainLinkInterface} from "../models/ChainLinkInterface";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
+import {MatchesRegex} from "../models/pipeline/conditions/MatchesRegex";
 
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
@@ -92,7 +93,8 @@ export default function (api, opts, done) {
         return {
             links: [
                 PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe),
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals)
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals),
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.MatchesRegex),
             ]
         }
     })

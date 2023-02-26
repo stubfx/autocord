@@ -31,6 +31,7 @@ export namespace ChainLinkTypes {
     export enum Condition {
         IsMe= "IsMe",
         Equals= "Equals",
+        MatchesRegex = "MatchesRegex",
     }
 
 }

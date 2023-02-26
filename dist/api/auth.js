@@ -68,7 +68,7 @@ export default function (api, opts, done) {
         await dbAdapter.saveJob(guildId, jobInstance);
         return {};
     });
-    api.post("/getAvailableEventNames", async (request) => {
+    api.post("/getAvailableEventNames", async () => {
         return {
             links: [
                 PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageCreate),
@@ -79,15 +79,16 @@ export default function (api, opts, done) {
             ]
         };
     });
-    api.post("/getAvailableJobConditions", async (request) => {
+    api.post("/getAvailableJobConditions", async () => {
         return {
             links: [
                 PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe),
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals)
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals),
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.MatchesRegex),
             ]
         };
     });
-    api.post("/getAvailableJobTasks", async (request) => {
+    api.post("/getAvailableJobTasks", async () => {
         return {
             links: [
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),

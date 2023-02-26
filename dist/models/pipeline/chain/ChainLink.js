@@ -21,6 +21,9 @@ export class ChainLink {
         return this.eventArgs[paramName];
     }
     resolveStringEmbeds(toResolve) {
+        if (!toResolve || typeof toResolve !== "string") {
+            return "";
+        }
         const str = toResolve;
         const regex = /\{\{(\w+)}}/g;
         return str.replace(regex, (match, variable) => {

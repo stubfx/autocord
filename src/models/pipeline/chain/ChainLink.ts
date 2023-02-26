@@ -32,6 +32,9 @@ export abstract class ChainLink implements ChainLinkInterface {
     }
 
     resolveStringEmbeds(toResolve: string) {
+        if (!toResolve || typeof toResolve !== "string") {
+            return ""
+        }
         const str = toResolve;
         const regex = /\{\{(\w+)}}/g;
 
