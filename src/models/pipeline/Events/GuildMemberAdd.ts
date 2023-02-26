@@ -1,13 +1,13 @@
 import {EventLink} from "../EventLink.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
-import {ChainLinkParam} from "../chain/ChainLinkParam";
+import {ChainLinkParam} from "../chain/ChainLinkParam.js";
 
-export class MessageCreate extends EventLink {
-    name = ChainLinkTypes.Event.MessageCreate;
+export class GuildMemberAdd extends EventLink {
+    name = ChainLinkTypes.Event.GuildMemberAdd;
 
     params: Array<ChainLinkParam> = [{
         name: this.name,
-        description: "Fired when a user sends a message.",
+        description: "Fired when a user joins a guild",
         type: ChainLinkTypes.ChainLinkParamType.STRING
     }];
 

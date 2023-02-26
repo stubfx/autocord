@@ -10,8 +10,16 @@
         <span class="font-semibold tracking-wide"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{link.name}}</span>
         <div class="flex flex-row" v-if="link.params">
-          <span :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">{{link.params.join(",")}}</span>
+          <span :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
+            {{link.params.map(el => el.name).join(",")}}
+          </span>
         </div>
+      </div>
+      <info_rounded data-tooltip-target="tooltip-default" class="w-[20px] ml-4 group-hover:fill-black"
+                    :class="link.type === 'EVENT' ? 'fill-black' : 'fill-gray-400'"></info_rounded>
+      <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        Tooltip content
+        <div class="tooltip-arrow" data-popper-arrow></div>
       </div>
     </div>
   </div>
@@ -21,10 +29,11 @@
 import Task_rounded from "../assets/task_rounded.vue";
 import Psicology_rounded from "../assets/psicology_rounded.vue";
 import Sensor_rounded from "../assets/sensor_rounded.vue";
+import Info_rounded from "../assets/info_rounded.vue";
 
 export default {
   name: "chainLinkElement",
-  components: {Sensor_rounded, Psicology_rounded, Task_rounded},
+  components: {Info_rounded, Sensor_rounded, Psicology_rounded, Task_rounded},
   props: {
     link: Object
   }

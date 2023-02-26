@@ -15,6 +15,10 @@ export class Chain {
             let taskResult : Boolean
             console.log(chainLink.type)
             switch (chainLink.type) {
+                case ChainLinkTypes.LinkType.EVENT:
+                    // skip the event.
+                    taskResult = true
+                    break;
                 case ChainLinkTypes.LinkType.CONDITION:
                     taskResult = await chainLink.run(guildId)
                     break;

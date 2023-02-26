@@ -4,8 +4,7 @@ import * as LoggerHelper from "./loggerHelper.js";
 import mongoose from "mongoose"
 import {Job} from "./models/pipeline/Job.js";
 import {GuildModel} from "./schemas/guildSchema.js";
-import {AggregatedGuildInterface, GuildInterface} from "./models/GuildInterface.js";
-import {JOB} from "./schemas/schemas.js";
+import {AggregatedGuildInterface} from "./models/GuildInterface.js";
 import {JobModel} from "./schemas/jobSchema.js";
 
 
@@ -28,7 +27,7 @@ export async function saveJob(guildId, job: Job): Promise<Boolean> {
         // only if the guild exists
         // and has the job inside.
         if (guild && !!guild.jobs.find(el => el._id.toString() === job.id)) {
-            let result = await JobModel.findOneAndReplace({_id: job.id}, job.toJobInterface())
+            await JobModel.findOneAndReplace({_id: job.id}, job.toJobInterface())
             return true
         }
         // mmmm, sketchy stuff here.
