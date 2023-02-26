@@ -17,8 +17,11 @@ import {ChainLinkParam} from "./ChainLinkInterface";
 
 export class PipelineFactory {
 
-    static createJob(jobInterface: JobInterface) : Job{
-        let job = new Job(jobInterface.id, jobInterface.name)
+    static createJob(jobInterface: JobInterface, eventArgs: any = {}) : Job{
+        let job = new Job(jobInterface.id, jobInterface.name, eventArgs)
+        if (jobInterface.chain.chainLinks.length > 5) {
+            throw new Error("Exceeded maximum chain length for this job.")
+        }
         for (let chainElement of jobInterface.chain.chainLinks) {
             job.addChainLink(PipelineFactory.getChainLink(
                 ChainLinkTypes.LinkType[chainElement.type],

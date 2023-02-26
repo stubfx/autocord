@@ -10,16 +10,18 @@
       <div class="flex flex-col mx-2 w-full">
         <span class="font-semibold tracking-wide"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{link.name}}</span>
-        <div class="flex flex-row" v-if="link.acceptParams">
-          <span :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
-            {{link.acceptParams.join(", ")}}
+<!--        <div class="flex flex-row" v-if="link.acceptParams">-->
+        <div class="flex flex-row">
+          <span class="font-light" :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
+<!--            {{link.acceptParams.join(", ")}}-->
+            {{link.description}}
           </span>
         </div>
       </div>
-      <a class="group/info flex flex-col" :title="link.description">
-        <info_rounded class="w-[30px] group-hover:fill-black fill-gray-400
-      group-data-[linktype=EVENT]:fill-black"></info_rounded>
-      </a>
+<!--      <a class="group/info flex flex-col" :title="link.description">-->
+<!--        <info_rounded class="w-[30px] group-hover:fill-black fill-gray-400-->
+<!--      group-data-[linktype=EVENT]:fill-black"></info_rounded>-->
+<!--      </a>-->
     </div>
   </div>
 </template>

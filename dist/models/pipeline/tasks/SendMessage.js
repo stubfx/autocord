@@ -4,7 +4,8 @@ export class SendMessage extends Task {
     name = ChainLinkTypes.Task.SendMessage;
     acceptParams = ["channelId", "message"];
     async behavior(...args) {
-        console.log('SENDING MESSAGE!!!');
+        let message = this.getParam("message");
+        console.log(this.resolveStringEmbeds(message));
         return true;
     }
 }

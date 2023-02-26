@@ -19,13 +19,15 @@ export function init (discordClient: Discord.Client) {
         // await dbAdapter.removeGuild(guild)
     })
 
-    client.on(Discord.Events.ChannelDelete, async channel => {
-        // await dbAdapter.removeNewsChannel(channel)
-    })
+    // client.on(Discord.Events.ChannelDelete, async channel => {
+    //     // await dbAdapter.removeNewsChannel(channel)
+    // })
 
     client.on(Discord.Events.MessageCreate, async data => {
-        LoggerHelper.dev(data.content)
-        await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate)
+        await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
+            userId : data.author.id,
+            username: data.author.username
+        })
     })
 
     client.on(Discord.Events.MessageReactionAdd, async data => {

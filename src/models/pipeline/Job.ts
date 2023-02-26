@@ -6,11 +6,15 @@ import {ChainLinkInterface} from "../ChainLinkInterface";
 export class Job {
     readonly id: string
     readonly name: string
-    private chain: Chain = new Chain()
+    private chain: Chain
 
-    constructor(id: string, name: string) {
+    readonly eventArgs: any
+
+    constructor(id: string, name: string, eventArgs: any = {}) {
         this.id = id
         this.name = name
+        this.eventArgs = eventArgs || {}
+        this.chain = new Chain(this.eventArgs)
     }
 
     addChainLink(chainLink: ChainLink) {
@@ -21,7 +25,7 @@ export class Job {
         return this.chain.chainLinks
     }
 
-    async run(guildId: string, ...args) {
+    async run(guildId: string) {
         await this.chain.run(guildId)
     }
 

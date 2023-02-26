@@ -4,11 +4,13 @@ import {ChainLinkTypes} from "./chain/ChainLinkTypes.js";
 
 export class Chain {
 
-    private guildId : string
-
-    private store: any
+    readonly eventArgs : any = {}
 
     public chainLinks: Array<ChainLink> = []
+
+    constructor(eventArgs: any) {
+        this.eventArgs = eventArgs
+    }
 
     async run(guildId: string) {
         for (let chainLink of this.chainLinks) {
@@ -20,10 +22,10 @@ export class Chain {
                     taskResult = true
                     break;
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.run(guildId)
+                    taskResult = await chainLink.run(guildId, this.eventArgs)
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.run(guildId)
+                    taskResult = await chainLink.run(guildId, this.eventArgs)
             }
             if (!taskResult) {
                 LoggerHelper.dev("ENDING CHAIN")

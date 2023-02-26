@@ -9,8 +9,11 @@ import { ChannelCreate } from "./pipeline/Events/ChannelCreate.js";
 import { GuildMemberAdd } from "./pipeline/Events/GuildMemberAdd.js";
 import { MessageReactionAdd } from "./pipeline/Events/MessageReactionAdd.js";
 export class PipelineFactory {
-    static createJob(jobInterface) {
-        let job = new Job(jobInterface.id, jobInterface.name);
+    static createJob(jobInterface, eventArgs = {}) {
+        let job = new Job(jobInterface.id, jobInterface.name, eventArgs);
+        if (jobInterface.chain.chainLinks.length > 5) {
+            throw new Error("Exceeded maximum chain length for this job.");
+        }
         for (let chainElement of jobInterface.chain.chainLinks) {
             job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params));
         }

@@ -7,7 +7,8 @@ export class SendMessage extends Task {
     acceptParams = ["channelId", "message"]
 
     async behavior(...args) : Promise<Boolean> {
-        console.log('SENDING MESSAGE!!!')
+        let message = this.getParam("message");
+        console.log(this.resolveStringEmbeds(message))
         return true
     }
 

@@ -10,6 +10,5 @@ discordBot.init(async (client) => {
     await dbAdapter.init();
     DiscordAdapter.init(client);
     fastify.init();
-    // await dbAdapter.saveJob("1078421269994815638", JOBSAMPLE.getSampleJob())
 });
 //# sourceMappingURL=init.js.map

@@ -1,5 +1,5 @@
 <template>
-  <chain-link-parameters-dialog ref="modal" :chain-link="currentItem">
+  <chain-link-parameters-dialog ref="modal">
   </chain-link-parameters-dialog>
   <div class="flex flex-col w-full h-full">
     <div class="flex flex-row items-baseline w-full mb-20 justify-self-stretch">
@@ -50,8 +50,7 @@ export default {
       },
       events: [],
       tasks: [],
-      conditions: [],
-      currentItem: {acceptParams: [], params: []}
+      conditions: []
     }
   },
   async mounted() {
@@ -86,11 +85,8 @@ export default {
       }
     },
     onLinkAdded(item) {
-      // open modal
-      // open only if it has params!
-      this.currentItem = item
-      if (this.currentItem.acceptParams.length > 0) {
-        this.$refs.modal.open()
+      if (item.acceptParams.length > 0) {
+        this.$refs.modal.open(item)
       }
     },
     async saveJob() {
