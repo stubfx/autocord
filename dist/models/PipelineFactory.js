@@ -4,7 +4,7 @@ import { BanUser } from "./pipeline/tasks/BanUser.js";
 import { IsMe } from "./pipeline/conditions/IsMe.js";
 export class PipelineFactory {
     static createJob(jobInterface) {
-        let job = new Job(jobInterface.id, jobInterface.name, jobInterface.firedOn);
+        let job = new Job(jobInterface.id, jobInterface.name);
         for (let chainElement of jobInterface.chain) {
             job.addChainLink(PipelineFactory.getChainLinkByName(chainElement.type, chainElement.name));
         }

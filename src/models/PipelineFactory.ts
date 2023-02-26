@@ -10,7 +10,7 @@ import {Task} from "./pipeline/Task.js";
 export class PipelineFactory {
 
     static createJob(jobInterface: JobInterface) : Job{
-        let job = new Job(jobInterface.id, jobInterface.name, jobInterface.firedOn)
+        let job = new Job(jobInterface.id, jobInterface.name)
         for (let chainElement of jobInterface.chain) {
             job.addChainLink(PipelineFactory.getChainLinkByName(chainElement.type, chainElement.name))
         }

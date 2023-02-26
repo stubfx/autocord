@@ -1,5 +1,4 @@
 import {ChainLink} from "./chain/ChainLink.js";
-import {TaskResult} from "./TaskResult";
 import * as LoggerHelper from "../../loggerHelper.js";
 import {ChainLinkTypes} from "./chain/ChainLinkTypes.js";
 
@@ -13,16 +12,16 @@ export class Chain {
 
     async run(guildId: string) {
         for (let chainLink of this.chainLinks) {
-            let taskResult : TaskResult
+            let taskResult : Boolean
             console.log(chainLink.type)
             switch (chainLink.type) {
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.exec(guildId)
+                    taskResult = await chainLink.run(guildId)
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.exec(guildId)
+                    taskResult = await chainLink.run(guildId)
             }
-            if (!taskResult.result) {
+            if (!taskResult) {
                 LoggerHelper.dev("ENDING CHAIN")
                 break;
             }

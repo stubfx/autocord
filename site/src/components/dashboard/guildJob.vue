@@ -1,18 +1,9 @@
 <template>
   <div class="flex flex-col flex-wrap bg-discord-5 p-6 w-[400px] rounded-xl m-5 items-center shadow-2xl gap-5">
     <h1 class="uppercase text-3xl text-white">{{ job.name }}</h1>
-    <div class="group cursor-pointer p-5 bg-discord-2 w-full rounded-xl
-  hover:text-discord-5 transition-colors duration-100 bg-discord-success text-black">
-      <div class="flex items-center">
-        <sensor_rounded class="fill-black w-10"></sensor_rounded>
-        <div class="flex flex-col ml-2">
-          <span class="font-bold">{{ job.firedOn }}</span>
-        </div>
-      </div>
-    </div>
     <chain-link-element :link="link" v-for="link in job.chain"></chain-link-element>
     <div class="group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded-xl py-4 hover:bg-discord-2
-transition-colors" v-if="job.chain.length < 4" @click="onAddLink()">
+transition-colors" v-if="job.chain.length < 5" @click="onAddLink()">
       <add_rounded class="rounded-full bg-discord-2 fill-discord-1 w-[48px]
   group-hover:bg-discord-1 group-hover:fill-white transition-colors"></add_rounded>
     </div>

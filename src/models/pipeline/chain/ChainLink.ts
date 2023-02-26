@@ -1,13 +1,16 @@
-import {TaskResult} from "../TaskResult";
 import {ChainLinkTypes} from "./ChainLinkTypes.js";
+import {ChainLinkParam} from "./ChainLinkParam.js";
 
-export interface ChainLink {
+export abstract class ChainLink {
 
     name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event;
     type: ChainLinkTypes.LinkType
-    params: Array<string>
-    exec(guildId : string, ...args): Promise<TaskResult>
+    params: Array<ChainLinkParam>
 
-    // toJson() : any
+    run(guildId : string, ...args): Promise<Boolean> {
+        return this.behavior()
+    }
+
+    protected abstract behavior() : Promise<Boolean>
 
 }

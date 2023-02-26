@@ -5,10 +5,8 @@ import {JobInterface} from "../models/JobInterface";
 
 const Schema = new mongoose.Schema<JobInterface>({
     name: String,
-    firedOn: String,
     chain: Array< {
         name: String,
-        firedOn: String,
         chain: Array<{
             type: ChainLinkTypes.LinkType,
             params: Array<String>,

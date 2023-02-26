@@ -2,15 +2,10 @@ import { Chain } from "./Chain.js";
 export class Job {
     id;
     name;
-    firedOn;
     chain = new Chain();
-    constructor(id, name, event) {
+    constructor(id, name) {
         this.id = id;
         this.name = name;
-        this.firedOn = event;
-    }
-    setFiredOn(eventName) {
-        this.firedOn = eventName;
     }
     addChainLink(chainLink) {
         this.chain.addLink(chainLink);
@@ -33,7 +28,6 @@ export class Job {
         return {
             id: this.id,
             name: this.name,
-            firedOn: this.firedOn,
             chain: chain
         };
     }

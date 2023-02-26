@@ -1,13 +1,13 @@
 import {ChainLink} from "./chain/ChainLink.js";
-import {TaskResult} from "./TaskResult.js";
 import {ChainLinkTypes} from "./chain/ChainLinkTypes.js";
+import {ChainLinkParam} from "./chain/ChainLinkParam";
 
-export abstract class Condition implements ChainLink {
+export abstract class Condition extends ChainLink {
     abstract name: ChainLinkTypes.Condition;
-    abstract params: Array<string>;
+    abstract params: Array<ChainLinkParam>;
     readonly type = ChainLinkTypes.LinkType.CONDITION;
 
-    abstract exec(...args) : Promise<TaskResult>
+    abstract behavior(...args) : Promise<Boolean>
 
     // abstract toJson() : any
 

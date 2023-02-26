@@ -6,17 +6,11 @@ import {ChainLinkInterface} from "../ChainLinkInterface";
 export class Job {
     readonly id: string
     readonly name: string
-    firedOn: string
     private chain: Chain = new Chain()
 
-    constructor(id: string, name: string, event: string) {
+    constructor(id: string, name: string) {
         this.id = id
         this.name = name
-        this.firedOn = event
-    }
-
-    setFiredOn(eventName: string) {
-        this.firedOn = eventName
     }
 
     addChainLink(chainLink: ChainLink) {
@@ -43,7 +37,6 @@ export class Job {
         return {
             id : this.id,
             name: this.name,
-            firedOn: this.firedOn,
             chain: chain
         }
     }

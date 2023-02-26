@@ -1,5 +1,6 @@
+import { ChainLink } from "./chain/ChainLink.js";
 import { ChainLinkTypes } from "./chain/ChainLinkTypes.js";
-export class Task {
+export class Task extends ChainLink {
     type = ChainLinkTypes.LinkType.TASK;
     params = [];
 }

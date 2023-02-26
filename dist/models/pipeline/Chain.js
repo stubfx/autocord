@@ -10,12 +10,12 @@ export class Chain {
             console.log(chainLink.type);
             switch (chainLink.type) {
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.exec(guildId);
+                    taskResult = await chainLink.run(guildId);
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.exec(guildId);
+                    taskResult = await chainLink.run(guildId);
             }
-            if (!taskResult.result) {
+            if (!taskResult) {
                 LoggerHelper.dev("ENDING CHAIN");
                 break;
             }

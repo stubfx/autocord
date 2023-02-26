@@ -2,11 +2,12 @@ import {Job} from "./models/pipeline/Job.js";
 import {SendMessage} from "./models/pipeline/tasks/SendMessage.js";
 import {BanUser} from "./models/pipeline/tasks/BanUser.js";
 import {IsMe} from "./models/pipeline/conditions/IsMe.js";
-import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
+import {MessageCreate} from "./models/pipeline/Events/MessageCreate.js";
 
 export function getSampleJob() {
     // define job
-    let job = new Job(null, "JOB " + (new Date().getTime()).toString(), ChainLinkTypes.Event.MessageCreate)
+    let job = new Job(null, "JOB " + (new Date().getTime()).toString())
+    job.addChainLink(new MessageCreate())
     job.addChainLink(new SendMessage())
     job.addChainLink(new IsMe())
     job.addChainLink(new BanUser())

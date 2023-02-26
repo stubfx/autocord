@@ -1,14 +1,16 @@
 <template>
-  <div class="group cursor-pointer p-5 bg-discord-2 w-full rounded-xl hover:bg-discord-1
-  hover:text-discord-5 transition-colors duration-100">
+  <div class="group cursor-pointer p-5  w-full
+  rounded-xl transition-colors duration-100"
+       :class="link.type === 'EVENT' ? 'bg-discord-success' : 'bg-discord-2 hover:text-discord-5 hover:bg-discord-1'">
     <div class="flex flex-row items-center">
-      <sensor_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
+      <sensor_rounded class="fill-black w-10 group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
       <task_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
       <psicology_rounded class="fill-gray-400 w-10 group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
       <div class="flex flex-col ml-2">
-        <span class="font-semibold text-white tracking-wide">{{link.name}}</span>
+        <span class="font-semibold tracking-wide"
+              :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{link.name}}</span>
         <div class="flex flex-row" v-if="link.params">
-          <span class="text-gray-400 group-hover:text-white">{{link.params.join(",")}}</span>
+          <span :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">{{link.params.join(",")}}</span>
         </div>
       </div>
     </div>

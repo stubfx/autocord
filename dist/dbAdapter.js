@@ -67,7 +67,7 @@ export async function getGuild(guildId) {
 export async function forGuildListeningForEvent(guildId, eventName, func) {
     let guild = await GuildModel.findOne({ guildId: guildId }).populate({
         path: JobModel.collection.name,
-        match: { firedOn: eventName }
+        match: { 'chain.0.name': eventName }
     });
     // @ts-ignore
     await func(guild);

@@ -63,9 +63,11 @@ export default {
   methods: {
     addLink(event) {
       if (event.type === "EVENT") {
-        this.job.firedOn = event.name
+        this.job.chain = this.job.chain.filter(el => el.type !== 'EVENT')
+        // then add the new one :P
+        this.job.chain.unshift(event)
       } else if (event.type === "TASK" || event.type === "CONDITION") {
-        if (this.job.chain.length < 4) {
+        if (this.job.chain.length < 5) {
           this.job.chain.push(event)
         }
       }
