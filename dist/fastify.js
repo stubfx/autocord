@@ -9,6 +9,7 @@ import fastifyCookie from "@fastify/cookie";
 import { getSessionExpirationDate } from "./utils.js";
 import authApi from './api/auth.js';
 import * as sessionV from "./sessionVariables.js";
+import * as LoggerHelper from "./loggerHelper.js";
 import cors from '@fastify/cors';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export function init() {
@@ -35,6 +36,14 @@ export function init() {
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
         prefix: "/dashboard", // optional: default '/'
+    });
+    fastify.addHook('preSerialization', async (request, reply, payload) => {
+        if (reply.statusCode === 500) {
+            // do not send the error to avoid api spoofing.
+            LoggerHelper.error(payload.toString());
+            return null;
+        }
+        return payload;
     });
     fastify.register(authApi, { prefix: '/auth' });
     fastify.get("/", async (request, reply) => {
@@ -64,7 +73,6 @@ export function init() {
                 let accessToken = `${oauthData["access_token"]}`;
                 request.session[sessionV.AUTHENTICATED] = true;
                 request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN] = accessToken;
-                console.log(JSON.stringify(request.cookies));
             }
             catch (error) {
                 // NOTE: An unauthorized token will not throw an error

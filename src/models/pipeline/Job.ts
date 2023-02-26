@@ -1,7 +1,7 @@
 import {Chain} from "./Chain.js";
 import {ChainLink} from "./chain/ChainLink.js";
 import {JobInterface} from "../JobInterface.js";
-import {ChainLinkDBInterface} from "../ChainLinkDBInterface";
+import {ChainLinkInterface} from "../ChainLinkInterface";
 
 export class Job {
     readonly id: string
@@ -26,18 +26,20 @@ export class Job {
     }
 
     toJobInterface(): JobInterface {
-        let chain: Array<ChainLinkDBInterface> = []
+        let chainLinks: Array<ChainLinkInterface> = []
         for (let chainLink of this.chain.chainLinks) {
-            chain.push({
+            chainLinks.push({
                 name: chainLink.name,
                 params: chainLink.params,
                 type: chainLink.type
             })
         }
         return {
-            id : this.id,
+            id: this.id,
             name: this.name,
-            chain: chain
+            chain: {
+                chainLinks: chainLinks
+            }
         }
     }
 

@@ -11,55 +11,55 @@ import { MessageReactionAdd } from "./pipeline/Events/MessageReactionAdd.js";
 export class PipelineFactory {
     static createJob(jobInterface) {
         let job = new Job(jobInterface.id, jobInterface.name);
-        for (let chainElement of jobInterface.chain) {
-            job.addChainLink(PipelineFactory.getChainLinkByName(chainElement.type, chainElement.name));
+        for (let chainElement of jobInterface.chain.chainLinks) {
+            job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params));
         }
         return job;
     }
-    static getChainLinkByName(type, name) {
+    static getChainLink(type, name, params = []) {
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
-                return this.getEventByName(name);
+                return this.getEventByName(name, params);
             case ChainLinkTypes.LinkType.CONDITION:
-                return this.getConditionByName(name);
+                return this.getConditionByName(name, params);
             case ChainLinkTypes.LinkType.TASK:
-                return this.getTaskByName(name);
+                return this.getTaskByName(name, params);
             default:
                 throw new Error(`Unknown chain type: ${type}`);
         }
     }
-    static getEventByName(name) {
-        switch (name) {
+    static getEventByName(chainLinkEventName, params = []) {
+        switch (chainLinkEventName) {
             case ChainLinkTypes.Event.MessageCreate:
-                return new MessageCreate();
+                return new MessageCreate(params);
             case ChainLinkTypes.Event.VoiceStateUpdate:
-                return new VoiceStateUpdate();
+                return new VoiceStateUpdate(params);
             case ChainLinkTypes.Event.ChannelCreate:
-                return new ChannelCreate();
+                return new ChannelCreate(params);
             case ChainLinkTypes.Event.GuildMemberAdd:
-                return new GuildMemberAdd();
+                return new GuildMemberAdd(params);
             case ChainLinkTypes.Event.MessageReactionAdd:
-                return new MessageReactionAdd();
+                return new MessageReactionAdd(params);
             default:
-                throw new Error(`Unknown condition name: ${name}`);
+                throw new Error(`Unknown condition name: ${chainLinkEventName}`);
         }
     }
-    static getTaskByName(name) {
-        switch (name) {
+    static getTaskByName(chainLinkTaskName, params = []) {
+        switch (chainLinkTaskName) {
             case ChainLinkTypes.Task.SendMessage:
-                return new SendMessage();
+                return new SendMessage(params);
             case ChainLinkTypes.Task.BanUser:
-                return new BanUser();
+                return new BanUser(params);
             default:
-                throw new Error(`Unknown task name: ${name}`);
+                throw new Error(`Unknown task name: ${chainLinkTaskName}`);
         }
     }
-    static getConditionByName(name) {
-        switch (name) {
+    static getConditionByName(chainLinkConditionName, params = []) {
+        switch (chainLinkConditionName) {
             case ChainLinkTypes.Condition.IsMe:
-                return new IsMe();
+                return new IsMe(params);
             default:
-                throw new Error(`Unknown condition name: ${name}`);
+                throw new Error(`Unknown condition name: ${chainLinkConditionName}`);
         }
     }
 }

@@ -17,9 +17,9 @@ export class Job {
         await this.chain.run(guildId);
     }
     toJobInterface() {
-        let chain = [];
+        let chainLinks = [];
         for (let chainLink of this.chain.chainLinks) {
-            chain.push({
+            chainLinks.push({
                 name: chainLink.name,
                 params: chainLink.params,
                 type: chainLink.type
@@ -28,7 +28,9 @@ export class Job {
         return {
             id: this.id,
             name: this.name,
-            chain: chain
+            chain: {
+                chainLinks: chainLinks
+            }
         };
     }
 }

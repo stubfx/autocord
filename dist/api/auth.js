@@ -3,13 +3,9 @@ import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
 import { PipelineFactory } from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
-import { MessageCreate } from "../models/pipeline/Events/MessageCreate.js";
-import { IsMe } from "../models/pipeline/conditions/IsMe.js";
-import { BanUser } from "../models/pipeline/tasks/BanUser.js";
-import { SendMessage } from "../models/pipeline/tasks/SendMessage.js";
+import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
-        console.log(JSON.stringify(request.cookies));
         if (!request.session[sessionV.AUTHENTICATED]) {
             reply.code(401);
             return null;
@@ -51,8 +47,18 @@ export default function (api, opts, done) {
     api.post("/getGuildJobs", async (request) => {
         let guildId = request.body["guildId"];
         let guild = await dbAdapter.getGuild(guildId);
+        // we need to add the metadata!
+        let jobs = [];
+        if (guild) {
+            for (let job of guild.jobs) {
+                // map does not work?
+                // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
+                // @ts-ignore
+                jobs.push(PipelineFactory.createJob(job));
+            }
+        }
         return {
-            jobs: guild ? guild.jobs : []
+            jobs: jobs
         };
     });
     api.post("/saveJob", async (request) => {
@@ -65,34 +71,26 @@ export default function (api, opts, done) {
     api.post("/getAvailableEventNames", async (request) => {
         return {
             links: [
-                new MessageCreate(),
-                new MessageCreate(),
-                new MessageCreate(),
-                new MessageCreate(),
-                new MessageCreate()
+                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageCreate),
+                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageReactionAdd),
+                PipelineFactory.getEventByName(ChainLinkTypes.Event.VoiceStateUpdate),
+                PipelineFactory.getEventByName(ChainLinkTypes.Event.ChannelCreate),
+                PipelineFactory.getEventByName(ChainLinkTypes.Event.GuildMemberAdd)
             ]
         };
     });
     api.post("/getAvailableJobConditions", async (request) => {
         return {
             links: [
-                new IsMe()
+                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe)
             ]
         };
     });
     api.post("/getAvailableJobTasks", async (request) => {
         return {
             links: [
-                new BanUser(),
-                new SendMessage(),
-                new BanUser(),
-                new SendMessage(),
-                new BanUser(),
-                new SendMessage(),
-                new BanUser(),
-                new SendMessage(),
-                new BanUser(),
-                new SendMessage()
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage)
             ]
         };
     });

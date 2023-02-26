@@ -5,10 +5,6 @@ export abstract class Task extends ChainLink {
     abstract name: ChainLinkTypes.Task;
     readonly type = ChainLinkTypes.LinkType.TASK;
 
-    params: Array<string> = [];
-
     abstract behavior(...args) : Promise<Boolean>
-
-    // abstract toJson() : any
 
 }

@@ -4,15 +4,15 @@
   data-[linktype=EVENT]:bg-discord-success
   bg-discord-2 hover:text-discord-5 hover:bg-discord-1">
     <div class="flex flex-row items-center">
-      <sensor_rounded class="fill-black w-[60px] group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
-      <task_rounded class="fill-gray-400 w-[60px] group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
-      <psicology_rounded class="fill-gray-400 w-[60px] group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
+      <sensor_rounded class="fill-black w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
+      <task_rounded class="fill-gray-400 w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
+      <psicology_rounded class="fill-gray-400 w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
       <div class="flex flex-col mx-2 w-full">
         <span class="font-semibold tracking-wide"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{link.name}}</span>
-        <div class="flex flex-row" v-if="link.params">
+        <div class="flex flex-row" v-if="link.acceptParams">
           <span :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
-            {{link.params.map(el => el.name).join(",")}}
+            {{link.acceptParams.join(", ")}}
           </span>
         </div>
       </div>

@@ -2,22 +2,22 @@ import mongoose from "mongoose";
 import {JOB} from "./schemas.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {JobInterface} from "../models/JobInterface";
+import {ChainLinkParam} from "../models/ChainLinkInterface";
 
 const Schema = new mongoose.Schema<JobInterface>({
     name: String,
-    chain: Array< {
-        name: String,
-        chain: Array<{
+    chain: {
+        chainLinks: Array<{
             type: ChainLinkTypes.LinkType,
             // description: String, // do not save in db.
-            params: Array<String>,
+            params: Array<ChainLinkParam>,
             name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event
         }>
-    }>
+    }
 });
 
 // Duplicate the ID field.
-Schema.virtual('id').get(function(){
+Schema.virtual('id').get(function () {
     return this._id.toHexString();
 });
 

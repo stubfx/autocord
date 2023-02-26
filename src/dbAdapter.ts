@@ -76,7 +76,7 @@ export async function getGuild(guildId: string) {
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
     let guild = await GuildModel.findOne({guildId: guildId}).populate({
         path: JobModel.collection.name,
-        match: {'chain.0.name': eventName}
+        match: {'chain.chainLinks.0.name': eventName}
     })
     // @ts-ignore
     await func(guild as AggregatedGuildInterface)

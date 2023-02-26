@@ -3,10 +3,11 @@
        v-if="isOpen" @click="onClose()">
     <!--  dialog-->
     <div class="absolute top-0 left-0 flex w-screen h-screen justify-center items-center">
-      <slot></slot>
+      <div class="flex flex-col bg-discord-5 p-5 rounded-xl text-white" @click.stop>
+        <slot></slot>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>

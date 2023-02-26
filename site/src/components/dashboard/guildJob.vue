@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col flex-wrap bg-discord-5 p-6 w-[400px] rounded-xl m-5 items-center shadow-2xl gap-5">
     <h1 class="uppercase text-3xl text-white">{{ job.name }}</h1>
-    <chain-link-element :link="link" v-for="link in job.chain"></chain-link-element>
+    <chain-link-element :link="link" v-for="link in job.chain.chainLinks"></chain-link-element>
     <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded-xl py-4 hover:bg-discord-2
-transition-colors overflow-hidden" v-if="job.chain.length < 5" @click="onAddLink()">
+transition-colors overflow-hidden" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">
       <div class="absolute rounded-full bg-discord-2 w-[48px] h-[48px] group-hover:bg-discord-1 transition-all
                   group-hover:scale-[10]"></div>
       <add_rounded class="rounded-full fill-discord-1 w-[48px] group-hover:fill-white z-10 group-hover:rotate-180
