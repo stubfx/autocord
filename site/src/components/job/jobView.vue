@@ -47,7 +47,7 @@ export default {
       },
       events: [],
       tasks: [],
-      conditions : []
+      conditions: []
     }
   },
   async mounted() {
@@ -67,7 +67,14 @@ export default {
         // then add the new one :P
         this.job.chain.unshift(event)
       } else if (event.type === "TASK" || event.type === "CONDITION") {
-        if (this.job.chain.length < 5) {
+        // count events in chain (max 4)
+        let count = this.job.chain.reduce((accumulator, currentValue) => {
+              if (currentValue.type !== 'EVENT') {
+                return ++accumulator
+              }
+            }, 0)
+        console.log(count)
+        if (count < 4) {
           this.job.chain.push(event)
         }
       }
