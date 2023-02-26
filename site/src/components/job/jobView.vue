@@ -21,6 +21,7 @@
       <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
         <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
+        <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
       </div>
     </div>
   </div>
@@ -45,7 +46,8 @@ export default {
         chain: []
       },
       events: [],
-      tasks: []
+      tasks: [],
+      conditions : []
     }
   },
   async mounted() {
@@ -56,13 +58,13 @@ export default {
     }
     this.events = await NetworkAdapter.getAvailableEventNames()
     this.tasks = await NetworkAdapter.getAvailableJobTasks()
-    this.conditions = await NetworkAdapter.getAvailableJobTasks()
+    this.conditions = await NetworkAdapter.getAvailableJobConditions()
   },
   methods: {
     addLink(event) {
       if (event.type === "EVENT") {
         this.job.firedOn = event.name
-      } else if (event.type === "TASK") {
+      } else if (event.type === "TASK" || event.type === "CONDITION") {
         if (this.job.chain.length < 4) {
           this.job.chain.push(event)
         }
