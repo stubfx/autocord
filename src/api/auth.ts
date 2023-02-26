@@ -1,7 +1,7 @@
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
-import {ChainLinkInterface} from "../models/ChainLinkInterface.js";
+import {ChainLinkDBInterface} from "../models/ChainLinkDBInterface";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
@@ -72,7 +72,7 @@ export default function (api, opts, done) {
         return {}
     })
 
-    api.post("/getAvailableEventNames", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableEventNames", async (request): Promise<{ links: Array<ChainLinkDBInterface> }> => {
         return {
             links: [
                 new MessageCreate(),
@@ -84,7 +84,7 @@ export default function (api, opts, done) {
         }
     })
 
-    api.post("/getAvailableJobConditions", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobConditions", async (request): Promise<{ links: Array<ChainLinkDBInterface> }> => {
         return {
             links: [
                 new IsMe()
@@ -92,7 +92,7 @@ export default function (api, opts, done) {
         }
     })
 
-    api.post("/getAvailableJobTasks", async (request): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobTasks", async (request): Promise<{ links: Array<ChainLinkDBInterface> }> => {
         return {
             links: [
                 new BanUser(),
