@@ -61,6 +61,13 @@ export function init() {
         return null
     })
 
+    fastify.get("/dahsboard/*", async (request, reply) => {
+        // redirect the browser to the discord login!
+        let redirectUri = process.env.discord_oauth_redirectUrl
+        reply.redirect(`https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`)
+        return null
+    })
+
     fastify.get("/login", async (request, reply) => {
         let code = request.query["code"];
         if (code) {

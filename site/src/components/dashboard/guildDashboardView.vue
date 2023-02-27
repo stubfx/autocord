@@ -35,11 +35,9 @@ export default {
   },
   methods: {
     addJob() {
-      let guildId = this.$store.guildId
       this.$router.push({name: 'jobView'})
     },
     addJobLink(job) {
-      let guildId = this.$store.guildId
       this.$store.state.currentJob = job
       this.$router.push({name: 'jobView'})
     }

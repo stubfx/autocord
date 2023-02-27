@@ -34,7 +34,6 @@ export default {
     async saveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      window.location.reload()
     },
     onAddLink() {
       this.$emit("onAddLink")
