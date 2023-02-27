@@ -2,7 +2,7 @@ export class NetworkAdapter {
 
     static async _post(route, body) {
         try {
-            return (await fetch('/' + route, {
+            return (await fetch(route, {
                 method: 'POST',
                 // credentials are required for the session
                 credentials: 'include',
