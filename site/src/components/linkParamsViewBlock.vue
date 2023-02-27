@@ -14,7 +14,7 @@ export default {
   methods: {
     formattedParamValue(value) {
       if (!value) {
-        return ""
+        return "ERROR"
       }
       const str = value;
       const regex = /\{\{(\w+)}}/g;

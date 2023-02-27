@@ -4,7 +4,7 @@
     <form ref="form" class="flex flex-col w-[400px] mt-2">
       <template v-for="param in chainLink.params">
         <label class="uppercase mt-2">{{param.name}}</label>
-        <input class="bg-discord-3 rounded-md" type="text" v-model="param.value"/>
+        <input class="bg-discord-3 rounded-md p-2" type="text" v-model="param.value"/>
       </template>
       <simple-button class="mt-5 w-fit self-center" @onClick="close()"></simple-button>
     </form>
