@@ -87,7 +87,7 @@ export default {
     async saveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$router.push({name: 'dashboard'})
+      this.$router.push({name: 'jobListing'})
     }
   }
 }

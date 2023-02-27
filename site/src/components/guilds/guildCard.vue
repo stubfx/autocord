@@ -44,7 +44,7 @@ export default {
       // check if the bot is in the guild.
       if (NetworkAdapter.openGuild(this.guild.id)) {
         this.$store.guildId = this.guild.id
-        this.$router.push({name: 'dashboard'})
+        this.$router.push({name: 'jobListing'})
       }
     }
   }

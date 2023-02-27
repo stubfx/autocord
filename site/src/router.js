@@ -5,12 +5,12 @@ import jobView from "./components/job/jobView.vue";
 
 const routes = [
     {
-        path: '/',
+        path: '/dashboard/',
         component: guildsSelector,
     },
     {
-        path: '/dashboard/',
-        name: 'dashboard',
+        path: '/dashboard/jobs',
+        name: 'jobListing',
         component: guildDashboardView,
     },
     {
