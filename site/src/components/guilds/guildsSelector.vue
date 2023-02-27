@@ -7,24 +7,20 @@
       </div>
       <div
           class="mx-auto mt-16 flex flex-col items-center md:justify-center md:flex-row justify-items-stretch md:items-stretch">
-        <guild-card v-for="guild in guilds" :guild=guild></guild-card>
+        <guild-card v-for="guild in guilds" :guild=guild @on-page-change="onPageChange"></guild-card>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// "id": string //"80351110224678912",
-// "name": string //"1337 Krew",
-// "icon": string //"8342729096ea3675442027381ff50dfe",
-// "owner": boolean //true,
-// "permissions": string //"36953089",
-// "features": Array<string> //["COMMUNITY", "NEWS"]
+
 import {NetworkAdapter} from "../../network.js";
 import GuildCard from "./guildCard.vue";
 
 export default {
   name: "guildsSelector",
+  emits: ['onPageChange'],
   components: {GuildCard},
   data() {
     return {
@@ -33,6 +29,11 @@ export default {
   },
   async mounted() {
     this.guilds = await NetworkAdapter.getOwnedGuilds()
+  },
+  methods: {
+    onPageChange(page) {
+      this.$emit('onPageChange',page)
+    }
   }
 }
 

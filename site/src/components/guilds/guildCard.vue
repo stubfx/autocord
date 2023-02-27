@@ -29,6 +29,7 @@
 // "features": Array<string> //["COMMUNITY", "NEWS"]
 import {NetworkAdapter} from "../../network.js";
 import Broken_image_rounded from "../../assets/broken_image_rounded.vue";
+import {PAGES} from "../../pages.js";
 
 export default {
   name: "guildCard",
@@ -36,6 +37,7 @@ export default {
   props: {
     guild: Object
   },
+  emits: ['onPageChange'],
   methods: {
     getImageUrl() {
       return `https://cdn.discordapp.com/icons/${this.guild.id}/${this.guild.icon}.png`
@@ -44,7 +46,7 @@ export default {
       // check if the bot is in the guild.
       if (NetworkAdapter.openGuild(this.guild.id)) {
         this.$store.guildId = this.guild.id
-        this.$router.push({name: 'jobListing'})
+        this.$emit('onPageChange',PAGES.JOB_LISTING)
       }
     }
   }

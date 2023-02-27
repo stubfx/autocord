@@ -4,7 +4,7 @@
     <div class="flex flex-row items-center">
       <save_rounded class="fill-gray-400 w-10 group-hover:fill-black"></save_rounded>
       <div class="flex flex-col ml-2">
-        <span class="font-semibold text-white tracking-wide group-hover:text-black">save</span>
+        <span class="font-semibold text-white tracking-wide group-hover:text-black">{{text}}</span>
       </div>
     </div>
   </div>
@@ -17,6 +17,9 @@ export default {
   name: "simpleButton",
   components: {Save_rounded},
   emits: ['onClick'],
+  props: {
+    text: "NONE"
+  },
   methods: {
     onClick() {
       this.$emit("onClick")

@@ -39,7 +39,7 @@ export function init() {
 
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
-        prefix: "/dashboard", // optional: default '/'
+        prefix: "/", // optional: default '/'
     });
 
 
@@ -54,18 +54,14 @@ export function init() {
 
     fastify.register(authApi, {prefix: '/auth'})
 
-    fastify.get("/", async (request, reply) => {
-        // redirect the browser to the discord login!
-        let redirectUri = process.env.discord_oauth_redirectUrl
-        reply.redirect(`https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`)
-        return null
+    fastify.post("/logincheck", async (request) => {
+        return {result : !!request.session[sessionV.AUTHENTICATED]}
     })
 
-    fastify.get("/dahsboard/*", async (request, reply) => {
+    fastify.post("/getDiscordLoginUrl", async () => {
         // redirect the browser to the discord login!
         let redirectUri = process.env.discord_oauth_redirectUrl
-        reply.redirect(`https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`)
-        return null
+        return {url : `https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`}
     })
 
     fastify.get("/login", async (request, reply) => {
@@ -85,6 +81,11 @@ export function init() {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 });
+                if (tokenResponseData.status === 401) {
+                    // well...
+                    reply.redirect(`${process.env.redirectUrl}/discordLogin`)
+                    return
+                }
                 const oauthData = await tokenResponseData.json();
                 // let tokenType = `${oauthData["token_type"]}`
                 let accessToken = `${oauthData["access_token"]}`
@@ -97,7 +98,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect(`${process.env.redirectUrl}/dashboard/`)
+        reply.redirect(`${process.env.redirectUrl}/close`)
         return
     })
 

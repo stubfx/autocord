@@ -29,9 +29,11 @@ import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import SimpleButton from "../simpleButton.vue";
+import {PAGES} from "../../pages.js";
 
 export default {
   name: "jobView",
+  emits: ['onPageChange'],
   components: {
     SimpleButton,
     ChainLinkParametersDialog,
@@ -87,7 +89,7 @@ export default {
     async saveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$router.push({name: 'jobListing'})
+      this.$emit('onPageChange',PAGES.JOB_LISTING)
     }
   }
 }

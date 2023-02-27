@@ -19,9 +19,11 @@
 import {NetworkAdapter} from "../../network.js";
 import GuildJob from "./guildJob.vue";
 import GuildJobAddCard from "./guildJobAddCard.vue";
+import {PAGES} from "../../pages.js";
 
 export default {
   name: "guildDashboardView",
+  emits: ['onPageChange'],
   components: {GuildJobAddCard, GuildJob},
   data() {
     return {
@@ -35,11 +37,11 @@ export default {
   },
   methods: {
     addJob() {
-      this.$router.push({name: 'jobView'})
+      this.$emit('onPageChange',PAGES.JOB_DETAIL)
     },
     addJobLink(job) {
       this.$store.state.currentJob = job
-      this.$router.push({name: 'jobView'})
+      this.$emit('onPageChange',PAGES.JOB_DETAIL)
     }
   }
 }

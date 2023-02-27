@@ -7,7 +7,6 @@ export class NetworkAdapter {
     }
 
     static async _post(route, body) {
-        try {
             return (await fetch(this.getServerUrl() + route, {
                 method: 'POST',
                 // credentials are required for the session
@@ -17,9 +16,14 @@ export class NetworkAdapter {
                 },
                 body: JSON.stringify(body || {})
             })).json()
-        } catch (e) {
-            window.location.href = '/'
-        }
+    }
+
+    static async getDiscordLoginUrl() {
+        return (await this._post('/getDiscordLoginUrl'))['url']
+    }
+
+    static async loginCheck() {
+        return (await this._post('/logincheck'))['result']
     }
 
     static async getOwnedGuilds() {
