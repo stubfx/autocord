@@ -20,6 +20,22 @@ async function saveJobToDB(job: Job) {
     return await new JobModel(job.toJobInterface()).save()
 }
 
+export async function deleteJob(guildId, job: Job): Promise<Boolean> {
+    let guild = await getGuild(guildId)
+    let hasId = !!job.id
+    if (hasId) {
+        // only if the guild exists
+        // and has the job inside.
+        if (guild && !!guild.jobs.find(el => el._id.toString() === job.id)) {
+            await JobModel.deleteOne({_id: job.id})
+            return true
+        }
+        // mmmm, sketchy stuff here.
+        LoggerHelper.error(new Error("Job already has an id, but it does not match the guild?"))
+        return false
+    }
+}
+
 export async function saveJob(guildId, job: Job): Promise<Boolean> {
     let guild = await getGuild(guildId)
     let hasId = !!job.id

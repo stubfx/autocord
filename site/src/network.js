@@ -1,3 +1,5 @@
+
+
 export class NetworkAdapter {
 
     static getServerUrl() {
@@ -30,13 +32,12 @@ export class NetworkAdapter {
         return await this._post('/auth/ownedGuilds')
     }
 
-    static async openGuild(guildId) {
-        if (!await this._post(`/auth/checkBotInGuild`, {guildId : guildId})) {
-            // bot is not in the server prompt the user!
-            window.location.href = (await this._post(`/auth/getAddBotToGuildInvite`, {guildId : guildId}))['url']
-            return false
-        }
-        return true
+    static async isBotInGuild(guildId) {
+        return await this._post(`/auth/checkBotInGuild`, {guildId : guildId})
+    }
+
+    static async getDiscordBotInviteUrl(guildId) {
+        return (await this._post(`/auth/getAddBotToGuildInvite`, {guildId : guildId}))['url']
     }
 
     static async getGuildJobs(guildId) {
@@ -57,6 +58,10 @@ export class NetworkAdapter {
 
     static async saveJob(guildId, job) {
         return (await this._post(`/auth/saveJob`, {guildId : guildId, job: job}))
+    }
+
+    static async deleteJob(guildId, job) {
+        return (await this._post(`/auth/deleteJob`, {guildId : guildId, job: job}))
     }
 
 }

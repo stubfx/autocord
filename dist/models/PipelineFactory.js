@@ -13,13 +13,28 @@ import { MatchesRegex } from "./pipeline/conditions/MatchesRegex.js";
 export class PipelineFactory {
     static createJob(jobInterface, eventArgs = {}) {
         let job = new Job(jobInterface.id, jobInterface.name, eventArgs);
-        if (jobInterface.chain.chainLinks.length > 5) {
-            throw new Error("Exceeded maximum chain length for this job.");
-        }
+        PipelineFactory.validateJob(jobInterface);
         for (let chainElement of jobInterface.chain.chainLinks) {
             job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params));
         }
         return job;
+    }
+    static validateJob(jobInterface) {
+        if (jobInterface.chain.chainLinks.length < 2) {
+            throw new Error("This job has only 1 item? Only an event?");
+        }
+        let eventCount = jobInterface.chain.chainLinks.reduce((previousValue, currentValue) => {
+            if (currentValue.type === ChainLinkTypes.LinkType.EVENT) {
+                return ++previousValue;
+            }
+            return previousValue;
+        }, 0);
+        if (eventCount !== 1) {
+            throw new Error("This job has more/less than 1 item in the chain");
+        }
+        if (jobInterface.chain.chainLinks.length > 5) {
+            throw new Error("Exceeded maximum chain length for this job.");
+        }
     }
     static getChainLink(type, name, params = []) {
         switch (type) {

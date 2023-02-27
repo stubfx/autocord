@@ -8,7 +8,7 @@
       </div>
       <div
           class="mt-10 flex flex-row flex-wrap justify-center w-full">
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)"></guild-job>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onSaveJob="onSaveJob" @onDeleteJob="onDeleteJob"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
     </div>
@@ -42,6 +42,15 @@ export default {
     addJobLink(job) {
       this.$store.state.currentJob = job
       this.$emit('onPageChange',PAGES.JOB_DETAIL)
+    },
+    async onSaveJob(job) {
+      let guildId = this.$store.guildId
+      await NetworkAdapter.saveJob(guildId, job)
+    },
+    async onDeleteJob(job) {
+      let guildId = this.$store.guildId
+      await NetworkAdapter.deleteJob(guildId, job)
+      this.jobs = await NetworkAdapter.getGuildJobs(this.$store.guildId)
     }
   }
 }

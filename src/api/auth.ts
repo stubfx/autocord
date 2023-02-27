@@ -42,6 +42,14 @@ export default function (api, opts, done) {
         return await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserInfo();
     })
 
+    api.post("/deleteJob", async (request) => {
+        let guildId = request.body["guildId"];
+        let rawJob = request.body["job"];
+        let jobInstance = PipelineFactory.createJob(rawJob)
+        await dbAdapter.deleteJob(guildId, jobInstance)
+        return {}
+    })
+
     api.post("/checkBotInGuild", async (request) => {
         let guildId = request.body["guildId"];
         return await new DiscordAdapter().checkServer(guildId)

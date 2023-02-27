@@ -7,8 +7,8 @@
     </div>
     <div class="flex flex-row">
       <div class="flex flex-col items-center">
-        <guild-job :job="job"></guild-job>
-        <simple-button @onClick="saveJob()"></simple-button>
+        <guild-job :job="job" @onSaveJob="onSaveJob" @onDeleteJob="onDeleteJob"></guild-job>
+        <simple-button @onClick="onSaveJob()" text="save"></simple-button>
       </div>
       <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
@@ -86,9 +86,14 @@ export default {
         this.$refs.modal.open(item)
       }
     },
-    async saveJob() {
+    async onSaveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
+      this.$emit('onPageChange',PAGES.JOB_LISTING)
+    },
+    async onDeleteJob() {
+      let guildId = this.$store.guildId
+      await NetworkAdapter.deleteJob(guildId, this.job)
       this.$emit('onPageChange',PAGES.JOB_LISTING)
     }
   }
