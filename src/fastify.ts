@@ -34,13 +34,14 @@ export function init() {
         methods: ['POST', "GET"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
-        origin: process.env.dev ? "http://localhost:5173" : "https://autocord.io"
+        origin: !!process.env.dev ? "http://localhost:5173" : "https://autocord.io"
     })
 
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
         prefix: "/dashboard", // optional: default '/'
     });
+
 
     fastify.addHook('preSerialization', async (request, reply, payload) => {
         if (reply.statusCode === 500) {
@@ -55,7 +56,8 @@ export function init() {
 
     fastify.get("/", async (request, reply) => {
         // redirect the browser to the discord login!
-        reply.redirect('https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds')
+        let redirectUri = process.env.redirectUrl
+        reply.redirect(`https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`)
         return null
     })
 
@@ -88,7 +90,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect(`${process.env.dev ? "http://localhost:3000" : "https://autocord.io"}/dashboard/index.html`)
+        reply.redirect(`${!!process.env.dev ? "http://localhost:3000" : "https://autocord.io"}/dashboard/`)
         return
     })
 

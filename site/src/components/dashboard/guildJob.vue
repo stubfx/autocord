@@ -32,7 +32,7 @@ export default {
   emits: ['onAddLink'],
   methods: {
     async saveJob() {
-      let guildId = this.$route.params.guildId
+      let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
       window.location.reload()
     },

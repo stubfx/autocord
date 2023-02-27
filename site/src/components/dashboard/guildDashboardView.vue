@@ -31,17 +31,17 @@ export default {
   async mounted() {
     // reset current job
     this.$store.state.currentJob = null
-    this.jobs = await NetworkAdapter.getGuildJobs(this.$route.params.guildId)
+    this.jobs = await NetworkAdapter.getGuildJobs(this.$store.guildId)
   },
   methods: {
     addJob() {
-      let guildId = this.$route.params.guildId
-      this.$router.push({name: 'jobView', params: {guildId: guildId}})
+      let guildId = this.$store.guildId
+      this.$router.push({name: 'jobView'})
     },
     addJobLink(job) {
-      let guildId = this.$route.params.guildId
+      let guildId = this.$store.guildId
       this.$store.state.currentJob = job
-      this.$router.push({name: 'jobView', params: {guildId: guildId}})
+      this.$router.push({name: 'jobView'})
     }
   }
 }

@@ -85,9 +85,9 @@ export default {
       }
     },
     async saveJob() {
-      let guildId = this.$route.params.guildId
+      let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$router.push({name: 'dashboard', params: {guildId: guildId}})
+      this.$router.push({name: 'dashboard'})
     }
   }
 }
