@@ -5,7 +5,7 @@ export class Chain {
 
     readonly eventArgs : any = {}
 
-    public chainLinks: Array<ChainLink> = []
+    public chainLinks: Array<ChainLink<any>> = []
 
     constructor(eventArgs: any) {
         this.eventArgs = eventArgs
@@ -31,7 +31,7 @@ export class Chain {
         }
     }
 
-    addLink(chainLink: ChainLink) {
+    addLink(chainLink: ChainLink<any>) {
         this.chainLinks.push(chainLink)
     }
 

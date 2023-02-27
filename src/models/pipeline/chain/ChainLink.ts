@@ -1,9 +1,9 @@
 import {ChainLinkTypes} from "./ChainLinkTypes.js";
 import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
 
-export abstract class ChainLink implements ChainLinkInterface {
+export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
-    readonly name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event;
+    readonly name: T;
     readonly type: ChainLinkTypes.LinkType
     description: string = "Missing description :P"
 
@@ -14,6 +14,9 @@ export abstract class ChainLink implements ChainLinkInterface {
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams: Array<string> = []
+    // used to help the user know which params the link adds to the store
+    // this won't be saved into the db
+    exposesArguments: Array<string> = []
     // this holds the actual param data.
     // this will be saved into the db
     params: Array<ChainLinkParam>

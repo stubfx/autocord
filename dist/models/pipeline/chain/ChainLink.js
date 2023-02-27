@@ -7,6 +7,9 @@ export class ChainLink {
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams = [];
+    // used to help the user know which params the link adds to the store
+    // this won't be saved into the db
+    exposesArguments = [];
     // this holds the actual param data.
     // this will be saved into the db
     params;

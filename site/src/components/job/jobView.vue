@@ -8,15 +8,7 @@
     <div class="flex flex-row">
       <div class="flex flex-col items-center">
         <guild-job :job="job"></guild-job>
-        <div class="group cursor-pointer p-5 bg-discord-2 rounded-xl hover:bg-discord-success
-                   transition-colors duration-100 w-[400px]" @click="saveJob()">
-          <div class="flex flex-row items-center">
-            <save_rounded class="fill-gray-400 w-10 group-hover:fill-black"></save_rounded>
-            <div class="flex flex-col ml-2">
-              <span class="font-semibold text-white tracking-wide group-hover:text-black">save</span>
-            </div>
-          </div>
-        </div>
+        <simple-button @onClick="saveJob()"></simple-button>
       </div>
       <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
@@ -34,12 +26,14 @@ import {NetworkAdapter} from "../../network.js";
 import EventListSelection from "./eventListSelection.vue";
 import Sensor_rounded from "../../assets/sensor_rounded.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
-import SimpleDialog from "../simpleDialog.vue";
-import ChainLinkParametersDialog from "./chainLinkParametersDialog.vue";
+import SimpleDialog from "../dialog/simpleDialog.vue";
+import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
+import SimpleButton from "../simpleButton.vue";
 
 export default {
   name: "jobView",
   components: {
+    SimpleButton,
     ChainLinkParametersDialog,
     SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},
   data() {
@@ -64,7 +58,8 @@ export default {
     this.conditions = await NetworkAdapter.getAvailableJobConditions()
   },
   methods: {
-    addLink(item) {
+    addLink(rawItem) {
+      let item = JSON.parse(JSON.stringify(rawItem));
       if (item.type === "EVENT") {
         this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
         // then add the new one :P

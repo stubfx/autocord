@@ -33,7 +33,7 @@ export class PipelineFactory {
         return job
     }
 
-    static getChainLink(type: ChainLinkTypes.LinkType, name: string, params: ChainLinkParam[] = []) : ChainLink {
+    static getChainLink(type: ChainLinkTypes.LinkType, name: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
                 return this.getEventByName(name, params)

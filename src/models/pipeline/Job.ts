@@ -17,11 +17,11 @@ export class Job {
         this.chain = new Chain(this.eventArgs)
     }
 
-    addChainLink(chainLink: ChainLink) {
+    addChainLink(chainLink: ChainLink<any>) {
         this.chain.addLink(chainLink)
     }
 
-    getChainLinks(): Array<ChainLink> {
+    getChainLinks(): Array<ChainLink<any>> {
         return this.chain.chainLinks
     }
 

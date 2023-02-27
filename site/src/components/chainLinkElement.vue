@@ -3,25 +3,23 @@
   rounded-xl transition-colors duration-100
   data-[linktype=EVENT]:bg-discord-success
   bg-discord-2 hover:text-discord-5 hover:bg-discord-1">
-    <div class="flex flex-row items-center">
-      <sensor_rounded class="fill-black w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
-      <task_rounded class="fill-gray-400 w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
-      <psicology_rounded class="fill-gray-400 w-[60px] h-[60px] group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
-      <div class="flex flex-col mx-2 w-full">
+    <div class="flex flex-row">
+      <div class="flex flex-col w-[60px] justify-start">
+        <sensor_rounded class="fill-black group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>
+        <task_rounded class="fill-gray-400  group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>
+        <psicology_rounded class="fill-gray-400  group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>
+      </div>
+      <div class="flex flex-col mx-2 w-full" :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
         <span class="font-semibold tracking-wide"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{link.name}}</span>
-<!--        <div class="flex flex-row" v-if="link.acceptParams">-->
         <div class="flex flex-row">
-          <span class="font-light" :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
-<!--            {{link.acceptParams.join(", ")}}-->
+          <span class="font-light">
             {{link.description}}
           </span>
         </div>
+        <exposed-argument-string :arguments="link.exposesArguments"></exposed-argument-string>
+        <link-params-view-block :chain-link="link"></link-params-view-block>
       </div>
-<!--      <a class="group/info flex flex-col" :title="link.description">-->
-<!--        <info_rounded class="w-[30px] group-hover:fill-black fill-gray-400-->
-<!--      group-data-[linktype=EVENT]:fill-black"></info_rounded>-->
-<!--      </a>-->
     </div>
   </div>
 </template>
@@ -31,10 +29,12 @@ import Task_rounded from "../assets/task_rounded.vue";
 import Psicology_rounded from "../assets/psicology_rounded.vue";
 import Sensor_rounded from "../assets/sensor_rounded.vue";
 import Info_rounded from "../assets/info_rounded.vue";
+import ExposedArgumentString from "./exposedArgumentString.vue";
+import LinkParamsViewBlock from "./linkParamsViewBlock.vue";
 
 export default {
   name: "chainLinkElement",
-  components: {Info_rounded, Sensor_rounded, Psicology_rounded, Task_rounded},
+  components: {LinkParamsViewBlock, ExposedArgumentString, Info_rounded, Sensor_rounded, Psicology_rounded, Task_rounded},
   props: {
     link: Object
   }

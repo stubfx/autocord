@@ -11,9 +11,7 @@ export class MatchesRegex extends Condition {
     async behavior(...args) : Promise<Boolean> {
         let text = this.getParam("Text") || ""
         let regex = this.getParam("Regex")
-        let cond = !!(this.resolveStringEmbeds(text)).match(regex)
-        console.log(`CONDITION ${cond}`)
-        return cond
+        return !!(this.resolveStringEmbeds(text)).match(regex)
     }
 
 }
