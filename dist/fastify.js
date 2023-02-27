@@ -48,7 +48,7 @@ export function init() {
     fastify.register(authApi, { prefix: '/auth' });
     fastify.get("/", async (request, reply) => {
         // redirect the browser to the discord login!
-        let redirectUri = process.env.redirectUrl;
+        let redirectUri = process.env.discord_oauth_redirectUrl;
         reply.redirect(`https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}`);
         return null;
     });
@@ -63,7 +63,7 @@ export function init() {
                         client_secret: process.env.clientSecret,
                         code,
                         grant_type: 'authorization_code',
-                        redirect_uri: process.env.redirectUrl
+                        redirect_uri: process.env.redirectUrl + '/login'
                     }).toString(),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -82,7 +82,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect(`${!!process.env.dev ? "http://localhost:3000" : "https://autocord.io"}/dashboard/`);
+        reply.redirect(`${process.env.redirectUrl}/dashboard/`);
         return;
     });
     fastify.get("/help", async (request, reply) => {
