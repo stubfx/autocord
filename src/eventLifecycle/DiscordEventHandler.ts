@@ -24,6 +24,10 @@ export function init (discordClient: Discord.Client) {
     // })
 
     client.on(Discord.Events.MessageCreate, async data => {
+        if (data.author.id === client.user.id) {
+            // hey, that's me!
+            return
+        }
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
             userId : data.author.id,
             username: data.author.username,

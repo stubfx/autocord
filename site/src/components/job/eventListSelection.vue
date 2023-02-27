@@ -19,6 +19,7 @@ export default {
     name: String,
     items: Array
   },
+  emits: ['onItemSelected'],
   methods: {
     onItemSelected(item) {
       this.$emit("onItemSelected", item)

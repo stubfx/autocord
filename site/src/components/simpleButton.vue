@@ -16,6 +16,7 @@ import Save_rounded from "../assets/save_rounded.vue";
 export default {
   name: "simpleButton",
   components: {Save_rounded},
+  emits: ['onClick'],
   methods: {
     onClick() {
       this.$emit("onClick")

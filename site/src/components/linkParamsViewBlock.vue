@@ -14,7 +14,7 @@ export default {
   methods: {
     formattedParamValue(value) {
       if (!value) {
-        return "ERROR"
+        return `<span class="text-discord-error">ERROR</span>`
       }
       const str = value;
       const regex = /\{\{(\w+)}}/g;

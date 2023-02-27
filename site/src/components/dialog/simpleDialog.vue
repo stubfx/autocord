@@ -16,6 +16,7 @@ export default {
   props: {
     closeOnClickOutside: true
   },
+  emits: ['onClose'],
   data() {
     return {
       isOpen: false

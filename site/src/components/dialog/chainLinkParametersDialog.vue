@@ -25,14 +25,19 @@ export default {
       chainLink : {}
     }
   },
+  emits: ['onClose'],
   methods: {
     open(chainLink) {
-      console.log(chainLink)
+      // map acceptParams to params, adding only if is not present yet.
       chainLink.acceptParams.forEach(value => {
-        chainLink.params.push({
-          name: value,
-          value: null
-        })
+        let found = chainLink.params.find(el => el.name === value)
+        if (!found) {
+          // param is not in the list, add it!
+          chainLink.params.push({
+            name: value,
+            value: null
+          })
+        }
       })
       this.chainLink = chainLink
       this.$refs.modal.open()
