@@ -5,13 +5,13 @@ import {ChainLinkInterface} from "../models/ChainLinkInterface";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
-import {MatchesRegex} from "../models/pipeline/conditions/MatchesRegex";
 
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
         if (!request.session[sessionV.AUTHENTICATED]) {
             reply.code(401)
-            return null
+            reply.send({})
+            return reply
         }
         let guildId = request.body["guildId"];
         if (guildId) {
@@ -20,12 +20,14 @@ export default function (api, opts, done) {
                 // check if the user is actually the owner of the guild passed as param
                 if (!request.session.ownedGuilds.includes(guildId)) {
                     reply.code(401)
-                    return
+                    reply.send({})
+                    return reply
                 }
             } catch (e) {
                 LoggerHelper.error(e)
                 reply.code(401)
-                return
+                reply.send({})
+                return reply
             }
         }
     })
@@ -48,7 +50,7 @@ export default function (api, opts, done) {
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";
-        return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=http://localhost:3000/login`}
+        return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${process.env.discord_oauth_redirectUrl}`}
     })
 
     api.post("/getGuildJobs", async (request) => {

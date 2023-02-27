@@ -22,7 +22,7 @@ export function init() {
         cookie: {
             domain: !process.env.dev ? 'autocord.io' : 'localhost',
             expires: getSessionExpirationDate(),
-            secure: !process.env.dev,
+            secure: "auto",
             // sameSite: !process.env.dev ? "strict" : "none"
         }
     });
@@ -31,7 +31,7 @@ export function init() {
         methods: ['POST', "GET"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
-        origin: !!process.env.dev ? "http://localhost:5173" : "https://autocord.io"
+        origin: process.env.redirectUrl
     });
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
@@ -41,7 +41,7 @@ export function init() {
         if (reply.statusCode === 500) {
             // do not send the error to avoid api spoofing.
             LoggerHelper.error(payload.toString());
-            return null;
+            return {};
         }
         return payload;
     });
@@ -63,7 +63,7 @@ export function init() {
                         client_secret: process.env.clientSecret,
                         code,
                         grant_type: 'authorization_code',
-                        redirect_uri: process.env.redirectUrl + '/login'
+                        redirect_uri: process.env.discord_oauth_redirectUrl
                     }).toString(),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

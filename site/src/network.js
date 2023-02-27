@@ -1,8 +1,14 @@
 export class NetworkAdapter {
 
+    static getServerUrl() {
+        // remap only localhost, unfortunately proxy won't work on this machine.
+        // and we cannot build on the prod server for wakeup performance reasons
+        return window.location.host.includes("localhost") ? 'http://localhost:3000' : ''
+    }
+
     static async _post(route, body) {
         try {
-            return (await fetch(route, {
+            return (await fetch(this.getServerUrl() + route, {
                 method: 'POST',
                 // credentials are required for the session
                 credentials: 'include',
