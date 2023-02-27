@@ -1,0 +1,1 @@
+{"version":3,"file":"EventLink.js","sourceRoot":"","sources":["../../../src/models/pipeline/EventLink.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,SAAS,EAAC,MAAM,sBAAsB,CAAC;AAC/C,OAAO,EAAC,cAAc,EAAC,MAAM,2BAA2B,CAAC;AAEzD,MAAM,OAAgB,SAAU,SAAQ,SAA+B;IAE1D,IAAI,GAAG,cAAc,CAAC,QAAQ,CAAC,KAAK,CAAC;CAGjD"}
