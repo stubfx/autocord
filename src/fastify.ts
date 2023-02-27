@@ -88,7 +88,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect('http://localhost:3000/dashboard/index.html')
+        reply.redirect(`${process.env.dev ? "http://localhost:3000" : "https://autocord.io"}/dashboard/index.html`)
         return
     })
 
