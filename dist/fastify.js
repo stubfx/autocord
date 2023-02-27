@@ -31,8 +31,9 @@ export function init() {
         methods: ['POST', "GET"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
-        origin: process.env.dev ? "http://localhost:5173" : "autocord.io"
+        origin: process.env.dev ? "http://localhost:5173" : "https://autocord.io"
     });
+    console.log(path.join(__dirname, "../site/dist"));
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "../site/dist"),
         prefix: "/dashboard", // optional: default '/'
@@ -81,7 +82,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect('http://localhost:5173/selectguild');
+        reply.redirect('http://localhost:3000/dashboard');
         return;
     });
     fastify.get("/help", async (request, reply) => {

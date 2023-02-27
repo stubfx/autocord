@@ -34,7 +34,7 @@ export function init() {
         methods: ['POST', "GET"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
-        origin: process.env.dev ? "http://localhost:5173" : "autocord.io"
+        origin: process.env.dev ? "http://localhost:5173" : "https://autocord.io"
     })
 
     fastify.register(fastifyStatic, {
@@ -88,7 +88,7 @@ export function init() {
             }
         }
         // after login, send the user to the guild selection
-        reply.redirect('http://localhost:5173/selectguild')
+        reply.redirect('http://localhost:3000/dashboard/index.html')
         return
     })
 

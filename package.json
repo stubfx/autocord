@@ -11,7 +11,7 @@
   "scripts": {
     "build": "npx tsc",
     "dev-dotenv": "node -r dotenv/config dist/init.js",
-    "start": "node dist/server.js"
+    "start": "node dist/init.js"
   },
   "dependencies": {
     "@fastify/cookie": "^8.3.0",
