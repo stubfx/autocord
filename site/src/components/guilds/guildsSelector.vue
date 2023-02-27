@@ -7,6 +7,7 @@
       </div>
       <div
           class="mx-auto mt-16 flex flex-col items-center md:justify-center md:flex-row justify-items-stretch md:items-stretch">
+        <div v-if="!guilds || guilds.length < 1" class="text-9xl animate-spin">🥰</div>
         <guild-card v-for="guild in guilds" :guild=guild @on-page-change="onPageChange"></guild-card>
       </div>
     </div>
@@ -15,8 +16,8 @@
 
 <script>
 
-import {NetworkAdapter} from "../../network.js";
 import GuildCard from "./guildCard.vue";
+import {NetworkAdapter} from "../../network.js";
 
 export default {
   name: "guildsSelector",

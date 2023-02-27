@@ -13,8 +13,11 @@ export class ChainLink {
     // this holds the actual param data.
     // this will be saved into the db
     params;
-    constructor(params = []) {
+    constructor(params = [], validate = false) {
         this.params = params;
+        if (validate) {
+            this.validate();
+        }
     }
     getParam(paramName) {
         // let it throw an error on null, if it happens, something has gone wrong.
@@ -37,6 +40,9 @@ export class ChainLink {
         this.guildId = guildId;
         this.eventArgs = eventArgs || {};
         return this.behavior();
+    }
+    validate() {
+        throw new Error(`Validation for ${this.name} not implemented`);
     }
 }
 //# sourceMappingURL=ChainLink.js.map

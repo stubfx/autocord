@@ -1,6 +1,9 @@
 <template>
-  <div id="ciao" class="flex w-full h-full flex-row items-center justify-center">
-    <simple-button @on-click="login" :text="'Login'"></simple-button>
+  <div id="ciao" class="flex w-full h-full flex-col items-center justify-center">
+    <h1 class="text-6xl">This app is in <span class="text-discord-error">early access</span></h1>
+    <h1 class="m-2">Use at your own risk.</h1>
+    <div class="ml-2 hover:scale-[4] duration-1000 transition-transform cursor-pointer w-fit text-9xl">🥰</div>
+    <simple-button @on-click="login" :text="'Login'" class="mt-4"></simple-button>
   </div>
 </template>
 
@@ -17,7 +20,7 @@ export default {
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection
-      this.$emit('onPageChange',PAGES.GUILD_SELECTION)
+      this.$emit('onPageChange', PAGES.GUILD_SELECTION)
     }
   },
   methods: {
@@ -26,7 +29,7 @@ export default {
       if (url) {
         await openPopup(url)
         if (await NetworkAdapter.loginCheck()) {
-          this.$emit('onPageChange',PAGES.GUILD_SELECTION)
+          this.$emit('onPageChange', PAGES.GUILD_SELECTION)
         }
       }
     }

@@ -1,6 +1,7 @@
 import {Task} from "../Task.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {discordClient} from "../../../discordbot.js";
+import {ChainLinkParam} from "../../ChainLinkInterface";
 
 export class SendMessage extends Task {
     name = ChainLinkTypes.Task.SendMessage;
@@ -18,5 +19,10 @@ export class SendMessage extends Task {
         console.log(this.resolveStringEmbeds(message))
         return true
     }
+
+    // validate() {
+    //     // check if channel id is from the same guild.
+    //     super.validate()
+    // }
 
 }

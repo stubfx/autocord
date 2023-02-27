@@ -21,8 +21,11 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     // this will be saved into the db
     params: Array<ChainLinkParam>
 
-    constructor(params: ChainLinkParam[] = []) {
+    constructor(params: ChainLinkParam[] = [], validate = false) {
         this.params = params
+        if (validate) {
+            this.validate()
+        }
     }
 
     getParam(paramName: string) {
@@ -50,6 +53,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         this.guildId = guildId
         this.eventArgs = eventArgs || {}
         return this.behavior()
+    }
+
+    validate() {
+        throw new Error(`Validation for ${this.name} not implemented`)
     }
 
     protected abstract behavior() : Promise<Boolean>
