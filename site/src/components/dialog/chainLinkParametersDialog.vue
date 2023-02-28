@@ -6,7 +6,7 @@
         <label class="uppercase mt-2">{{param.name}}</label>
         <input class="bg-discord-3 rounded-md p-2" type="text" v-model="param.value"/>
       </template>
-      <simple-button class="mt-5 w-fit self-center" @onClick="close()"></simple-button>
+      <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
     </form>
   </simple-dialog>
 </template>

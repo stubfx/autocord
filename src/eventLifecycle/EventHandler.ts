@@ -9,7 +9,12 @@ export async function runEventForGuilds(guildId: string, eventName: string, even
                 // find the right job
                 if (job.chain && job.chain.chainLinks[0].name === eventName) {
                     // found it!
-                    PipelineFactory.createJob(job, eventArgs).run(guildId)
+                    // make sure to enrich the storage data with the actual storage + eventArgs
+                    let storageData = {
+                        ...eventArgs,
+                        ...guildInterface.storage.data
+                    }
+                    PipelineFactory.createJob(job, storageData, guildInterface).run()
                 }
             }
         } catch (e) {

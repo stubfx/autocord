@@ -3,12 +3,14 @@ export class Job {
     id;
     name;
     chain;
+    guild;
     store;
-    constructor(id, name, eventArgs = {}) {
+    constructor(id, name, storageData = {}, guild = null) {
         this.id = id;
         this.name = name;
-        this.store = eventArgs || {};
+        this.store = storageData || {};
         this.chain = new Chain(this.store);
+        this.guild = guild;
     }
     addChainLink(chainLink) {
         this.chain.addLink(chainLink);
@@ -16,8 +18,8 @@ export class Job {
     getChainLinks() {
         return this.chain.chainLinks;
     }
-    async run(guildId) {
-        await this.chain.run(guildId);
+    async run() {
+        await this.chain.run(this.guild);
     }
     toJobInterface() {
         let chainLinks = [];

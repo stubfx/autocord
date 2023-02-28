@@ -38,12 +38,19 @@ export async function deleteJob(guildId, job: Job): Promise<Boolean> {
     }
 }
 
+export async function addStorageData(guildId: string, storageDataName: string) {
+    let guild = await getGuild(guildId)
+    let storage = guild.storage
+    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
+        [`data.${storageDataName}`]: ""
+    })
+    return true
+}
+
 async function createGuildWithJob(guildId, mongoJobId: mongoose.Types.ObjectId) {
     // first make sure to create the storage for this guild!
     let storage = await new GuildStorage({
-        data: {
-            counter: 0
-        }
+        data: {}
     }).save()
     await new GuildModel({
         guildId: guildId,
@@ -99,16 +106,22 @@ export async function saveJob(guildId, job: Job): Promise<Boolean> {
 // }
 
 export async function getGuild(guildId: string) {
-    return await GuildModel.findOne({guildId: guildId}).populate(STORAGE).populate(JOBS)
+    return GuildModel.findOne({guildId: guildId}).populate(STORAGE).populate(JOBS)
+}
+
+export async function increaseStorageCounter(storageId: string, counterName: string) {
+    await GuildStorage.findOneAndUpdate({_id: storageId}, {
+        $inc: {[`data.${counterName}`]: 1}
+    })
 }
 
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
     let guild = await GuildModel.findOne({guildId: guildId})
         .populate(STORAGE)
         .populate({
-        path: JOBS,
-        match: {'chain.chainLinks.0.name': eventName}
-    })
+            path: JOBS,
+            match: {'chain.chainLinks.0.name': eventName}
+        })
     if (!guild) {
         // no guild, no party.
         return

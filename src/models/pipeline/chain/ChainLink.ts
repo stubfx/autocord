@@ -1,5 +1,6 @@
 import {ChainLinkTypes} from "./ChainLinkTypes.js";
 import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
+import {AggregatedGuildInterface} from "../../GuildInterface";
 
 export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
@@ -7,7 +8,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     readonly type: ChainLinkTypes.LinkType
     description: string = "Missing description :P"
 
-    guildId : string
+    guild : AggregatedGuildInterface
 
     private store = {}
 
@@ -49,10 +50,14 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         });
     }
 
-    run(guildId : string, store: any): Promise<Boolean> {
-        this.guildId = guildId
+    run(guildInterface: AggregatedGuildInterface, store: any): Promise<Boolean> {
+        this.guild = guildInterface
         this.store = store || {}
         return this.behavior()
+    }
+
+    increaseStorageCounter(paramName: string) {
+        return this.store[paramName]++
     }
 
     validate() {

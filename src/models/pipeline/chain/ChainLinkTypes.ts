@@ -1,7 +1,7 @@
 export namespace ChainLinkTypes {
 
 
-    export enum ChainLinkParamType{
+    export enum ChainLinkParamType {
         STRING = "STRING",
         BOOLEAN = "BOOLEAN",
         NUMBER = "NUMBER"
@@ -25,12 +25,13 @@ export namespace ChainLinkTypes {
     export enum Task {
         SendMessage = "SendMessage",
         BanUser = "BanUser",
+        IncreaseCounter = "IncreaseCounter",
 
     }
 
     export enum Condition {
-        IsMe= "IsMe",
-        Equals= "Equals",
+        IsMe = "IsMe",
+        Equals = "Equals",
         MatchesRegex = "MatchesRegex",
     }
 

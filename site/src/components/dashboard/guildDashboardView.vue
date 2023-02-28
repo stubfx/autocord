@@ -5,10 +5,10 @@
         <h2 class="text-3xl font-bold sm:text-4xl">Automate your server!</h2>
         <p class="text-lg leading-8 underline text-transparent">This can be dangerous.</p>
       </div>
-      <div class="flex flex-col items-center mt-10">
+      <div class="flex flex-col items-center mt-6">
         <h2 class="text-3xl font-bold sm:text-4xl">Storage</h2>
         <div class="flex flex-row w-full p-5">
-          <storage-view class="mt-5" :storage="storage"></storage-view>
+          <storage-view class="mt-5" :storage="storage" @on-storage-data-added="refreshGuildData"></storage-view>
         </div>
         <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
         <div class="mt-2 flex flex-row flex-wrap justify-center w-full">
@@ -25,7 +25,7 @@
 import {NetworkAdapter} from "../../network.js";
 import GuildJob from "./guildJob.vue";
 import GuildJobAddCard from "./guildJobAddCard.vue";
-import {PAGES} from "../../pages.js";
+import {DASHBOARDPAGES} from "../../pages.js";
 import StorageView from "../storageView.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
@@ -41,7 +41,7 @@ export default {
   },
   async mounted() {
     // reset current job
-    this.$store.state.currentJob = null
+    this.$store.currentJob = null
     await this.refreshGuildData()
   },
   methods: {
@@ -51,11 +51,11 @@ export default {
       this.storage = response['storage']
     },
     addJob() {
-      this.$emit('onPageChange', PAGES.JOB_DETAIL)
+      this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
     },
     addJobLink(job) {
-      this.$store.state.currentJob = job
-      this.$emit('onPageChange', PAGES.JOB_DETAIL)
+      this.$store.currentJob = job
+      this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId

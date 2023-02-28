@@ -9,6 +9,7 @@ export class NetworkAdapter {
     }
 
     static async _post(route, body) {
+        try {
             return (await fetch(this.getServerUrl() + route, {
                 method: 'POST',
                 // credentials are required for the session
@@ -18,6 +19,9 @@ export class NetworkAdapter {
                 },
                 body: JSON.stringify(body || {})
             })).json()
+        } catch (e) {
+            window.location.href = '/'
+        }
     }
 
     static async getDiscordLoginUrl() {
@@ -62,6 +66,10 @@ export class NetworkAdapter {
 
     static async deleteJob(guildId, job) {
         return (await this._post(`/auth/deleteJob`, {guildId : guildId, job: job}))
+    }
+
+    static async addStorageData(guildId, dataName) {
+        return (await this._post(`/auth/addStorageData`, {guildId : guildId, dataName: dataName}))
     }
 
 }

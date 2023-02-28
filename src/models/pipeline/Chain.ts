@@ -1,5 +1,6 @@
 import {ChainLink} from "./chain/ChainLink.js";
 import {ChainLinkTypes} from "./chain/ChainLinkTypes.js";
+import {AggregatedGuildInterface} from "../GuildInterface";
 
 export class Chain {
 
@@ -11,7 +12,7 @@ export class Chain {
         this.store = store
     }
 
-    async run(guildId: string) {
+    async run(guildInterface: AggregatedGuildInterface) {
         for (let chainLink of this.chainLinks) {
             let taskResult : Boolean
             switch (chainLink.type) {
@@ -20,10 +21,10 @@ export class Chain {
                     taskResult = true
                     break;
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.run(guildId, this.store)
+                    taskResult = await chainLink.run(guildInterface, this.store)
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.run(guildId, this.store)
+                    taskResult = await chainLink.run(guildInterface, this.store)
             }
             if (!taskResult) {
                 break;

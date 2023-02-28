@@ -60,6 +60,12 @@ export default function (api, opts, done) {
         return await new DiscordAdapter().checkServer(guildId)
     })
 
+    api.post("/addStorageData", async (request) => {
+        let guildId = request.body["guildId"];
+        let dataName = request.body["dataName"];
+        return await dbAdapter.addStorageData(guildId, dataName)
+    })
+
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";
@@ -121,7 +127,8 @@ export default function (api, opts, done) {
         return {
             links: [
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage)
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage),
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.IncreaseCounter),
             ]
         }
     })

@@ -5,7 +5,7 @@ export class Chain {
     constructor(store) {
         this.store = store;
     }
-    async run(guildId) {
+    async run(guildInterface) {
         for (let chainLink of this.chainLinks) {
             let taskResult;
             switch (chainLink.type) {
@@ -14,10 +14,10 @@ export class Chain {
                     taskResult = true;
                     break;
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.run(guildId, this.store);
+                    taskResult = await chainLink.run(guildInterface, this.store);
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.run(guildId, this.store);
+                    taskResult = await chainLink.run(guildInterface, this.store);
             }
             if (!taskResult) {
                 break;

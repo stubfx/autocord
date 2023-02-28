@@ -1,24 +1,25 @@
 <template>
-  <div class="flex flex-row p-5 bg-discord-5 rounded-xl w-full items-center gap-2">
-    <div class="flex flex-row bg-discord-3 p-2 rounded-md" v-for="item in getStorageData()">
-      <p>{{item.name}} : {{item.value}}</p>
+  <div class="flex flex-row w-full">
+    <add-storage-value-dialog ref="modal" @onClose="onStorageDataAdded"></add-storage-value-dialog>
+    <div class="flex flex-row p-5 bg-discord-5 rounded-xl w-full items-center gap-2">
+      <div class="flex flex-row bg-discord-3 p-2 rounded-md" v-for="item in getStorageData()">
+        <p>{{ item.name }} : {{ item.value.toString() || 'EMPTY' }}</p>
+      </div>
+      <add_rounded class="w-10 h-10 bg-discord-3 rounded-md fill-white hover:bg-discord-success
+    hover:fill-black cursor-pointer transition-colors" @click="onAddStorageData"></add_rounded>
     </div>
-    <simple-dialog>
-      <h2 class="text-3xl font-bold sm:text-4xl">Add Storage Data</h2>
-
-    </simple-dialog>
-    <add_rounded class="w-10 h-10 bg-discord-3 rounded-md fill-white hover:bg-discord-success
-    hover:fill-black cursor-pointer transition-colors"></add_rounded>
   </div>
 </template>
 
 <script>
 import Add_rounded from "../assets/add_rounded.vue";
 import SimpleDialog from "./dialog/simpleDialog.vue";
+import AddStorageValueDialog from "./dialog/addStorageValueDialog.vue";
 
 export default {
   name: "storageView",
-  components: {SimpleDialog, Add_rounded},
+  components: {AddStorageValueDialog, SimpleDialog, Add_rounded},
+  emits: ['onStorageDataAdded'],
   props: {
     storage: Object
   },
@@ -33,6 +34,12 @@ export default {
         })
       }
       return storageData
+    },
+    onAddStorageData() {
+      this.$refs.modal.open()
+    },
+    onStorageDataAdded() {
+      this.$emit('onStorageDataAdded')
     }
   }
 }

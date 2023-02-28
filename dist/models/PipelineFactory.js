@@ -10,9 +10,10 @@ import { GuildMemberAdd } from "./pipeline/Events/GuildMemberAdd.js";
 import { MessageReactionAdd } from "./pipeline/Events/MessageReactionAdd.js";
 import { Equals } from "./pipeline/conditions/Equals.js";
 import { MatchesRegex } from "./pipeline/conditions/MatchesRegex.js";
+import { IncreaseCounter } from "./pipeline/tasks/IncreaseCounter.js";
 export class PipelineFactory {
-    static createJob(jobInterface, eventArgs = {}) {
-        let job = new Job(jobInterface.id, jobInterface.name, eventArgs);
+    static createJob(jobInterface, storageData = {}, guild = null) {
+        let job = new Job(jobInterface.id, jobInterface.name, storageData, guild);
         PipelineFactory.validateJob(jobInterface);
         for (let chainElement of jobInterface.chain.chainLinks) {
             job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params));
@@ -37,6 +38,7 @@ export class PipelineFactory {
         }
     }
     static getChainLink(type, name, params = []) {
+        // TODO check if params match the actual chainLink to avoid db exploitation
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
                 return this.getEventByName(name, params);
@@ -70,6 +72,8 @@ export class PipelineFactory {
                 return new SendMessage(params);
             case ChainLinkTypes.Task.BanUser:
                 return new BanUser(params);
+            case ChainLinkTypes.Task.IncreaseCounter:
+                return new IncreaseCounter(params);
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`);
         }

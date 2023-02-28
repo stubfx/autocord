@@ -30,12 +30,18 @@ export async function deleteJob(guildId, job) {
         return false;
     }
 }
+export async function addStorageData(guildId, storageDataName) {
+    let guild = await getGuild(guildId);
+    let storage = guild.storage;
+    await GuildStorage.findOneAndUpdate({ _id: storage._id }, {
+        [`data.${storageDataName}`]: ""
+    });
+    return true;
+}
 async function createGuildWithJob(guildId, mongoJobId) {
     // first make sure to create the storage for this guild!
     let storage = await new GuildStorage({
-        data: {
-            counter: 0
-        }
+        data: {}
     }).save();
     await new GuildModel({
         guildId: guildId,
@@ -89,7 +95,12 @@ export async function saveJob(guildId, job) {
 //     }
 // }
 export async function getGuild(guildId) {
-    return await GuildModel.findOne({ guildId: guildId }).populate(STORAGE).populate(JOBS);
+    return GuildModel.findOne({ guildId: guildId }).populate(STORAGE).populate(JOBS);
+}
+export async function increaseStorageCounter(storageId, counterName) {
+    await GuildStorage.findOneAndUpdate({ _id: storageId }, {
+        $inc: { [`data.${counterName}`]: 1 }
+    });
 }
 export async function forGuildListeningForEvent(guildId, eventName, func) {
     let guild = await GuildModel.findOne({ guildId: guildId })

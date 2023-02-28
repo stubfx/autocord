@@ -2,7 +2,7 @@ export class ChainLink {
     name;
     type;
     description = "Missing description :P";
-    guildId;
+    guild;
     store = {};
     // used to help the user know which params the link accepts
     // this won't be saved into the db
@@ -36,10 +36,13 @@ export class ChainLink {
             return this.getStoreValue(variable) || match;
         });
     }
-    run(guildId, store) {
-        this.guildId = guildId;
+    run(guildInterface, store) {
+        this.guild = guildInterface;
         this.store = store || {};
         return this.behavior();
+    }
+    increaseStorageCounter(paramName) {
+        return this.store[paramName]++;
     }
     validate() {
         throw new Error(`Validation for ${this.name} not implemented`);

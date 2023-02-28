@@ -29,7 +29,7 @@
 // "features": Array<string> //["COMMUNITY", "NEWS"]
 import {NetworkAdapter} from "../../network.js";
 import Broken_image_rounded from "../../assets/broken_image_rounded.vue";
-import {PAGES} from "../../pages.js";
+import {DASHBOARDPAGES} from "../../pages.js";
 import {openPopup} from "../../../popup.js";
 
 export default {
@@ -45,7 +45,7 @@ export default {
     },
     goToListingPage() {
       this.$store.guildId = this.guild.id
-      this.$emit('onPageChange',PAGES.JOB_LISTING)
+      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
     },
     async selectGuild() {
       // check if the bot is in the guild.

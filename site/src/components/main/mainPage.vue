@@ -20,7 +20,7 @@ export default {
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection
-      this.$emit('onPageChange', PAGES.GUILD_SELECTION)
+      this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
     }
   },
   methods: {
@@ -29,7 +29,7 @@ export default {
       if (url) {
         await openPopup(url)
         if (await NetworkAdapter.loginCheck()) {
-          this.$emit('onPageChange', PAGES.GUILD_SELECTION)
+          this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
         }
       }
     }

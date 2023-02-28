@@ -2,19 +2,23 @@ import {Chain} from "./Chain.js";
 import {ChainLink} from "./chain/ChainLink.js";
 import {JobInterface} from "../JobInterface.js";
 import {ChainLinkInterface} from "../ChainLinkInterface";
+import {AggregatedGuildInterface} from "../GuildInterface";
 
 export class Job {
     readonly id: string
     readonly name: string
     private chain: Chain
 
+    private readonly guild: AggregatedGuildInterface
+
     private readonly store: any
 
-    constructor(id: string, name: string, eventArgs: any = {}) {
+    constructor(id: string, name: string, storageData: any = {}, guild: AggregatedGuildInterface = null) {
         this.id = id
         this.name = name
-        this.store = eventArgs || {}
+        this.store = storageData || {}
         this.chain = new Chain(this.store)
+        this.guild = guild
     }
 
     addChainLink(chainLink: ChainLink<any>) {
@@ -25,8 +29,8 @@ export class Job {
         return this.chain.chainLinks
     }
 
-    async run(guildId: string) {
-        await this.chain.run(guildId)
+    async run() {
+        await this.chain.run(this.guild)
     }
 
     toJobInterface(): JobInterface {

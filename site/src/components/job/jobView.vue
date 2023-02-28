@@ -29,7 +29,7 @@ import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import SimpleButton from "../simpleButton.vue";
-import {PAGES} from "../../pages.js";
+import {DASHBOARDPAGES} from "../../pages.js";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
 export default {
@@ -53,7 +53,7 @@ export default {
   },
   async mounted() {
     // is there a job in the store?
-    let currentJob = this.$store.state.currentJob;
+    let currentJob = this.$store.currentJob;
     if (currentJob) {
       this.job = currentJob
     }
@@ -91,12 +91,12 @@ export default {
     async onSaveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$emit('onPageChange',PAGES.JOB_LISTING)
+      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
     },
     async onDeleteJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.deleteJob(guildId, this.job)
-      this.$emit('onPageChange',PAGES.JOB_LISTING)
+      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
     }
   }
 }
