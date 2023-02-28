@@ -1,0 +1,1 @@
+{"version":3,"file":"guildStorageSchema.js","sourceRoot":"","sources":["../../src/schemas/guildStorageSchema.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAC;AAChC,OAAO,EAAa,OAAO,EAAC,MAAM,cAAc,CAAC;AAGjD,MAAM,MAAM,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAwB;IACtD,IAAI,EAAE,MAAM;CACf,CAAC,CAAC;AAGH,MAAM,CAAC,MAAM,YAAY,GAAG,QAAQ,CAAC,KAAK,CAAwB,OAAO,EAAE,MAAM,CAAC,CAAA"}

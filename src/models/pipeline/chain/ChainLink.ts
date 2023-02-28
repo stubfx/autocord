@@ -9,7 +9,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     guildId : string
 
-    private eventArgs = {}
+    private store = {}
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
@@ -33,8 +33,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         return this.params.find(value => value.name === paramName).value
     }
 
-    getEventArg(paramName: string) {
-        return this.eventArgs[paramName]
+    getStoreValue(paramName: string) {
+        return this.store[paramName]
     }
 
     resolveStringEmbeds(toResolve: string) {
@@ -45,13 +45,13 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         const regex = /\{\{(\w+)}}/g;
 
         return str.replace(regex, (match, variable) => {
-            return this.getEventArg(variable) || match;
+            return this.getStoreValue(variable) || match;
         });
     }
 
-    run(guildId : string, eventArgs: any): Promise<Boolean> {
+    run(guildId : string, store: any): Promise<Boolean> {
         this.guildId = guildId
-        this.eventArgs = eventArgs || {}
+        this.store = store || {}
         return this.behavior()
     }
 

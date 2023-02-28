@@ -40,8 +40,8 @@ export class NetworkAdapter {
         return (await this._post(`/auth/getAddBotToGuildInvite`, {guildId : guildId}))['url']
     }
 
-    static async getGuildJobs(guildId) {
-        return (await this._post(`/auth/getGuildJobs`, {guildId : guildId}))['jobs']
+    static async getGuildData(guildId) {
+        return await this._post(`/auth/getGuildJobs`, {guildId : guildId})
     }
 
     static async getAvailableJobTasks() {

@@ -3,7 +3,7 @@ export class ChainLink {
     type;
     description = "Missing description :P";
     guildId;
-    eventArgs = {};
+    store = {};
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams = [];
@@ -23,8 +23,8 @@ export class ChainLink {
         // let it throw an error on null, if it happens, something has gone wrong.
         return this.params.find(value => value.name === paramName).value;
     }
-    getEventArg(paramName) {
-        return this.eventArgs[paramName];
+    getStoreValue(paramName) {
+        return this.store[paramName];
     }
     resolveStringEmbeds(toResolve) {
         if (!toResolve || typeof toResolve !== "string") {
@@ -33,12 +33,12 @@ export class ChainLink {
         const str = toResolve;
         const regex = /\{\{(\w+)}}/g;
         return str.replace(regex, (match, variable) => {
-            return this.getEventArg(variable) || match;
+            return this.getStoreValue(variable) || match;
         });
     }
-    run(guildId, eventArgs) {
+    run(guildId, store) {
         this.guildId = guildId;
-        this.eventArgs = eventArgs || {};
+        this.store = store || {};
         return this.behavior();
     }
     validate() {

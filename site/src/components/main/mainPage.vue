@@ -1,9 +1,9 @@
 <template>
-  <div id="ciao" class="flex w-full h-full flex-col items-center justify-center">
-    <h1 class="text-6xl">This app is in <span class="text-discord-error">early access</span></h1>
+  <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white">
+    <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
     <h1 class="m-2">Use at your own risk.</h1>
     <div class="ml-2 hover:scale-[4] duration-1000 transition-transform cursor-pointer w-fit text-9xl">🥰</div>
-    <simple-button @on-click="login" :text="'Login'" class="mt-4"></simple-button>
+    <simple-button @on-click="login" :text="'Login'" class="mt-4"  type="LOGIN"></simple-button>
   </div>
 </template>
 

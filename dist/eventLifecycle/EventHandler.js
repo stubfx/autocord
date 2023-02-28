@@ -3,10 +3,6 @@ import { PipelineFactory } from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 export async function runEventForGuilds(guildId, eventName, eventArgs = {}) {
     await dbAdapter.forGuildListeningForEvent(guildId, eventName, async (guildInterface) => {
-        if (!guildInterface) {
-            // db is empty :/
-            return
-        }
         try {
             for (let job of guildInterface.jobs) {
                 // find the right job

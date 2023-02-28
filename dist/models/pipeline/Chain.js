@@ -1,9 +1,9 @@
 import { ChainLinkTypes } from "./chain/ChainLinkTypes.js";
 export class Chain {
-    eventArgs = {};
+    store = {};
     chainLinks = [];
-    constructor(eventArgs) {
-        this.eventArgs = eventArgs;
+    constructor(store) {
+        this.store = store;
     }
     async run(guildId) {
         for (let chainLink of this.chainLinks) {
@@ -14,10 +14,10 @@ export class Chain {
                     taskResult = true;
                     break;
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.run(guildId, this.eventArgs);
+                    taskResult = await chainLink.run(guildId, this.store);
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.run(guildId, this.eventArgs);
+                    taskResult = await chainLink.run(guildId, this.store);
             }
             if (!taskResult) {
                 break;

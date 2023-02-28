@@ -3,12 +3,12 @@ export class Job {
     id;
     name;
     chain;
-    eventArgs;
+    store;
     constructor(id, name, eventArgs = {}) {
         this.id = id;
         this.name = name;
-        this.eventArgs = eventArgs || {};
-        this.chain = new Chain(this.eventArgs);
+        this.store = eventArgs || {};
+        this.chain = new Chain(this.store);
     }
     addChainLink(chainLink) {
         this.chain.addLink(chainLink);

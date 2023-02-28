@@ -6,6 +6,8 @@ import {Job} from "./models/pipeline/Job.js";
 import {GuildModel} from "./schemas/guildSchema.js";
 import {AggregatedGuildInterface} from "./models/GuildInterface.js";
 import {JobModel} from "./schemas/jobSchema.js";
+import {GuildStorage} from "./schemas/guildStorageSchema.js";
+import {JOBS, STORAGE} from "./schemas/schemas.js";
 
 
 const DEFAULT_TOPIC = "top";
@@ -34,6 +36,20 @@ export async function deleteJob(guildId, job: Job): Promise<Boolean> {
         LoggerHelper.error(new Error("Job already has an id, but it does not match the guild?"))
         return false
     }
+}
+
+async function createGuildWithJob(guildId, mongoJobId: mongoose.Types.ObjectId) {
+    // first make sure to create the storage for this guild!
+    let storage = await new GuildStorage({
+        data: {
+            counter: 0
+        }
+    }).save()
+    await new GuildModel({
+        guildId: guildId,
+        jobs: [mongoJobId],
+        storage: storage._id
+    }).save()
 }
 
 export async function saveJob(guildId, job: Job): Promise<Boolean> {
@@ -69,10 +85,7 @@ export async function saveJob(guildId, job: Job): Promise<Boolean> {
         // no guild, no job, must be a new user, welcome!
         let saved = await saveJobToDB(job)
         // in this case the guild does not exist!
-        await new GuildModel({
-            guildId: guildId,
-            jobs: [saved._id]
-        }).save()
+        await createGuildWithJob(guildId, saved._id)
         return true
     }
 }
@@ -86,14 +99,20 @@ export async function saveJob(guildId, job: Job): Promise<Boolean> {
 // }
 
 export async function getGuild(guildId: string) {
-    return await GuildModel.findOne({guildId: guildId}).populate(JobModel.collection.name)
+    return await GuildModel.findOne({guildId: guildId}).populate(STORAGE).populate(JOBS)
 }
 
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
-    let guild = await GuildModel.findOne({guildId: guildId}).populate({
-        path: JobModel.collection.name,
+    let guild = await GuildModel.findOne({guildId: guildId})
+        .populate(STORAGE)
+        .populate({
+        path: JOBS,
         match: {'chain.chainLinks.0.name': eventName}
     })
+    if (!guild) {
+        // no guild, no party.
+        return
+    }
     // @ts-ignore
     await func(guild as AggregatedGuildInterface)
 }

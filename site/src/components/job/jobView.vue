@@ -7,8 +7,8 @@
     </div>
     <div class="flex flex-row">
       <div class="flex flex-col items-center">
-        <guild-job :job="job" @onSaveJob="onSaveJob" @onDeleteJob="onDeleteJob"></guild-job>
-        <simple-button @onClick="onSaveJob()" text="save"></simple-button>
+        <guild-job :job="job" @onSaveJob="onSaveJob" :deletable="false"></guild-job>
+        <simple-button @onClick="onSaveJob()" text="save" type="SAVE"></simple-button>
       </div>
       <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
@@ -30,11 +30,13 @@ import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import SimpleButton from "../simpleButton.vue";
 import {PAGES} from "../../pages.js";
+import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
 export default {
   name: "jobView",
   emits: ['onPageChange'],
   components: {
+    ConfirmDeletionDialog,
     SimpleButton,
     ChainLinkParametersDialog,
     SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},

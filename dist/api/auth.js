@@ -4,6 +4,7 @@ import * as dbAdapter from "../dbAdapter.js";
 import { PipelineFactory } from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
+import { STORAGE } from "../schemas/schemas.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
         if (!request.session[sessionV.AUTHENTICATED]) {
@@ -41,6 +42,10 @@ export default function (api, opts, done) {
     api.post("/deleteJob", async (request) => {
         let guildId = request.body["guildId"];
         let rawJob = request.body["job"];
+        if (!rawJob.id) {
+            // no id, abort.
+            return {};
+        }
         let jobInstance = PipelineFactory.createJob(rawJob);
         await dbAdapter.deleteJob(guildId, jobInstance);
         return {};
@@ -59,7 +64,9 @@ export default function (api, opts, done) {
         let guild = await dbAdapter.getGuild(guildId);
         // we need to add the metadata!
         let jobs = [];
+        let storage = {};
         if (guild) {
+            storage = guild[STORAGE];
             for (let job of guild.jobs) {
                 // map does not work?
                 // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
@@ -68,7 +75,8 @@ export default function (api, opts, done) {
             }
         }
         return {
-            jobs: jobs
+            storage,
+            jobs
         };
     });
     api.post("/saveJob", async (request) => {
