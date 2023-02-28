@@ -34,7 +34,7 @@ export async function addStorageData(guildId, storageDataName) {
     let guild = await getGuild(guildId);
     let storage = guild.storage;
     await GuildStorage.findOneAndUpdate({ _id: storage._id }, {
-        [`data.${storageDataName}`]: ""
+        [`data.${storageDataName}`]: 0
     });
     return true;
 }
