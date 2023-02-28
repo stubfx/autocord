@@ -26,6 +26,7 @@ export namespace ChainLinkTypes {
         SendMessage = "SendMessage",
         BanUser = "BanUser",
         IncreaseCounter = "IncreaseCounter",
+        AssignRole = 'AssignRole',
 
     }
 

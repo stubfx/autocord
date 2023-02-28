@@ -1,7 +1,6 @@
 import { Job } from "./pipeline/Job.js";
 import { SendMessage } from "./pipeline/tasks/SendMessage.js";
 import { BanUser } from "./pipeline/tasks/BanUser.js";
-import { IsMe } from "./pipeline/conditions/IsMe.js";
 import { ChainLinkTypes } from "./pipeline/chain/ChainLinkTypes.js";
 import { MessageCreate } from "./pipeline/Events/MessageCreate.js";
 import { VoiceStateUpdate } from "./pipeline/Events/VoiceStateUpdate.js";
@@ -11,6 +10,7 @@ import { MessageReactionAdd } from "./pipeline/Events/MessageReactionAdd.js";
 import { Equals } from "./pipeline/conditions/Equals.js";
 import { MatchesRegex } from "./pipeline/conditions/MatchesRegex.js";
 import { IncreaseCounter } from "./pipeline/tasks/IncreaseCounter.js";
+import { AssignRole } from "./pipeline/tasks/AssignRole.js";
 export class PipelineFactory {
     static createJob(jobInterface, storageData = {}, guild = null) {
         let job = new Job(jobInterface.id, jobInterface.name, storageData, guild);
@@ -74,14 +74,14 @@ export class PipelineFactory {
                 return new BanUser(params);
             case ChainLinkTypes.Task.IncreaseCounter:
                 return new IncreaseCounter(params);
+            case ChainLinkTypes.Task.AssignRole:
+                return new AssignRole(params);
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`);
         }
     }
     static getConditionByName(chainLinkConditionName, params = []) {
         switch (chainLinkConditionName) {
-            case ChainLinkTypes.Condition.IsMe:
-                return new IsMe(params);
             case ChainLinkTypes.Condition.Equals:
                 return new Equals(params);
             case ChainLinkTypes.Condition.MatchesRegex:

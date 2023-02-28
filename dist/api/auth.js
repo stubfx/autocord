@@ -105,7 +105,6 @@ export default function (api, opts, done) {
     api.post("/getAvailableJobConditions", async () => {
         return {
             links: [
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.IsMe),
                 PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals),
                 PipelineFactory.getConditionByName(ChainLinkTypes.Condition.MatchesRegex),
             ]
@@ -117,6 +116,7 @@ export default function (api, opts, done) {
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage),
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.IncreaseCounter),
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.AssignRole),
             ]
         };
     });

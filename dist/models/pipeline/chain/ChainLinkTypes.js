@@ -25,6 +25,7 @@ export var ChainLinkTypes;
         Task["SendMessage"] = "SendMessage";
         Task["BanUser"] = "BanUser";
         Task["IncreaseCounter"] = "IncreaseCounter";
+        Task["AssignRole"] = "AssignRole";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {

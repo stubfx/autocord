@@ -19,6 +19,9 @@ export class ChainLink {
             this.validate();
         }
     }
+    getResolvedParam(paramName) {
+        return this.resolveStringEmbeds(this.getParam(paramName));
+    }
     getParam(paramName) {
         // let it throw an error on null, if it happens, something has gone wrong.
         return this.params.find(value => value.name === paramName).value;
