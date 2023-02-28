@@ -16,9 +16,9 @@
                      v-if="!type"></cancel_rounded>
       <div class="flex flex-col justify-center h-full">
         <span class="font-semibold text-white tracking-wide
-                    group-data-[type=SAVE]:hover:text-black
-                    group-data-[type=DELETE]:hover:text-white
-                    group-data-[type=LOGIN]:hover:text-black">{{ text }}</span>
+                    group-data-[type=SAVE]:group-hover:text-black
+                    group-data-[type=DELETE]:group-hover:text-white
+                    group-data-[type=LOGIN]:group-hover:text-black">{{ text }}</span>
       </div>
     </div>
   </div>
