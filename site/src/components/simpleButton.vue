@@ -10,7 +10,7 @@
                     v-if="type==='SAVE'"></save_rounded>
       <close_rounded class="fill-gray-400 w-10 group-hover:fill-white"
                      v-if="type==='DELETE'"></close_rounded>
-      <login_rounded class="fill-gray-400 w-10 group-hover:fill-white"
+      <login_rounded class="fill-gray-400 w-10 group-hover:fill-black"
                      v-if="type==='LOGIN'"></login_rounded>
       <cancel_rounded class="fill-gray-400 w-10 group-hover:fill-white"
                      v-if="!type"></cancel_rounded>
@@ -18,7 +18,7 @@
         <span class="font-semibold text-white tracking-wide
                     group-data-[type=SAVE]:hover:text-black
                     group-data-[type=DELETE]:hover:text-white
-                    group-data-[type=LOGIN]:hover:text-white">{{ text }}</span>
+                    group-data-[type=LOGIN]:hover:text-black">{{ text }}</span>
       </div>
     </div>
   </div>
