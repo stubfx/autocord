@@ -6,6 +6,13 @@ module.exports = {
     ],
     theme: {
         extend: {
+            borderRadius: {
+                'none': '0',
+                'sm': '.125rem',
+                DEFAULT: '.375rem',
+                'lg': '.5rem',
+                'full': '9999px',
+            },
             colors: {
                 "discord-1": "#7289da",
                 "discord-2": "#424549",

@@ -1,5 +1,5 @@
 <template>
-  <div :data-type="type" @click="onClick()" class="group cursor-pointer p-5 bg-discord-2 rounded-xl
+  <div :data-type="type" @click="onClick()" class="group cursor-pointer p-5 bg-discord-2 rounded
                    transition-colors duration-100
                    hover:bg-discord-1
                    data-[type=SAVE]:hover:bg-discord-success

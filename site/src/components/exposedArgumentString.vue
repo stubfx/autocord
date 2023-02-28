@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row flex-wrap">
-          <span class="font-light bg-discord-4 text-white p-1 px-2 rounded-md mr-0.5 mt-1" v-for="arg in arguments">
+          <span class="font-light bg-discord-4 text-white p-1 px-2 rounded mr-0.5 mt-1" v-for="arg in arguments">
 <!--            {{link.acceptParams.join(", ")}}-->
             <span>{{arg}}</span>
 <!--            <span v-pre>{{</span>{{arg}}<span v-pre>}}</span>-->

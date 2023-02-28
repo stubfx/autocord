@@ -33,5 +33,11 @@ export var ChainLinkTypes;
         Condition["Equals"] = "Equals";
         Condition["MatchesRegex"] = "MatchesRegex";
     })(Condition = ChainLinkTypes.Condition || (ChainLinkTypes.Condition = {}));
+    let Param;
+    (function (Param) {
+        Param["STRING"] = "STRING";
+        Param["CHANNEL_ID"] = "CHANNEL_ID";
+        Param["ROLE_ID"] = "ROLE_ID";
+    })(Param = ChainLinkTypes.Param || (ChainLinkTypes.Param = {}));
 })(ChainLinkTypes || (ChainLinkTypes = {}));
 //# sourceMappingURL=ChainLinkTypes.js.map

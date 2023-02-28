@@ -14,7 +14,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
-    acceptParams: Array<string> = []
+    acceptParams: Array<{name: string, type: ChainLinkTypes.Param}> = []
     // used to help the user know which params the link adds to the store
     // this won't be saved into the db
     exposesArguments: Array<string> = []

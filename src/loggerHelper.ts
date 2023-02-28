@@ -29,12 +29,12 @@ export function init(discordClient) {
 
 export function error(...errors) {
     console.error(errors)
-    // client.channels.fetch(process.env.discord_log_channel_id)
-    //     .then(async channel => {
-    //         // await channel.send({embeds: [exampleEmbed]});
-    //         await channel.send({embeds: [getLogEmbed(0xED4245, errors)]});
-    //     })
-    //     .catch(console.error);
+    client.channels.fetch(process.env.discord_log_channel_id)
+        .then(async channel => {
+            // await channel.send({embeds: [exampleEmbed]});
+            await channel.send({embeds: [getLogEmbed(0xED4245, errors)]});
+        })
+        .catch(console.error);
 }
 
 export function consoleError(data) {
@@ -44,36 +44,24 @@ export function consoleError(data) {
 export function success(...data) {
     // clear data in case of template string multiline
     console.info(data)
-    // client.channels.fetch(process.env.discord_log_channel_id)
-    //     .then(async channel => {
-    //         // await channel.send({embeds: [exampleEmbed]});
-    //         // await channel.send(`:green_circle:\`${log.toString()}\``);
-    //         await channel.send({embeds: [getLogEmbed(0x57F287, data)]});
-    //     })
-    //     .catch(console.error);
-}
-
-export function suggestion(...data) {
-    let log = getSanitizedLog(data)
-    console.info(log)
-    // client.channels.fetch(process.env.discord_log_suggestion_channel_id)
-    //     .then(async channel => {
-    //         // await channel.send({embeds: [exampleEmbed]});
-    //         // await channel.send(`:green_circle:\`${log.toString()}\``);
-    //         await channel.send({embeds: [getLogEmbed(0x57F287, log)]});
-    //     })
-    //     .catch(console.error);
+    client.channels.fetch(process.env.discord_log_channel_id)
+        .then(async channel => {
+            // await channel.send({embeds: [exampleEmbed]});
+            // await channel.send(`:green_circle:\`${log.toString()}\``);
+            await channel.send({embeds: [getLogEmbed(0x57F287, data)]});
+        })
+        .catch(console.error);
 }
 
 export function info(...data) {
     console.log(data)
-    // client.channels.fetch(process.env.discord_log_channel_id)
-    //     .then(async channel => {
-    //         // await channel.send({embeds: [exampleEmbed]});
-    //         // await channel.send(`\`${data}\``);
-    //         await channel.send({embeds: [getLogEmbed(0x3498DB, data)]});
-    //     })
-    //     .catch(console.error);
+    client.channels.fetch(process.env.discord_log_channel_id)
+        .then(async channel => {
+            // await channel.send({embeds: [exampleEmbed]});
+            // await channel.send(`\`${data}\``);
+            await channel.send({embeds: [getLogEmbed(0x3498DB, data)]});
+        })
+        .catch(console.error);
 }
 
 export function dev(data) {

@@ -2,15 +2,11 @@
   <chain-link-parameters-dialog ref="modal">
   </chain-link-parameters-dialog>
   <div class="flex flex-col w-full h-full">
-    <div class="flex flex-row items-baseline w-full mb-20 justify-self-stretch">
-      <h1 class="text-9xl font-bold text-white">New Flow</h1>
-    </div>
     <div class="flex flex-row">
       <div class="flex flex-col items-center">
-        <guild-job :job="job" @onSaveJob="onSaveJob" :deletable="false"></guild-job>
-        <simple-button @onClick="onSaveJob()" text="save" type="SAVE"></simple-button>
+        <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true"></guild-job>
       </div>
-      <div class="flex flex-col bg-discord-5 shadow-2xl rounded-xl m-5 py-3">
+      <div class="flex flex-col bg-discord-5 shadow-2xl rounded m-5 py-3">
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
         <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
         <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
@@ -91,11 +87,6 @@ export default {
     async onSaveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
-    },
-    async onDeleteJob() {
-      let guildId = this.$store.guildId
-      await NetworkAdapter.deleteJob(guildId, this.job)
       this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
     }
   }

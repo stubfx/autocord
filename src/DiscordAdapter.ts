@@ -1,10 +1,7 @@
-import fetch from "node-fetch";
 import Discord, {REST, RouteLike} from "discord.js";
 import {Routes} from "discord-api-types/v10";
 import * as LoggerHelper from "./loggerHelper.js";
-import * as sessionV from "./sessionVariables";
-import {PipelineFactory} from "./models/PipelineFactory";
-import * as dbAdapter from "./dbAdapter";
+import {discordClient} from "./discordbot.js";
 
 let client = null
 
@@ -22,10 +19,9 @@ export class DiscordAdapter {
 
     async get(route: RouteLike) {
         const rest = new REST({version: '10'}).setToken(this.bearerToken);
-        const result = await rest.get(route, {
+        return await rest.get(route, {
             authPrefix: "Bearer"
-        });
-        return result
+        })
     }
 
     async getUserInfo() {
@@ -34,6 +30,16 @@ export class DiscordAdapter {
 
     async getUserOwnedGuilds() {
         return (await this.get(Routes.userGuilds()) as Array<PartialGuild>).filter(value => value.owner)
+    }
+
+    async getGuildChannels(guildId: string) {
+        let guild = await discordClient.guilds.fetch(guildId);
+        return guild.channels.cache
+    }
+
+    async getGuildRoles(guildId: string) {
+        let guild = await discordClient.guilds.fetch(guildId);
+        return guild.roles.cache
     }
 
     async checkServer(guildId: string) : Promise<boolean> {

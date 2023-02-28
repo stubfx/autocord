@@ -36,6 +36,14 @@ export class NetworkAdapter {
         return await this._post('/auth/ownedGuilds')
     }
 
+    static async getGuildChannels(guildId) {
+        return await this._post('/auth/getGuildChannels', {guildId : guildId})
+    }
+
+    static async getGuildRoles(guildId) {
+        return await this._post('/auth/getGuildRoles', {guildId : guildId})
+    }
+
     static async isBotInGuild(guildId) {
         return await this._post(`/auth/checkBotInGuild`, {guildId : guildId})
     }

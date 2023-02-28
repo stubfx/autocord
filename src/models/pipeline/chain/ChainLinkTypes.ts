@@ -36,4 +36,10 @@ export namespace ChainLinkTypes {
         MatchesRegex = "MatchesRegex",
     }
 
+    export enum Param {
+        STRING = 'STRING',
+        CHANNEL_ID = 'CHANNEL_ID',
+        ROLE_ID = 'ROLE_ID',
+    }
+
 }

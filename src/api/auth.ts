@@ -55,6 +55,16 @@ export default function (api, opts, done) {
         return {}
     })
 
+    api.post("/getGuildChannels", async (request) => {
+        let guildId = request.body["guildId"];
+        return await new DiscordAdapter().getGuildChannels(guildId)
+    })
+
+    api.post("/getGuildRoles", async (request) => {
+        let guildId = request.body["guildId"];
+        return await new DiscordAdapter().getGuildRoles(guildId)
+    })
+
     api.post("/checkBotInGuild", async (request) => {
         let guildId = request.body["guildId"];
         return await new DiscordAdapter().checkServer(guildId)

@@ -1,8 +1,10 @@
 <template>
-  <template v-for="param in chainLink.params">
-    <p class="uppercase mt-2">{{param.name}}</p>
-    <p class="bg-discord-3 rounded-md p-2" v-html="formattedParamValue(param.value)"></p>
-  </template>
+  <div class="flex flex-col w-full">
+    <div class="flex flex-row w-full" v-for="param in chainLink.params">
+      <span>{{ param.name }}&nbsp;:&nbsp;</span>
+      <span class="" v-html="formattedParamValue(param.value)"></span>
+    </div>
+  </div>
 </template>
 
 <script>

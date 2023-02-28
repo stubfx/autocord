@@ -3,7 +3,13 @@ import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 export class SendMessage extends Task {
     name = ChainLinkTypes.Task.SendMessage;
-    acceptParams = ["channelId", "message"];
+    acceptParams = [{
+            name: "channelId",
+            type: ChainLinkTypes.Param.CHANNEL_ID
+        }, {
+            name: "message",
+            type: ChainLinkTypes.Param.STRING
+        }];
     async behavior(...args) {
         let channelId = this.getParam("channelId");
         let message = this.getParam("message");
@@ -11,7 +17,7 @@ export class SendMessage extends Task {
             .then(async (channel) => {
             // @ts-ignore
             await channel.send(this.resolveStringEmbeds(message));
-        }).catch(async (reason) => { });
+        }).catch(async () => { });
         console.log(this.resolveStringEmbeds(message));
         return true;
     }

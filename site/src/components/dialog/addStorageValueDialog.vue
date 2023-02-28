@@ -2,7 +2,7 @@
   <simple-dialog ref="modal" :close-on-click-outside="false">
     <form ref="form" class="flex flex-col w-[400px]">
       <label class="uppercase">Storage value name</label>
-      <input class="bg-discord-3 rounded-md p-2 mt-2" type="text" v-model="value"/>
+      <input class="bg-discord-3 rounded p-2 mt-2" type="text" v-model="value"/>
       <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
     </form>
   </simple-dialog>

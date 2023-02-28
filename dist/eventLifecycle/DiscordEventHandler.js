@@ -23,6 +23,7 @@ export function init(discordClient) {
             return;
         }
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
+            channelId: data.channelId,
             userId: data.author.id,
             username: data.author.username,
             messageContent: data.content
