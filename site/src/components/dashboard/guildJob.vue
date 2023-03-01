@@ -1,11 +1,11 @@
 <template>
-  <chain-link-parameters-dialog ref="modal" @onClose="saveJob()">
+  <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
   </chain-link-parameters-dialog>
   <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
   <div class="flex flex-col bg-discord-5 p-6 rounded items-center shadow-2xl gap w-full">
     <div class="flex flex-row w-full items-center gap">
-      <h1 class="uppercase text-3xl text-white flex-grow" v-if="!showSave">{{ job.name }}</h1>
-      <input class="uppercase text-3xl bg-discord-3 text-white flex-grow" v-else v-model="job.name">
+      <h1 v-if="!showSave" class="uppercase text-3xl text-white flex-grow">{{ job.name }}</h1>
+      <input v-else class="uppercase text-3xl bg-discord-3 text-white flex-grow p-1 rounded"  v-model="job.name">
       <edit_rounded class="fill-discord-success rounded w-7 h-7 cursor-pointer"
                     v-if="editable" @click="onAddLink()"></edit_rounded>
       <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer" @click="deleteJob"
@@ -54,10 +54,13 @@ export default {
     showSave: false,
     editable: false
   },
-  emits: ['onAddLink', 'onSaveJob', 'onJobDeleted'],
+  emits: ['onAddLink', 'onSaveJob', 'onJobDeleted', 'onJobDeleted', "onJobUpdate"],
   methods: {
     onSaveJob() {
       this.$emit('onSaveJob', this.job)
+    },
+    onParameterChanged() {
+      this.$emit('onJobUpdate', this.job)
     },
     deleteJob() {
       this.$refs.deleteModal.open(async () => {

@@ -9,7 +9,7 @@
       </div>
       <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
       <div class="mt-2 flex flex-col justify-center gap w-full">
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onSaveJob="onSaveJob"
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
                    @on-job-deleted="onJobDeleted" :deletable="true" :editable="true"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
@@ -53,7 +53,7 @@ export default {
       this.$store.currentJob = job
       this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
     },
-    async onSaveJob(job) {
+    async onUpdateJob(job) {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, job)
     },
