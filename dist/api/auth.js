@@ -102,6 +102,7 @@ export default function (api, opts, done) {
         let rawJob = request.body["job"];
         let jobInstance = PipelineFactory.createJob(rawJob);
         await dbAdapter.saveJob(guildId, jobInstance);
+        LoggerHelper.success(`saved job for guild ${guildId}`);
         return {};
     });
     api.post("/getAvailableEventNames", async () => {

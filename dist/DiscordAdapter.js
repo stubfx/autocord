@@ -37,7 +37,7 @@ export class DiscordAdapter {
             guild = await client.guilds.fetch(guildId);
         }
         catch (e) {
-            LoggerHelper.error(e);
+            LoggerHelper.consoleError(e);
         }
         return !!guild;
     }

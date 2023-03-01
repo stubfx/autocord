@@ -11,6 +11,7 @@ import authApi from './api/auth.js';
 import * as sessionV from "./sessionVariables.js";
 import * as LoggerHelper from "./loggerHelper.js";
 import cors from '@fastify/cors';
+import { DiscordAdapter } from "./DiscordAdapter.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export function init() {
     const fastify = Fastify({
@@ -81,6 +82,8 @@ export function init() {
                 let accessToken = `${oauthData["access_token"]}`;
                 request.session[sessionV.AUTHENTICATED] = true;
                 request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN] = accessToken;
+                let userinfo = await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserInfo();
+                LoggerHelper.success(`User login: ${userinfo.username}(${userinfo.id})`);
             }
             catch (error) {
                 // NOTE: An unauthorized token will not throw an error
