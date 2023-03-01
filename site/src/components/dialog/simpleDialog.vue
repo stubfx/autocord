@@ -3,7 +3,7 @@
        v-if="isOpen" @click="onClickOutside()">
     <!--  dialog-->
     <div class="absolute top-0 left-0 flex w-screen h-screen justify-center items-center">
-      <div class="flex flex-col bg-discord-5 p-5 rounded text-white" @click.stop>
+      <div class="flex flex-col bg-discord-5 p rounded text-white" @click.stop>
         <slot></slot>
       </div>
     </div>

@@ -13,6 +13,12 @@ module.exports = {
                 'lg': '.5rem',
                 'full': '9999px',
             },
+            gap: {
+                DEFAULT: '1.25rem'
+            },
+            padding: {
+                DEFAULT: '1.25rem'
+            },
             colors: {
                 "discord-1": "#7289da",
                 "discord-2": "#424549",

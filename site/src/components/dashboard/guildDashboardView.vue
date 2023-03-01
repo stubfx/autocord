@@ -1,21 +1,15 @@
 <template>
-  <div class="text-white">
-    <div class="flex flex-col items-center w-full">
-      <div class="max-w-2xl text-center">
-        <h2 class="text-3xl font-bold sm:text-4xl">Automate your server!</h2>
-        <p class="text-lg leading-8 underline text-transparent">This can be dangerous.</p>
+  <div class="flex flex-col items-center w-full text-white">
+    <div class="flex flex-col items-center mt-6 gap w-full">
+      <h2 class="text-3xl font-bold sm:text-4xl">Storage</h2>
+      <div class="flex flex-row w-full">
+        <storage-view class="mt-5" :storage="storage" @on-storage-data-added="refreshGuildData"></storage-view>
       </div>
-      <div class="flex flex-col items-center mt-6">
-        <h2 class="text-3xl font-bold sm:text-4xl">Storage</h2>
-        <div class="flex flex-row w-full p-5">
-          <storage-view class="mt-5" :storage="storage" @on-storage-data-added="refreshGuildData"></storage-view>
-        </div>
-        <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
-        <div class="mt-2 flex flex-row flex-wrap justify-center w-full">
-          <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onSaveJob="onSaveJob"
-                     @on-job-deleted="onJobDeleted" :deletable="true"></guild-job>
-          <guild-job-add-card @click="addJob()"></guild-job-add-card>
-        </div>
+      <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
+      <div class="mt-2 flex flex-col justify-center gap w-full">
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onSaveJob="onSaveJob"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :editable="true"></guild-job>
+        <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
     </div>
   </div>

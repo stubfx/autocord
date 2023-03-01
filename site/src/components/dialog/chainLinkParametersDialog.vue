@@ -3,13 +3,13 @@
     <chain-link-element :link="chainLink"></chain-link-element>
     <form ref="form" class="flex flex-col w-[400px] mt-2">
       <template v-for="param in chainLink.params">
-        <label class="mt-2">{{ param.name }}</label>
+        <label class="my-2">{{ param.name }}</label>
         <input class="bg-discord-3 rounded p-2" type="text" v-model="param.value" v-if="isString(param.type)"/>
-        <select v-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-5">
-          <option v-for="channel in textChannels" :value="channel.id">{{ channel.name }}</option>
+        <select v-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
+          <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{ channel.name }}</option>
         </select>
-        <select v-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-5">
-          <option v-for="role in roles" :value="role.id">{{ role.name }}</option>
+        <select v-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
+          <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
         </select>
       </template>
       <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>

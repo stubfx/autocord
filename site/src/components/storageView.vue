@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row w-full">
     <add-storage-value-dialog ref="modal" @onClose="onStorageDataAdded"></add-storage-value-dialog>
-    <div class="flex flex-row p-5 bg-discord-5 rounded w-full items-center gap-2">
+    <div class="flex flex-row p bg-discord-5 rounded w-full items-center gap-2">
       <div class="flex flex-row bg-discord-3 p-2 rounded" v-for="item in getStorageData()">
         <p>{{ item.name }} : {{ item.value.toString() || 'EMPTY' }}</p>
       </div>

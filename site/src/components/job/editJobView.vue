@@ -1,16 +1,12 @@
 <template>
   <chain-link-parameters-dialog ref="modal">
   </chain-link-parameters-dialog>
-  <div class="flex flex-col w-full h-full">
-    <div class="flex flex-row">
-      <div class="flex flex-col items-center">
-        <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true"></guild-job>
-      </div>
-      <div class="flex flex-col bg-discord-5 shadow-2xl rounded m-5 py-3">
-        <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
-        <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
-        <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
-      </div>
+  <div class="flex flex-col w-full h-full gap">
+    <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true"></guild-job>
+    <div class="flex flex-col bg-discord-5 shadow-2xl rounded gap py">
+      <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
+      <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
+      <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
     </div>
   </div>
 </template>
@@ -29,7 +25,7 @@ import {DASHBOARDPAGES} from "../../pages.js";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
 export default {
-  name: "jobView",
+  name: "editJobView",
   emits: ['onPageChange'],
   components: {
     ConfirmDeletionDialog,

@@ -1,6 +1,6 @@
 <template>
-  <div class="relative group rounded m-5 flex flex-col items-center p-3 hover:shadow-2xl hover:-translate-y-6 transition-all duration-300 bg-discord-5 cursor-pointer w-[200px]
-  overflow-hidden h-100 hover:scale-110 hover:bg-discord-1 hover:text-discord-5"
+  <div class="group rounded flex flex-col items-center p hover:shadow-2xl hover:-translate-y-6 transition-all duration-300 bg-discord-5 cursor-pointer w-[200px]
+  h-100 hover:scale-110 hover:bg-discord-1 hover:text-discord-5"
   @click="selectGuild()">
     <object :data="getImageUrl()" type="image/png" class="rounded w-full h-auto" v-if="guild.icon">
     </object>

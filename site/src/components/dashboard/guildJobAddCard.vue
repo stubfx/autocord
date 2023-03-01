@@ -1,8 +1,8 @@
 <template>
-<div class="group relative flex flex-col flex-wrap overflow-hidden bg-discord-5 p-6 rounded m-5 items-center shadow-2xl w-[400px] opacity-50 hover:opacity-100 transition-opacity cursor-pointer
+<div class="group relative flex flex-col flex-wrap overflow-hidden bg-discord-5 p-6 rounded items-center shadow-2xl w-full opacity-50 hover:opacity-100 transition-opacity cursor-pointer
             justify-center min-h-[400px]">
-  <add_rounded class="absolute rounded-full fill-discord-1 w-full transition-colors group-hover:fill-black z-10"></add_rounded>
-  <add_rounded class="absolute rounded-full fill-discord-1 w-full transition-colors group-hover:scale-[20] transition-transform"></add_rounded>
+  <add_rounded class="max-w-[350px] absolute rounded-full fill-discord-1 w-full transition-colors group-hover:fill-black z-10"></add_rounded>
+  <add_rounded class="max-w-[350px] absolute rounded-full fill-discord-1 w-full transition-colors group-hover:scale-[20] transition-transform"></add_rounded>
 </div>
 </template>
 
