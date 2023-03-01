@@ -9,8 +9,10 @@ export class MessageCreate extends EventLink {
     //     messageContent: data.content
     // }
     exposesArguments = [
-        "userId",
+        "channelId",
+        "userId ",
         "username",
+        "messageId",
         "messageContent",
     ];
     async behavior(...args) {

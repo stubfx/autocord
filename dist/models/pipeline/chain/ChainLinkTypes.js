@@ -1,11 +1,5 @@
 export var ChainLinkTypes;
 (function (ChainLinkTypes) {
-    let ChainLinkParamType;
-    (function (ChainLinkParamType) {
-        ChainLinkParamType["STRING"] = "STRING";
-        ChainLinkParamType["BOOLEAN"] = "BOOLEAN";
-        ChainLinkParamType["NUMBER"] = "NUMBER";
-    })(ChainLinkParamType = ChainLinkTypes.ChainLinkParamType || (ChainLinkTypes.ChainLinkParamType = {}));
     let Event;
     (function (Event) {
         Event["MessageCreate"] = "MessageCreate";
@@ -26,6 +20,7 @@ export var ChainLinkTypes;
         Task["BanUser"] = "BanUser";
         Task["IncreaseCounter"] = "IncreaseCounter";
         Task["AssignRole"] = "AssignRole";
+        Task["AddMessageReaction"] = "AddMessageReaction";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {

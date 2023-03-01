@@ -11,6 +11,7 @@ import { Equals } from "./pipeline/conditions/Equals.js";
 import { MatchesRegex } from "./pipeline/conditions/MatchesRegex.js";
 import { IncreaseCounter } from "./pipeline/tasks/IncreaseCounter.js";
 import { AssignRole } from "./pipeline/tasks/AssignRole.js";
+import { AddMessageReaction } from "./pipeline/tasks/AddMessageReaction.js";
 export class PipelineFactory {
     static createJob(jobInterface, storageData = {}, guild = null) {
         let job = new Job(jobInterface.id, jobInterface.name, storageData, guild);
@@ -76,6 +77,8 @@ export class PipelineFactory {
                 return new IncreaseCounter(params);
             case ChainLinkTypes.Task.AssignRole:
                 return new AssignRole(params);
+            case ChainLinkTypes.Task.AddMessageReaction:
+                return new AddMessageReaction(params);
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`);
         }

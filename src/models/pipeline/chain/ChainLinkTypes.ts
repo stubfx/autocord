@@ -1,12 +1,5 @@
 export namespace ChainLinkTypes {
 
-
-    export enum ChainLinkParamType {
-        STRING = "STRING",
-        BOOLEAN = "BOOLEAN",
-        NUMBER = "NUMBER"
-    }
-
     export enum Event {
         MessageCreate = "MessageCreate",
         MessageReactionAdd = "MessageReactionAdd",
@@ -27,6 +20,7 @@ export namespace ChainLinkTypes {
         BanUser = "BanUser",
         IncreaseCounter = "IncreaseCounter",
         AssignRole = 'AssignRole',
+        AddMessageReaction = 'AddMessageReaction',
 
     }
 

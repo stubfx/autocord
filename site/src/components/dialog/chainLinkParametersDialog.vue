@@ -5,16 +5,19 @@
       <div ref="form" class="flex flex-col w-[400px]">
         <template v-for="param in chainLink.params">
           <label class="my-2">{{ param.name }}</label>
-          <input class="bg-discord-3 rounded p-2" type="text" v-model="param.value" v-if="isString(param.type)"/>
-          <select v-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
-            <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{
-                channel.name
-              }}
-            </option>
-          </select>
-          <select v-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
-            <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
-          </select>
+          <div class="flex flex-row w-full gap">
+            <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
+            <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value" v-if="isStringOrForcedAs(param)"/>
+            <select v-else-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
+              <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{
+                  channel.name
+                }}
+              </option>
+            </select>
+            <select v-else-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
+              <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
+            </select>
+          </div>
         </template>
         <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
       </div>
@@ -79,8 +82,11 @@ export default {
     async loadGuildRoles() {
       this.roles = await NetworkAdapter.getGuildRoles(this.$store.guildId)
     },
-    isString(type) {
-      return type === ChainLinkParam.STRING
+    isString(param) {
+      return param.type === ChainLinkParam.STRING
+    },
+    isStringOrForcedAs(param) {
+      return param.forceString || param.type === ChainLinkParam.STRING
     },
     isChannelID(type) {
       return type === ChainLinkParam.CHANNEL_ID

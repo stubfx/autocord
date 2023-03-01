@@ -21,7 +21,6 @@ export class Equals extends Condition {
         let op2 = this.getParam("op2")
         // cond = stubfx === stubfx
         let cond = this.resolveStringEmbeds(op1) === this.resolveStringEmbeds(op2)
-        console.log(`CONDITION ${cond}`)
         return cond
     }
 

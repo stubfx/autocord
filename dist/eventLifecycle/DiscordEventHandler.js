@@ -2,7 +2,13 @@ import Discord from "discord.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import * as EventHandler from "./EventHandler.js";
 import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
+import { discordClient } from "../discordbot.js";
 let client = null;
+function isMe_id(id) {
+    let isMe = discordClient.user.id === id;
+    console.log(`Is me: ${isMe}`);
+    return isMe;
+}
 export function init(discordClient) {
     client = discordClient;
     client.on(Discord.Events.GuildCreate, guild => {
@@ -18,18 +24,19 @@ export function init(discordClient) {
     //     // await dbAdapter.removeNewsChannel(channel)
     // })
     client.on(Discord.Events.MessageCreate, async (data) => {
-        if (data.author.id === client.user.id) {
-            // hey, that's me!
+        if (isMe_id(data.author.id))
             return;
-        }
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
             channelId: data.channelId,
             userId: data.author.id,
             username: data.author.username,
-            messageContent: data.content
+            messageId: data.id,
+            messageContent: data.content,
         });
     });
     client.on(Discord.Events.MessageReactionAdd, async (data, user) => {
+        if (isMe_id(user.id))
+            return;
         await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
             userId: user.id,
             username: user.username,

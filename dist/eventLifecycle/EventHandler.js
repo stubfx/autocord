@@ -27,11 +27,12 @@ export async function runEventForGuilds(guildId, eventName, eventArgs = {}) {
                         ...eventArgs,
                         ...guildInterface.storage.data
                     };
-                    PipelineFactory.createJob(job, storageData, guildInterface).run();
+                    await PipelineFactory.createJob(job, storageData, guildInterface).run();
                 }
             }
         }
         catch (e) {
+            // wont explode for the command itself as we are not waiting for it.
             LoggerHelper.error(e);
         }
     });

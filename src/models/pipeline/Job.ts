@@ -3,6 +3,7 @@ import {ChainLink} from "./chain/ChainLink.js";
 import {JobInterface} from "../JobInterface.js";
 import {ChainLinkInterface} from "../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../GuildInterface";
+import * as LoggerHelper from "../../loggerHelper.js";
 
 export class Job {
     readonly id: string
