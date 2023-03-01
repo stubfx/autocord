@@ -2,7 +2,7 @@
     <div :data-linktype="link.type" class="group cursor-pointer p
   rounded transition-colors duration-100
   data-[linktype=EVENT]:bg-discord-success
-  bg-discord-2 hover:text-discord-5 hover:bg-discord-1 flex-grow w-full max-w-[400px] h-full select-none">
+  bg-discord-2 hover:text-discord-5 hover:bg-discord-1 flex-grow w-full h-full select-none">
       <div class="flex flex-row h-full">
         <!--      <div class="flex flex-col w-[60px] justify-start">-->
         <!--        <sensor_rounded class="fill-black group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>-->
@@ -16,7 +16,7 @@
           <span class="font-light">
             {{ link.description }}
           </span>
-          <div class="flex flex-col flex-grow w-full h-full justify-end">
+          <div class="flex flex-col flex-grow w-full h-full justify-end overflow-hidden">
             <exposed-argument-string :arguments="link.exposesArguments"></exposed-argument-string>
             <link-params-view-block :chain-link="link"></link-params-view-block>
           </div>

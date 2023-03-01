@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full">
     <div class="flex flex-row flex-wrap" v-for="param in chainLink.params">
       <p>{{ param.name }}&nbsp;:&nbsp;</p>
-      <p class="overflow-hidden overflow-ellipsis" v-html="formattedParamValue(param.value)"></p>
+      <p class="overflow-hidden overflow-ellipsis max-w-[200px]" v-html="formattedParamValue(param.value)"></p>
     </div>
   </div>
 </template>
