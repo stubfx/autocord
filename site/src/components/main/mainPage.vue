@@ -1,7 +1,10 @@
 <template>
-  <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white">
+  <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
     <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
-    <simple-button @on-click="login" :text="'Login'" class="mt-4"  type="LOGIN"></simple-button>
+    <h1 class="text-4xl">❤️</h1>
+    <simple-button @on-click="login" :text="'Login'" class="mt-4" type="LOGIN"></simple-button>
+    <h1 class="text-4xl">--------------</h1>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
 </template>
 
