@@ -2,7 +2,7 @@
   <simple-dialog ref="modal" :close-on-click-outside="false">
     <div class="flex flex-col w-full">
       <chain-link-element :link="chainLink"></chain-link-element>
-      <form ref="form" class="flex flex-col w-[400px]">
+      <div ref="form" class="flex flex-col w-[400px]">
         <template v-for="param in chainLink.params">
           <label class="my-2">{{ param.name }}</label>
           <input class="bg-discord-3 rounded p-2" type="text" v-model="param.value" v-if="isString(param.type)"/>
@@ -17,7 +17,7 @@
           </select>
         </template>
         <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
-      </form>
+      </div>
     </div>
   </simple-dialog>
 </template>
