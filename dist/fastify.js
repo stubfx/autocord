@@ -34,7 +34,7 @@ export function init() {
         origin: process.env.redirectUrl
     });
     fastify.register(fastifyStatic, {
-        root: path.join(__dirname, "../site/dist"),
+        root: path.join(__dirname, "/site"),
         prefix: "/", // optional: default '/'
     });
     fastify.addHook('preSerialization', async (request, reply, payload) => {

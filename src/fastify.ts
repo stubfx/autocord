@@ -38,7 +38,7 @@ export function init() {
     })
 
     fastify.register(fastifyStatic, {
-        root: path.join(__dirname, "../site/dist"),
+        root: path.join(__dirname, "/site"),
         prefix: "/", // optional: default '/'
     });
 
