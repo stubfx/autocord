@@ -62,7 +62,7 @@ export function init() {
     fastify.post("/getDiscordLoginUrl", async () => {
         // redirect the browser to the discord login!
         let redirectUri = process.env.discord_oauth_redirectUrl;
-        return { url: `https://discord.com/api/oauth2/authorize?client_id=1078071216226709525&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}` };
+        return { url: `https://discord.com/api/oauth2/authorize?client_id=${process.env.discord_application_id}&response_type=code&scope=identify%20guilds&redirect_uri=${redirectUri}` };
     });
     fastify.get("/login", async (request, reply) => {
         let code = request.query["code"];
@@ -71,7 +71,7 @@ export function init() {
                 const tokenResponseData = await fetch('https://discord.com/api/oauth2/token', {
                     method: 'POST',
                     body: new URLSearchParams({
-                        client_id: process.env.clientId,
+                        client_id: process.env.discord_application_id,
                         client_secret: process.env.clientSecret,
                         code,
                         grant_type: 'authorization_code',

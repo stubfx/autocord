@@ -74,7 +74,7 @@ export default function (api, opts, done) {
     });
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
-        let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";
+        let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=2080374975&scope=bot%20applications.commands`;
         return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${process.env.discord_oauth_redirectUrl}` };
     });
     api.post("/getGuildJobs", async (request) => {
