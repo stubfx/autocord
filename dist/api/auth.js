@@ -83,14 +83,17 @@ export default function (api, opts, done) {
         // we need to add the metadata!
         let jobs = [];
         let storage = {};
-        if (guild) {
-            storage = guild[STORAGE];
-            for (let job of guild.jobs) {
-                // map does not work?
-                // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
-                // @ts-ignore
-                jobs.push(PipelineFactory.createJob(job));
-            }
+        if (!guild) {
+            // we must add it then!
+            await dbAdapter.createGuildWithStorage(guildId);
+            guild = await dbAdapter.getGuild(guildId);
+        }
+        storage = guild[STORAGE];
+        for (let job of guild.jobs) {
+            // map does not work?
+            // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
+            // @ts-ignore
+            jobs.push(PipelineFactory.createJob(job));
         }
         return {
             storage,

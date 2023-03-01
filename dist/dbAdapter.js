@@ -46,14 +46,18 @@ export async function deleteStorageData(guildId, storageDataName) {
     });
     return true;
 }
-async function createGuildWithJob(guildId, mongoJobId) {
+export async function createGuildWithStorage(guildId, mongoJobId = null) {
     // first make sure to create the storage for this guild!
     let storage = await new GuildStorage({
         data: {}
     }).save();
+    let jobs = [];
+    if (mongoJobId) {
+        jobs.push(jobs);
+    }
     await new GuildModel({
         guildId: guildId,
-        jobs: [mongoJobId],
+        jobs: jobs,
         storage: storage._id
     }).save();
 }
@@ -91,7 +95,7 @@ export async function saveJob(guildId, job) {
         // no guild, no job, must be a new user, welcome!
         let saved = await saveJobToDB(job);
         // in this case the guild does not exist!
-        await createGuildWithJob(guildId, saved._id);
+        await createGuildWithStorage(guildId, saved._id);
         return true;
     }
 }

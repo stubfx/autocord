@@ -13,7 +13,7 @@
       <save_rounded class="fill-discord-success rounded rounded w-7 h-7 cursor-pointer" @click="onSaveJob"
                     v-if="showSave"></save_rounded>
     </div>
-    <div class="grid grid-flow-col gap w-full overflow-hidden">
+    <div class="grid grid-flow-col gap w-full overflow-x-auto">
       <chain-link-element :link="link" v-for="link in job.chain.chainLinks" @click="editLink(link)"></chain-link-element>
     </div>
 <!--    <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded py-4 hover:bg-discord-2-->

@@ -10,7 +10,6 @@
         <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
         <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"
-                frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
       </div>
