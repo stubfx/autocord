@@ -30,7 +30,8 @@ export default {
   methods: {
     getStorageData() {
       let storageData = []
-      let data = this.storage.data;
+      let storage = this.$props.storage || {};
+      let data = storage.data;
       for (let storageKey in data) {
         storageData.push({
           name: storageKey,
