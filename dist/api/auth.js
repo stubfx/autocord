@@ -82,7 +82,7 @@ export default function (api, opts, done) {
         let guild = await dbAdapter.getGuild(guildId);
         // we need to add the metadata!
         let jobs = [];
-        let storage = {};
+        let storage;
         if (!guild) {
             // we must add it then!
             await dbAdapter.createGuildWithStorage(guildId);
