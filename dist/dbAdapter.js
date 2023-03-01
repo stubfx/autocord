@@ -38,6 +38,14 @@ export async function addStorageData(guildId, storageDataName) {
     });
     return true;
 }
+export async function deleteStorageData(guildId, storageDataName) {
+    let guild = await getGuild(guildId);
+    let storage = guild.storage;
+    await GuildStorage.findOneAndUpdate({ _id: storage._id }, {
+        $unset: { [`data.${storageDataName}`]: "" }
+    });
+    return true;
+}
 async function createGuildWithJob(guildId, mongoJobId) {
     // first make sure to create the storage for this guild!
     let storage = await new GuildStorage({

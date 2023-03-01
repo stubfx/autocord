@@ -3,7 +3,9 @@
     <div class="flex flex-col items-center mt-6 gap w-full">
       <h2 class="text-3xl font-bold sm:text-4xl">Storage</h2>
       <div class="flex flex-row w-full">
-        <storage-view class="mt-5" :storage="storage" @on-storage-data-added="refreshGuildData"></storage-view>
+        <storage-view class="mt-5" :storage="storage"
+                      @on-storage-data-added="refreshGuildData"
+                      @on-storage-data-deleted="refreshGuildData"></storage-view>
       </div>
       <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
       <div class="mt-2 flex flex-col justify-center gap w-full">

@@ -67,6 +67,11 @@ export default function (api, opts, done) {
         let dataName = request.body["dataName"];
         return await dbAdapter.addStorageData(guildId, dataName);
     });
+    api.post("/deleteStorageData", async (request) => {
+        let guildId = request.body["guildId"];
+        let dataName = request.body["dataName"];
+        return await dbAdapter.deleteStorageData(guildId, dataName);
+    });
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = "https://discord.com/oauth2/authorize?client_id=1078071216226709525&permissions=2080374975&scope=bot%20applications.commands";

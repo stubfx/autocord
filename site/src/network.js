@@ -80,4 +80,8 @@ export class NetworkAdapter {
         return (await this._post(`/auth/addStorageData`, {guildId : guildId, dataName: dataName}))
     }
 
+    static async deleteStorageData(guildId, dataName) {
+        return (await this._post(`/auth/deleteStorageData`, {guildId : guildId, dataName: dataName}))
+    }
+
 }
