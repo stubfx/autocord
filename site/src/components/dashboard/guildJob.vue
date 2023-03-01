@@ -52,7 +52,8 @@ export default {
     job: Object,
     deletable: false,
     showSave: false,
-    editable: false
+    editable: false,
+    isSample: false
   },
   emits: ['onAddLink', 'onSaveJob', 'onJobDeleted', 'onJobDeleted', "onJobUpdate"],
   methods: {
@@ -63,6 +64,9 @@ export default {
       this.$emit('onJobUpdate', this.job)
     },
     deleteJob() {
+      if (this.$props.isSample) {
+        return
+      }
       this.$refs.deleteModal.open(async () => {
         let guildId = this.$store.guildId
         await NetworkAdapter.deleteJob(guildId, this.job)
@@ -73,6 +77,9 @@ export default {
       this.$emit("onAddLink")
     },
     editLink(link) {
+      if (this.$props.isSample) {
+        return
+      }
       if (link.acceptParams.length > 0) {
         this.$refs.modal.open(link)
       }

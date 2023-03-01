@@ -3,6 +3,7 @@ import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 export class SendMessage extends Task {
     name = ChainLinkTypes.Task.SendMessage;
+    description = 'Sends a message to the given channel.';
     acceptParams = [{
             name: "channelId",
             type: ChainLinkTypes.Param.CHANNEL_ID

@@ -1,10 +1,13 @@
 <template>
   <div :data-type="type" @click="onClick()" class="group cursor-pointer p bg-discord-2 rounded
                    transition-colors duration-100
+                   w-fit
                    hover:bg-discord-1
                    data-[type=SAVE]:hover:bg-discord-success
                    data-[type=DELETE]:hover:bg-discord-error
-                   data-[type=LOGIN]:hover:bg-discord-success">
+                   data-[type=LOGIN]:hover:bg-discord-1
+                   data-[type=LOGIN]:border-discord-1
+                   data-[type=LOGIN]:border-2">
     <div class="flex flex-row items-center h-full gap-2">
       <save_rounded class="fill-gray-400 w-10 group-hover:fill-black"
                     v-if="type==='SAVE'"></save_rounded>
@@ -13,7 +16,7 @@
       <login_rounded class="fill-gray-400 w-10 group-hover:fill-black"
                      v-if="type==='LOGIN'"></login_rounded>
       <cancel_rounded class="fill-gray-400 w-10 group-hover:fill-white"
-                     v-if="!type"></cancel_rounded>
+                      v-if="!type"></cancel_rounded>
       <div class="flex flex-col justify-center h-full">
         <span class="font-semibold text-white tracking-wide
                     group-data-[type=SAVE]:group-hover:text-black
