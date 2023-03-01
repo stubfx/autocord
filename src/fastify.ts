@@ -43,7 +43,6 @@ export function init() {
         prefix: "/", // optional: default '/'
     });
 
-
     fastify.addHook('preSerialization', async (request, reply, payload) => {
         if (reply.statusCode === 500) {
             // do not send the error to avoid api spoofing.
@@ -53,7 +52,18 @@ export function init() {
         return payload
     })
 
+
     fastify.register(authApi, {prefix: '/auth'})
+
+    fastify.get('/close', (request, reply) => {
+        reply.headers({
+            "Content-Type" : 'text/html'
+        })
+        reply.send(`<script>
+          window.close();
+        </script>
+        <p>You can now close this window.</p>`);
+    })
 
     fastify.post("/logincheck", async (request) => {
         return {result : !!request.session[sessionV.AUTHENTICATED]}

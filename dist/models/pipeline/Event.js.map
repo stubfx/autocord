@@ -1,1 +1,0 @@
-{"version":3,"file":"Event.js","sourceRoot":"","sources":["../../../src/models/pipeline/Event.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,SAAS,EAAC,MAAM,sBAAsB,CAAC;AAC/C,OAAO,EAAC,cAAc,EAAC,MAAM,2BAA2B,CAAC;AAGzD,MAAM,OAAgB,KAAM,SAAQ,SAAS;IAEhC,IAAI,GAAG,cAAc,CAAC,QAAQ,CAAC,KAAK,CAAC;IAE9C,MAAM,GAA0B,EAAE,CAAC;CAItC"}
