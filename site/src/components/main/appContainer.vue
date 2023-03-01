@@ -1,6 +1,8 @@
 <template>
-  <main-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></main-page>
-  <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
+  <div class="w-full mt-3 py-20 px-56">
+    <main-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></main-page>
+    <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
+  </div>
 </template>
 
 <script>

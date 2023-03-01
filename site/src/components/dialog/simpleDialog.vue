@@ -1,9 +1,14 @@
 <template>
-  <div class="fixed z-[99999] top-0 left-0 bg-discord-2 w-full h-full overflow-hidden cursor-pointer"
+  <div class="fixed z-[99999] top-0 left-0 bg-discord-2 w-full h-full overflow-hidden"
        v-if="isOpen" @click="onClickOutside()">
     <!--  dialog-->
     <div class="absolute top-0 left-0 flex w-screen h-screen justify-center items-center">
-      <div class="flex flex-col bg-discord-5 p rounded text-white" @click.stop>
+      <div class="flex flex-col bg-discord-5 p rounded text-white gap" @click.stop>
+        <div class="flex flex-row w-full items-center">
+          <h1 class="flex-grow uppercase text-white text-2xl">{{title}}</h1>
+          <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer"
+                         @click="onCancel()" v-show="!hideCloseButton"></close_rounded>
+        </div>
         <slot></slot>
       </div>
     </div>
@@ -11,10 +16,23 @@
 </template>
 
 <script>
+import Close_rounded from "../../assets/close_rounded.vue";
+
 export default {
   name: "simpleDialog",
+  components: {Close_rounded},
   props: {
-    closeOnClickOutside: true
+    title: {
+      type: String
+    },
+    closeOnClickOutside: {
+      type: Boolean,
+      default: true
+    },
+    hideCloseButton: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['onClose'],
   data() {
@@ -27,9 +45,12 @@ export default {
       this.isOpen = true
     },
     onClickOutside() {
-      if (this.closeOnClickOutside) {
+      if (this.$props.closeOnClickOutside) {
         this.close()
       }
+    },
+    onCancel() {
+      this.close()
     },
     close() {
       this.isOpen = false

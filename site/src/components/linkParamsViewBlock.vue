@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col w-full">
-    <div class="flex flex-row w-full" v-for="param in chainLink.params">
-      <span>{{ param.name }}&nbsp;:&nbsp;</span>
-      <span class="" v-html="formattedParamValue(param.value)"></span>
+  <div class="flex flex-col">
+    <div class="flex flex-row flex-wrap" v-for="param in chainLink.params">
+      <p>{{ param.name }}&nbsp;:&nbsp;</p>
+      <p class="overflow-ellipsis" v-html="formattedParamValue(param.value)"></p>
     </div>
   </div>
 </template>

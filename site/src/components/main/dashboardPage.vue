@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col w-full gap">
-    <div class="flex flex-row p bg-discord-5 rounded" v-if="page !== DASHBOARDPAGES.GUILD_SELECTION">
+    <div class="flex flex-row p bg-discord-5 rounded gap" v-if="page !== DASHBOARDPAGES.GUILD_SELECTION">
+<!--      <simple-select></simple-select>-->
       <home_rounded class="w-[40px] cursor-pointer fill-white"
                     @click="onPageChange(DASHBOARDPAGES.GUILD_SELECTION)"></home_rounded>
     </div>
@@ -17,12 +18,14 @@ import GuildsSelector from "../guilds/guildsSelector.vue";
 import GuildDashboardView from "../dashboard/guildDashboardView.vue";
 import Home_rounded from "../../assets/home_rounded.vue";
 import EditJobView from "../job/editJobView.vue";
+import SimpleSelect from "../general/simpleSelect.vue";
 
 export default {
   name: "dashboardPage",
-  components: {EditJobView, Home_rounded, GuildDashboardView, GuildsSelector},
+  components: {SimpleSelect, EditJobView, Home_rounded, GuildDashboardView, GuildsSelector},
   data() {
     return {
+      userGuilds:[],
       page: DASHBOARDPAGES.GUILD_SELECTION,
       DASHBOARDPAGES: DASHBOARDPAGES
     }

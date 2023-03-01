@@ -1,19 +1,24 @@
 <template>
   <simple-dialog ref="modal" :close-on-click-outside="false">
-    <chain-link-element :link="chainLink"></chain-link-element>
-    <form ref="form" class="flex flex-col w-[400px] mt-2">
-      <template v-for="param in chainLink.params">
-        <label class="my-2">{{ param.name }}</label>
-        <input class="bg-discord-3 rounded p-2" type="text" v-model="param.value" v-if="isString(param.type)"/>
-        <select v-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
-          <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{ channel.name }}</option>
-        </select>
-        <select v-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
-          <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
-        </select>
-      </template>
-      <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
-    </form>
+    <div class="flex flex-col w-full">
+      <chain-link-element :link="chainLink"></chain-link-element>
+      <form ref="form" class="flex flex-col w-[400px]">
+        <template v-for="param in chainLink.params">
+          <label class="my-2">{{ param.name }}</label>
+          <input class="bg-discord-3 rounded p-2" type="text" v-model="param.value" v-if="isString(param.type)"/>
+          <select v-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
+            <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{
+                channel.name
+              }}
+            </option>
+          </select>
+          <select v-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2">
+            <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
+          </select>
+        </template>
+        <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
+      </form>
+    </div>
   </simple-dialog>
 </template>
 
@@ -24,10 +29,11 @@ import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleButton from "../simpleButton.vue";
 import {ChainLinkParam} from "../../ParamTypes.js";
 import {NetworkAdapter} from "../../network.js";
+import Close_rounded from "../../assets/close_rounded.vue";
 
 export default {
   name: "chainLinkParametersDialog",
-  components: {SimpleButton, Save_rounded, ChainLinkElement, SimpleDialog},
+  components: {Close_rounded, SimpleButton, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
       chainLink: {},

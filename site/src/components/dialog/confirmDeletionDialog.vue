@@ -1,7 +1,6 @@
 <template>
-  <simple-dialog ref="modal">
-    <h1>Are you sure you want to delete this item?</h1>
-    <div class="flex flex-row w-full mt-4">
+  <simple-dialog ref="modal" title="Are you sure?" :hide-close-button="true">
+    <div class="flex flex-row w-full">
       <simple-button text="Delete" @on-click="onConfirmDeletion()" type="DELETE"></simple-button>
       <simple-button class="ml-5" text="cancel" @on-click="noDelete()"></simple-button>
     </div>

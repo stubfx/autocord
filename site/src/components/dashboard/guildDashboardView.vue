@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center w-full text-white">
-    <div class="flex flex-col items-center mt-6 gap w-full">
+    <div class="flex flex-col items-center gap w-full">
       <h2 class="text-3xl font-bold sm:text-4xl">Storage</h2>
       <div class="flex flex-row w-full">
         <storage-view class="mt-5" :storage="storage"
