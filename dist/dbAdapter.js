@@ -6,6 +6,7 @@ import { GuildModel } from "./schemas/guildSchema.js";
 import { JobModel } from "./schemas/jobSchema.js";
 import { GuildStorage } from "./schemas/guildStorageSchema.js";
 import { JOBS, STORAGE } from "./schemas/schemas.js";
+import { skipEventsCache } from "./eventLifecycle/EventHandler.js";
 const DEFAULT_TOPIC = "top";
 let mongooseConnection = null;
 export async function init() {
@@ -69,6 +70,7 @@ export async function saveJob(guildId, job) {
         // and has the job inside.
         if (guild && !!guild.jobs.find(el => el._id.toString() === job.id)) {
             await JobModel.findOneAndReplace({ _id: job.id }, job.toJobInterface());
+            skipEventsCache.clearGuildCache(guildId);
             return true;
         }
         // mmmm, sketchy stuff here.
@@ -90,12 +92,14 @@ export async function saveJob(guildId, job) {
             guild.jobs.push(new mongoose.Types.ObjectId(saved._id));
             // ok, just update it then.
             guild.save();
+            skipEventsCache.clearGuildCache(guildId);
             return true;
         }
         // no guild, no job, must be a new user, welcome!
         let saved = await saveJobToDB(job);
         // in this case the guild does not exist!
         await createGuildWithStorage(guildId, saved._id);
+        skipEventsCache.clearGuildCache(guildId);
         return true;
     }
 }
@@ -121,10 +125,6 @@ export async function forGuildListeningForEvent(guildId, eventName, func) {
         path: JOBS,
         match: { 'chain.chainLinks.0.name': eventName }
     });
-    if (!guild) {
-        // no guild, no party.
-        return;
-    }
     // @ts-ignore
     await func(guild);
 }
