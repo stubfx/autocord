@@ -1,6 +1,7 @@
 import {ChainLinkTypes} from "./ChainLinkTypes.js";
 import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../../GuildInterface";
+import {discordClient} from "../../../discordbot.js";
 
 export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
@@ -14,7 +15,13 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
-    acceptParams: Array<{name: string, type: ChainLinkTypes.Param}> = []
+    acceptParams: Array<{
+        name: string,
+        type: ChainLinkTypes.Param,
+        options?: Array<{
+            name: string,
+            value: any
+        }> | null}> = []
     // used to help the user know which params the link adds to the store
     // this won't be saved into the db
     exposesArguments: Array<string> = []
@@ -22,11 +29,14 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     // this will be saved into the db
     params: Array<ChainLinkParam>
 
-    constructor(params: ChainLinkParam[] = [], validate = false) {
+    constructor(params: ChainLinkParam[] = []) {
+        // TODO match params in command (ex we are saving forceString in DB!!! which is fine btw)
+        // force string is ok, as the user can see that in the interface, however is not ok that
+        // everything coming from the web interface is not validated.
+        // if (validate) {
+        //     this.validate()
+        // }
         this.params = params
-        if (validate) {
-            this.validate()
-        }
     }
 
     getResolvedParam(paramName: string) {
@@ -66,6 +76,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     validate() {
         throw new Error(`Validation for ${this.name} not implemented`)
+    }
+
+    protected async fetchedGuild() {
+        return await discordClient.guilds.fetch(this.guild.guildId)
     }
 
     protected abstract behavior() : Promise<Boolean>

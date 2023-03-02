@@ -7,15 +7,13 @@
           <label class="my-2">{{ param.name }}</label>
           <div class="flex flex-row w-full gap">
             <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
-            <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value" v-if="isStringOrForcedAs(param)"/>
-            <select v-else-if="isChannelID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
-              <option v-for="channel in textChannels" :value="channel.id" class="bg-discord-5">{{
-                  channel.name
+            <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value"
+                   v-if="isStringOrForcedAs(param)"/>
+            <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
+              <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-discord-5">{{
+                  paramOption.name
                 }}
               </option>
-            </select>
-            <select v-else-if="isRoleID(param.type)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
-              <option v-for="role in roles" :value="role.id" class="bg-discord-5">{{ role.name }}</option>
             </select>
           </div>
         </template>
@@ -47,25 +45,33 @@ export default {
   emits: ['onClose'],
   methods: {
     open(chainLink) {
-      let textChannels
+      let channelId
       let roles
       // map acceptParams to params, adding only if is not present yet.
       chainLink.acceptParams.forEach(value => {
         let found = chainLink.params.find(el => el.name === value.name)
-        textChannels = textChannels || this.isChannelID(value.type)
+        channelId = channelId || this.isChannelOrCategoryID(value.type)
         roles = roles || this.isRoleID(value.type)
         if (!found) {
+          // if there are options, make sure they are all strings.
+          if (value.options) {
+            value.options = value.options.map(el => {
+              el.value = el.value.toString()
+              return el
+            })
+          }
           // param is not in the list, add it!
           chainLink.params.push({
             name: value.name,
             type: value.type,
+            options: value.options,
             value: null
           })
         }
       })
       // at least one textChannel?
-      if (textChannels) {
-        this.loadTextChannels()
+      if (channelId) {
+        this.loadChannelIds()
       }
       // at least one role?
       if (roles) {
@@ -74,22 +80,28 @@ export default {
       this.chainLink = chainLink
       this.$refs.modal.open()
     },
-    async loadTextChannels() {
+    async loadChannelIds() {
       let channels = await NetworkAdapter.getGuildChannels(this.$store.guildId);
-      // only text channels in this case.
-      this.textChannels = channels.filter(ch => ch.type === 0)
+      this.textChannels = channels.map(el => {
+        el.value = el.id
+        return el
+      })
     },
     async loadGuildRoles() {
-      this.roles = await NetworkAdapter.getGuildRoles(this.$store.guildId)
+      let roles = await NetworkAdapter.getGuildRoles(this.$store.guildId)
+      this.roles = roles.map(el => {
+        el.value = el.id
+        return el
+      })
     },
     isString(param) {
-      return param.type === ChainLinkParam.STRING
+      return !this.hasOptions(param)
     },
     isStringOrForcedAs(param) {
       return param.forceString || param.type === ChainLinkParam.STRING
     },
-    isChannelID(type) {
-      return type === ChainLinkParam.CHANNEL_ID
+    isChannelOrCategoryID(type) {
+      return type === ChainLinkParam.CHANNEL_ID || type === ChainLinkParam.CATEGORY_ID
     },
     isRoleID(type) {
       return type === ChainLinkParam.ROLE_ID
@@ -97,6 +109,42 @@ export default {
     close() {
       this.$refs.modal.close()
       this.$emit("onClose")
+    },
+    hasOptions(param) {
+      switch (param.type) {
+        case ChainLinkParam.CHANNEL_ID:
+        case ChainLinkParam.CATEGORY_ID:
+        // case ChainLinkParam.CHANNEL_TYPE:
+        case ChainLinkParam.ROLE_ID:
+          return true
+      }
+      // are there options?
+      return !!param.options
+    },
+    getParamOptions(param) {
+      // let options = [
+      // {
+      //  name: #general,
+      //    value: '3213213122313131'
+      // }
+      // ]
+      if (this.isChannelOrCategoryID(param.type)) {
+        switch (param.type){
+          case ChainLinkParam.CHANNEL_ID:
+            return this.textChannels.filter(ch => ch.type === 0)
+          case ChainLinkParam.CATEGORY_ID:
+            return this.textChannels.filter(ch => ch.type === 4)
+          default:
+            throw new Error('Type error.')
+        }
+      }
+      if (param.type === ChainLinkParam.ROLE_ID) {
+        return this.roles
+      }
+      // check if it has options then
+      if (param.options) {
+        return param.options
+      }
     }
   }
 }

@@ -150,6 +150,7 @@ export default function (api, opts, done) {
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.IncreaseCounter),
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.AssignRole),
                 PipelineFactory.getTaskByName(ChainLinkTypes.Task.AddMessageReaction),
+                PipelineFactory.getTaskByName(ChainLinkTypes.Task.CreateChannel),
             ]
         }
     })

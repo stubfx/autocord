@@ -16,14 +16,13 @@ export class SendMessage extends Task {
     }]
 
     async behavior(...args) : Promise<Boolean> {
-        let channelId = this.getParam("channelId");
-        let message = this.getParam("message");
+        let channelId = this.getResolvedParam("channelId");
+        let message = this.getResolvedParam("message");
         discordClient.channels.fetch(channelId)
             .then(async channel => {
                 // @ts-ignore
-                await channel.send(this.resolveStringEmbeds(message));
+                await channel.send(message);
             }).catch(async () => {})
-        console.log(this.resolveStringEmbeds(message))
         return true
     }
 

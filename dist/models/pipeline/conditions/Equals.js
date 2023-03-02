@@ -11,13 +11,10 @@ export class Equals extends Condition {
             type: ChainLinkTypes.Param.STRING
         }];
     async behavior(...args) {
-        // stubfx
         let op1 = this.getParam("op1");
-        // {{username}}
         let op2 = this.getParam("op2");
-        // cond = stubfx === stubfx
-        let cond = this.resolveStringEmbeds(op1) === this.resolveStringEmbeds(op2);
-        return cond;
+        // DOUBLE == IS INTENTIONAL: this module needs to handle endless possibilities.
+        return this.resolveStringEmbeds(op1) == this.resolveStringEmbeds(op2);
     }
 }
 //# sourceMappingURL=Equals.js.map

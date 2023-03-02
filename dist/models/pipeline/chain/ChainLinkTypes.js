@@ -21,6 +21,7 @@ export var ChainLinkTypes;
         Task["IncreaseCounter"] = "IncreaseCounter";
         Task["AssignRole"] = "AssignRole";
         Task["AddMessageReaction"] = "AddMessageReaction";
+        Task["CreateChannel"] = "CreateChannel";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {
@@ -33,6 +34,8 @@ export var ChainLinkTypes;
         Param["STRING"] = "STRING";
         Param["CHANNEL_ID"] = "CHANNEL_ID";
         Param["ROLE_ID"] = "ROLE_ID";
+        Param["CHANNEL_TYPE"] = "CHANNEL_TYPE";
+        Param["CATEGORY_ID"] = "CATEGORY_ID";
     })(Param = ChainLinkTypes.Param || (ChainLinkTypes.Param = {}));
 })(ChainLinkTypes || (ChainLinkTypes = {}));
 //# sourceMappingURL=ChainLinkTypes.js.map

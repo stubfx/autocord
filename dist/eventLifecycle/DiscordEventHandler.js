@@ -5,9 +5,7 @@ import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 import { discordClient } from "../discordbot.js";
 let client = null;
 function isMe_id(id) {
-    let isMe = discordClient.user.id === id;
-    console.log(`Is me: ${isMe}`);
-    return isMe;
+    return discordClient.user.id === id;
 }
 export function init(discordClient) {
     client = discordClient;
@@ -48,8 +46,15 @@ export function init(discordClient) {
         await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.GuildMemberAdd);
     });
     // random user joins voice channel, (we cannot check the user unfortunately.)
-    client.on(Discord.Events.VoiceStateUpdate, async (data) => {
-        await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.VoiceStateUpdate);
+    client.on(Discord.Events.VoiceStateUpdate, async (oldState, newState) => {
+        await EventHandler.runEventForGuilds(newState.guild.id, ChainLinkTypes.Event.VoiceStateUpdate, {
+            channelId: newState.channelId || oldState.channelId,
+            channelName: newState.channel ? newState.channel.name : oldState.channel.name,
+            userId: newState.member ? newState.member.id : newState.member.id,
+            username: newState.member ? newState.member.user.username : newState.member.user.username,
+            memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size,
+            action: newState.channelId ? 'join' : 'left'
+        });
     });
     client.on(Discord.Events.ChannelCreate, async (data) => {
         await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.ChannelCreate);

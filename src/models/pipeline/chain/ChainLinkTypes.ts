@@ -21,6 +21,7 @@ export namespace ChainLinkTypes {
         IncreaseCounter = "IncreaseCounter",
         AssignRole = 'AssignRole',
         AddMessageReaction = 'AddMessageReaction',
+        CreateChannel = 'CreateChannel',
 
     }
 
@@ -34,6 +35,8 @@ export namespace ChainLinkTypes {
         STRING = 'STRING',
         CHANNEL_ID = 'CHANNEL_ID',
         ROLE_ID = 'ROLE_ID',
+        CHANNEL_TYPE = 'CHANNEL_TYPE',
+        CATEGORY_ID = 'CATEGORY_ID',
     }
 
 }

@@ -6,6 +6,15 @@ export class VoiceStateUpdate extends EventLink {
 
     description = "Fired when a user joins a channel"
 
+    exposesArguments = [
+        'channelId',
+        'channelName',
+        'userId',
+        'username',
+        'memberCount',
+        'action'
+    ]
+
     async behavior(...args) : Promise<Boolean> {
         console.log(this.name)
         return true

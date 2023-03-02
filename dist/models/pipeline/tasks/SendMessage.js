@@ -12,14 +12,13 @@ export class SendMessage extends Task {
             type: ChainLinkTypes.Param.STRING
         }];
     async behavior(...args) {
-        let channelId = this.getParam("channelId");
-        let message = this.getParam("message");
+        let channelId = this.getResolvedParam("channelId");
+        let message = this.getResolvedParam("message");
         discordClient.channels.fetch(channelId)
             .then(async (channel) => {
             // @ts-ignore
-            await channel.send(this.resolveStringEmbeds(message));
+            await channel.send(message);
         }).catch(async () => { });
-        console.log(this.resolveStringEmbeds(message));
         return true;
     }
 }

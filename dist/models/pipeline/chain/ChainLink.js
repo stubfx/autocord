@@ -1,3 +1,4 @@
+import { discordClient } from "../../../discordbot.js";
 export class ChainLink {
     name;
     type;
@@ -13,11 +14,14 @@ export class ChainLink {
     // this holds the actual param data.
     // this will be saved into the db
     params;
-    constructor(params = [], validate = false) {
+    constructor(params = []) {
+        // TODO match params in command (ex we are saving forceString in DB!!! which is fine btw)
+        // force string is ok, as the user can see that in the interface, however is not ok that
+        // everything coming from the web interface is not validated.
+        // if (validate) {
+        //     this.validate()
+        // }
         this.params = params;
-        if (validate) {
-            this.validate();
-        }
     }
     getResolvedParam(paramName) {
         return this.resolveStringEmbeds(this.getParam(paramName));
@@ -49,6 +53,9 @@ export class ChainLink {
     }
     validate() {
         throw new Error(`Validation for ${this.name} not implemented`);
+    }
+    async fetchedGuild() {
+        return await discordClient.guilds.fetch(this.guild.guildId);
     }
 }
 //# sourceMappingURL=ChainLink.js.map
