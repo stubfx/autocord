@@ -9,6 +9,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     readonly type: ChainLinkTypes.LinkType
     description: string = "Missing description :P"
 
+    readonly cost : number = 1
+
     guild: AggregatedGuildInterface
 
     private store = {}

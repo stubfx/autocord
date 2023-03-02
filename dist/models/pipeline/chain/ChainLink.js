@@ -4,6 +4,7 @@ export class ChainLink {
     name;
     type;
     description = "Missing description :P";
+    cost = 1;
     guild;
     store = {};
     // used to help the user know which params the link accepts

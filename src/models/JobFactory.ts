@@ -26,7 +26,8 @@ export class JobFactory {
 
     static createJob(jobInterface: JobInterface, storageData: any = {}, guild: AggregatedGuildInterface = null) : Job{
         let job = new Job(jobInterface.id, jobInterface.name, storageData, guild)
-        JobFactory.validateJob(jobInterface)
+        JobFactory.validateJobInterface(jobInterface)
+        let jobCost = 0
         for (let chainElement of jobInterface.chain.chainLinks) {
             let chainLink = JobFactory.getChainLink(
                 ChainLinkTypes.LinkType[chainElement.type],
@@ -34,12 +35,16 @@ export class JobFactory {
             // REMEMBER TO VALIDATE <3
             // * battlefield theme in background *
             chainLink.validate()
+            jobCost += chainLink.cost
+            if (jobCost > +process.env.JOB_COST) {
+                throw new Error(`Job is too expensive: ${jobCost}`)
+            }
             job.addChainLink(chainLink)
         }
         return job
     }
 
-    static validateJob(jobInterface: JobInterface) {
+    static validateJobInterface(jobInterface: JobInterface) {
         if (jobInterface.chain.chainLinks.length < 2) {
             throw new Error("This job has only 1 item? Only an event?")
         }

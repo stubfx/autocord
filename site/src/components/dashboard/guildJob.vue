@@ -16,13 +16,13 @@
     <div class="grid grid-flow-col gap w-full overflow-x-auto">
       <chain-link-element :link="link" v-for="link in job.chain.chainLinks" @click="editLink(link)"></chain-link-element>
     </div>
-<!--    <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded py-4 hover:bg-discord-2-->
-<!--transition-colors overflow-hidden flex-grow items-center" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">-->
-<!--      <div class="absolute rounded-full bg-discord-2 w-[48px] h-[48px] group-hover:bg-discord-1 transition-all-->
-<!--                  group-hover:scale-[10]"></div>-->
-<!--      <add_rounded class="rounded-full fill-discord-1 w-[48px] group-hover:fill-white z-10 group-hover:rotate-180-->
-<!--      transition-all"></add_rounded>-->
-<!--    </div>-->
+    <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded py-4 hover:bg-discord-2
+transition-colors overflow-hidden flex-grow items-center" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">
+      <div class="absolute rounded-full bg-discord-2 w-[48px] h-[48px] group-hover:bg-discord-1 transition-all
+                  group-hover:scale-[50] duration-700"></div>
+      <add_rounded class="rounded-full fill-discord-1 w-[48px] group-hover:fill-white z-10 group-hover:rotate-180
+      transition-all"></add_rounded>
+    </div>
   </div>
 </template>
 
