@@ -30,6 +30,9 @@ export class ChainLink {
         // let it throw an error on null, if it happens, something has gone wrong.
         return this.params.find(value => value.name === paramName).value;
     }
+    addParam(paramName, value) {
+        return this.store[paramName] = value;
+    }
     getStoreValue(paramName) {
         return this.store[paramName];
     }

@@ -48,6 +48,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         return this.params.find(value => value.name === paramName).value
     }
 
+    addParam(paramName: string, value: string) {
+        return this.store[paramName] = value
+    }
+
     private getStoreValue(paramName: string) {
         return this.store[paramName]
     }

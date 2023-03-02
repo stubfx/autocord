@@ -22,11 +22,11 @@ export namespace ChainLinkTypes {
         AssignRole = 'AssignRole',
         AddMessageReaction = 'AddMessageReaction',
         CreateChannel = 'CreateChannel',
+        DeleteChannel = 'DeleteChannel',
 
     }
 
     export enum Condition {
-        IsMe = "IsMe",
         Equals = "Equals",
         MatchesRegex = "MatchesRegex",
     }

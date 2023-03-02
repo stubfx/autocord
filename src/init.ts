@@ -5,6 +5,7 @@ import * as LoggerHelper from "./loggerHelper.js";
 import * as DiscordAdapter from "./DiscordAdapter.js";
 import * as DiscordEventHandler from "./eventLifecycle/DiscordEventHandler.js";
 import updateCommands from "./commandHandler.js";
+import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
 
 discordBot.init(async (client) => {
     LoggerHelper.init(client)

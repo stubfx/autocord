@@ -56,13 +56,11 @@ export function init(discordClient: Discord.Client) {
     // random user joins voice channel, (we cannot check the user unfortunately.)
     client.on(Discord.Events.VoiceStateUpdate, async (oldState: VoiceState, newState: VoiceState) => {
         await EventHandler.runEventForGuilds(newState.guild.id, ChainLinkTypes.Event.VoiceStateUpdate, {
-
             channelId: newState.channelId || oldState.channelId,
             channelName: newState.channel ? newState.channel.name : oldState.channel.name,
             userId: newState.member ? newState.member.id : newState.member.id,
             username: newState.member ? newState.member.user.username : newState.member.user.username,
-            memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size,
-            action: newState.channelId ? 'join' : 'left'
+            memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size
         })
     })
 

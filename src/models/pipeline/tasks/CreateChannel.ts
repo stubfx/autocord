@@ -7,6 +7,8 @@ export class CreateChannel extends Task {
 
     description = 'Creates a new channel.'
 
+    exposesArguments = ['newChannelId']
+
     acceptParams = [{
         name: "category",
         type: ChainLinkTypes.Param.CATEGORY_ID
@@ -30,7 +32,9 @@ export class CreateChannel extends Task {
         let type = this.getResolvedParam("type");
         let name = this.getResolvedParam("name");
         let guild = await this.fetchedGuild()
-        await guild.channels.create({name: name, type: +type, parent: category})
+        let channel = await guild.channels.create({name: name, type: +type, parent: category})
+        // @ts-ignore
+        this.addParam('newChannelId', channel.id)
         return true
     }
 

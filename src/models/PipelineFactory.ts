@@ -20,6 +20,7 @@ import {IncreaseCounter} from "./pipeline/tasks/IncreaseCounter.js";
 import {AssignRole} from "./pipeline/tasks/AssignRole.js";
 import {AddMessageReaction} from "./pipeline/tasks/AddMessageReaction.js";
 import {CreateChannel} from "./pipeline/tasks/CreateChannel.js";
+import {DeleteChannel} from "./pipeline/tasks/DeleteChannel.js";
 
 export class PipelineFactory {
 
@@ -98,6 +99,8 @@ export class PipelineFactory {
                 return new AddMessageReaction(params)
             case ChainLinkTypes.Task.CreateChannel:
                 return new CreateChannel(params)
+            case ChainLinkTypes.Task.DeleteChannel:
+                return new DeleteChannel(params)
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`)
         }

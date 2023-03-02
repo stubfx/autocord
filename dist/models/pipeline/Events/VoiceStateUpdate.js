@@ -2,7 +2,7 @@ import { EventLink } from "../EventLink.js";
 import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 export class VoiceStateUpdate extends EventLink {
     name = ChainLinkTypes.Event.VoiceStateUpdate;
-    description = "Fired when a user joins a channel";
+    description = "Fired when voice channel updates.";
     exposesArguments = [
         'channelId',
         'channelName',

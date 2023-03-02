@@ -22,10 +22,10 @@ export var ChainLinkTypes;
         Task["AssignRole"] = "AssignRole";
         Task["AddMessageReaction"] = "AddMessageReaction";
         Task["CreateChannel"] = "CreateChannel";
+        Task["DeleteChannel"] = "DeleteChannel";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {
-        Condition["IsMe"] = "IsMe";
         Condition["Equals"] = "Equals";
         Condition["MatchesRegex"] = "MatchesRegex";
     })(Condition = ChainLinkTypes.Condition || (ChainLinkTypes.Condition = {}));

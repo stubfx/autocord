@@ -52,8 +52,7 @@ export function init(discordClient) {
             channelName: newState.channel ? newState.channel.name : oldState.channel.name,
             userId: newState.member ? newState.member.id : newState.member.id,
             username: newState.member ? newState.member.user.username : newState.member.user.username,
-            memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size,
-            action: newState.channelId ? 'join' : 'left'
+            memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size
         });
     });
     client.on(Discord.Events.ChannelCreate, async (data) => {

@@ -114,33 +114,17 @@ export default function (api, opts, done) {
     });
     api.post("/getAvailableEventNames", async () => {
         return {
-            links: [
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageCreate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageReactionAdd),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.VoiceStateUpdate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.ChannelCreate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.GuildMemberAdd)
-            ]
+            links: Object.keys(ChainLinkTypes.Event).map(el => PipelineFactory.getEventByName(el))
         };
     });
     api.post("/getAvailableJobConditions", async () => {
         return {
-            links: [
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals),
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.MatchesRegex),
-            ]
+            links: Object.keys(ChainLinkTypes.Condition).map(el => PipelineFactory.getConditionByName(el))
         };
     });
     api.post("/getAvailableJobTasks", async () => {
         return {
-            links: [
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.IncreaseCounter),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.AssignRole),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.AddMessageReaction),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.CreateChannel),
-            ]
+            links: Object.keys(ChainLinkTypes.Task).map(el => PipelineFactory.getTaskByName(el))
         };
     });
     // only for authenticated users with role.

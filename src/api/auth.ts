@@ -1,11 +1,13 @@
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
-import {ChainLinkInterface} from "../models/ChainLinkInterface";
 import {PipelineFactory} from "../models/PipelineFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {STORAGE} from "../schemas/schemas.js";
+import {Task} from "../models/pipeline/Task.js";
+import {Condition} from "../models/pipeline/Condition.js";
+import {EventLink} from "../models/pipeline/EventLink.js";
 
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
@@ -126,37 +128,21 @@ export default function (api, opts, done) {
         return {}
     })
 
-    api.post("/getAvailableEventNames", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableEventNames", async (): Promise<{ links: Array<EventLink> }> => {
         return {
-            links: [
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageCreate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.MessageReactionAdd),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.VoiceStateUpdate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.ChannelCreate),
-                PipelineFactory.getEventByName(ChainLinkTypes.Event.GuildMemberAdd)
-            ]
+            links: Object.keys(ChainLinkTypes.Event).map(el => PipelineFactory.getEventByName(el))
         }
     })
 
-    api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<Condition> }> => {
         return {
-            links: [
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.Equals),
-                PipelineFactory.getConditionByName(ChainLinkTypes.Condition.MatchesRegex),
-            ]
+            links: Object.keys(ChainLinkTypes.Condition).map(el => PipelineFactory.getConditionByName(el))
         }
     })
 
-    api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<ChainLinkInterface> }> => {
+    api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<Task> }> => {
         return {
-            links: [
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.BanUser),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.SendMessage),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.IncreaseCounter),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.AssignRole),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.AddMessageReaction),
-                PipelineFactory.getTaskByName(ChainLinkTypes.Task.CreateChannel),
-            ]
+            links: Object.keys(ChainLinkTypes.Task).map(el => PipelineFactory.getTaskByName(el))
         }
     })
 
