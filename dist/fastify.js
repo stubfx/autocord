@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import path from "path";
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
+import fastifyRateLimit from '@fastify/rate-limit';
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import fastifySession from "@fastify/session";
@@ -13,7 +14,7 @@ import * as LoggerHelper from "./loggerHelper.js";
 import cors from '@fastify/cors';
 import { DiscordAdapter } from "./DiscordAdapter.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-export function init() {
+export async function init() {
     const fastify = Fastify({
         logger: false
     });
@@ -33,6 +34,17 @@ export function init() {
         allowedHeaders: ["Content-Type"],
         credentials: true,
         origin: process.env.redirectUrl
+    });
+    await fastify.register(fastifyRateLimit, {
+        global: true,
+        max: 30,
+        timeWindow: 1000,
+        // allowList: ['127.0.0.1']
+    });
+    fastify.setNotFoundHandler({
+        preHandler: fastify.rateLimit()
+    }, function (request, reply) {
+        reply.code(404).send('There you go: https://www.youtube.com/watch?v=dQw4w9WgXcQ');
     });
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "/site"),

@@ -11,6 +11,6 @@ discordBot.init(async (client) => {
     DiscordEventHandler.init(client)
     await dbAdapter.init()
     DiscordAdapter.init(client)
-    fastify.init()
+    await fastify.init()
     await updateCommands(client)
 })
