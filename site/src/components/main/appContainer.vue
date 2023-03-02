@@ -5,7 +5,7 @@
   </div>
   <logout-button @on-click="logout" class="ml-20 mt-20"
                  v-if="page === PAGES.DASHBOARD_PAGE"></logout-button>
-  <div class="w-full min-h-full mt-3 py-20">
+  <div class="w-full mt-3 pt-20">
     <home-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></home-page>
     <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
   </div>

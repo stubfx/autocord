@@ -5,7 +5,6 @@ import { JobModel } from "./schemas/jobSchema.js";
 import { GuildStorage } from "./schemas/guildStorageSchema.js";
 import { JOBS, STORAGE } from "./schemas/schemas.js";
 import { skipEventsCache } from "./eventLifecycle/EventHandler.js";
-const DEFAULT_TOPIC = "top";
 let mongooseConnection = null;
 export async function init() {
     mongoose.set('strictQuery', false);
