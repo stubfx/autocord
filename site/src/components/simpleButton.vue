@@ -15,13 +15,16 @@
                      v-if="type==='DELETE'"></close_rounded>
       <login_rounded class="fill-gray-400 w-10 group-hover:fill-black"
                      v-if="type==='LOGIN'"></login_rounded>
+      <login_rounded class="fill-discord-error w-10 group-hover:fill-black"
+                     v-if="type==='LOGOUT'"></login_rounded>
       <cancel_rounded class="fill-gray-400 w-10 group-hover:fill-white"
                       v-if="!type"></cancel_rounded>
       <div class="flex flex-col justify-center h-full">
         <span class="font-semibold text-white tracking-wide
                     group-data-[type=SAVE]:group-hover:text-black
                     group-data-[type=DELETE]:group-hover:text-white
-                    group-data-[type=LOGIN]:group-hover:text-black">{{ text }}</span>
+                    group-data-[type=LOGIN]:group-hover:text-black
+                    group-data-[type=LOGOUT]:group-hover:text-black">{{ text }}</span>
       </div>
     </div>
   </div>

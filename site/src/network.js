@@ -32,6 +32,10 @@ export class NetworkAdapter {
         return (await this._post('/logincheck'))['result']
     }
 
+    static async logout() {
+        return (await this._post(`/auth/logout`))
+    }
+
     static async getOwnedGuilds() {
         return await this._post('/auth/ownedGuilds')
     }

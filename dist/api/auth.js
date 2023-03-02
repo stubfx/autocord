@@ -31,6 +31,10 @@ export default function (api, opts, done) {
             }
         }
     });
+    api.post("/logout", async (request) => {
+        await request.session.destroy();
+        return { msg: 'bye!' };
+    });
     api.post("/ownedGuilds", async (request) => {
         let partialGuilds = await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserOwnedGuilds();
         request.session.ownedGuilds = partialGuilds.filter(value => value.owner).map(value => value.id);
