@@ -9,13 +9,12 @@
 
 <script>
 import SimpleDialog from "./simpleDialog.vue";
-import SimpleButton from "../simpleButton.vue";
 import DeleteButton from "../buttons/deleteButton.vue";
 import CancelButton from "../buttons/cancelButton.vue";
 
 export default {
   name: "confirmDeletionDialog",
-  components: {CancelButton, DeleteButton, SimpleButton, SimpleDialog},
+  components: {CancelButton, DeleteButton, SimpleDialog},
   data() {
     return {
       cb: null

@@ -1,22 +1,22 @@
 <template>
   <simple-dialog ref="modal" :close-on-click-outside="false" title="Add storage value">
-    <div ref="form" class="flex flex-col w-[400px]" @submit="close()">
-      <input class="bg-discord-3 rounded p-2 mt-2" type="text" v-model="value"/>
-      <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
+    <div ref="form" class="flex flex-col w-[400px] items-center gap" @submit="close()">
+      <input class="bg-discord-3 rounded p-2 mt-2 w-full" type="text" v-model="value"/>
+      <save-button @onClick="close()"></save-button>
     </div>
   </simple-dialog>
 </template>
 
 <script>
-import SimpleButton from "../simpleButton.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
 import ChainLinkElement from "../chainLinkElement.vue";
 import SimpleDialog from "./simpleDialog.vue";
 import {NetworkAdapter} from "../../network.js";
+import SaveButton from "../buttons/saveButton.vue";
 
 export default {
   name: "addStorageValueDialog",
-  components: {SimpleButton, Save_rounded, ChainLinkElement, SimpleDialog},
+  components: {SaveButton, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
       value : ''

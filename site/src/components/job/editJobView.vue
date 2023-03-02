@@ -20,7 +20,6 @@ import Sensor_rounded from "../../assets/sensor_rounded.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
-import SimpleButton from "../simpleButton.vue";
 import {DASHBOARDPAGES} from "../../pages.js";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
@@ -29,9 +28,9 @@ export default {
   emits: ['onPageChange'],
   components: {
     ConfirmDeletionDialog,
-    SimpleButton,
     ChainLinkParametersDialog,
-    SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob},
+    SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob
+  },
   data() {
     return {
       job: {
@@ -64,11 +63,11 @@ export default {
       } else if (item.type === "TASK" || item.type === "CONDITION") {
         // count events in chain (max 4)
         let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
-              if (currentValue.type !== 'EVENT') {
-                return ++accumulator
-              }
-              return accumulator
-            }, 0)
+          if (currentValue.type !== 'EVENT') {
+            return ++accumulator
+          }
+          return accumulator
+        }, 0)
         if (count < 4) {
           this.job.chain.chainLinks.push(item)
           this.onLinkAdded(item)
@@ -83,7 +82,7 @@ export default {
     async onSaveJob() {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, this.job)
-      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
+      this.$emit('onPageChange', DASHBOARDPAGES.JOB_LISTING)
     }
   }
 }

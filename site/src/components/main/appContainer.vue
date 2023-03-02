@@ -18,13 +18,12 @@ import GuildDashboardView from "../dashboard/guildDashboardView.vue";
 import DashboardPage from "./dashboardPage.vue";
 import Logout_rounded from "../../assets/logout_rounded.vue";
 import {NetworkAdapter} from "../../network.js";
-import SimpleButton from "../simpleButton.vue";
 import HomePage from "../homePage/homePage.vue";
 import LogoutButton from "../buttons/logoutButton.vue";
 
 export default {
   name: "appContainer",
-  components: {LogoutButton, HomePage, SimpleButton, Logout_rounded, DashboardPage, GuildDashboardView, GuildsSelector},
+  components: {LogoutButton, HomePage, Logout_rounded, DashboardPage, GuildDashboardView, GuildsSelector},
   data() {
     return {
       page: PAGES.MAIN_PAGE,

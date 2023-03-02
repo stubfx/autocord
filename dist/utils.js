@@ -1,6 +1,4 @@
-import topicsData from "./datamodels/topicsData.js";
 import fetch from "node-fetch";
-import locales from './datamodels/locales.js';
 import { PermissionFlagsBits } from "discord.js";
 export function rndArrayItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -41,26 +39,6 @@ export function checkStringLength(string, max, min = 1) {
         }
     }
     return null;
-}
-export function getTimageFromTopicValue(topicValue) {
-    if ((topicsData[topicValue])) {
-        let imageLinks = topicsData[topicValue].images;
-        return imageLinks ? rndArrayItem(imageLinks) : null;
-    }
-    return `ERROR(${topicValue})`;
-}
-export function getNameFromTopicValue(topicValue) {
-    if ((topicsData[topicValue])) {
-        return topicsData[topicValue].name;
-    }
-    return `ERROR(${topicValue})`;
-}
-export function getNameFromLanguageValue(languageValue) {
-    let find = locales.find(value => value.value === languageValue);
-    if (find) {
-        return find.name;
-    }
-    return `ERROR(${languageValue})`;
 }
 export function sendMessagesPermissionsInFetchedChannel(guildMember, channel) {
     let viewChannelPermission = guildMember.permissionsIn(channel).has(PermissionFlagsBits.ViewChannel);

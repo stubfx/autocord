@@ -17,7 +17,7 @@
             </select>
           </div>
         </template>
-        <simple-button class="mt-5 w-fit self-center" @onClick="close()" text="save" type="SAVE"></simple-button>
+        <save-button class="self-center mt-5" @onClick="close()"></save-button>
       </div>
     </div>
   </simple-dialog>
@@ -27,14 +27,14 @@
 import SimpleDialog from "./simpleDialog.vue";
 import ChainLinkElement from "../chainLinkElement.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
-import SimpleButton from "../simpleButton.vue";
 import {ChainLinkParam} from "../../ParamTypes.js";
 import {NetworkAdapter} from "../../network.js";
 import Close_rounded from "../../assets/close_rounded.vue";
+import SaveButton from "../buttons/saveButton.vue";
 
 export default {
   name: "chainLinkParametersDialog",
-  components: {Close_rounded, SimpleButton, Save_rounded, ChainLinkElement, SimpleDialog},
+  components: {SaveButton, Close_rounded, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
       chainLink: {},
