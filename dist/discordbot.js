@@ -1,4 +1,4 @@
-import Discord, { Events, GatewayIntentBits, IntentsBitField, Partials } from "discord.js";
+import Discord, { ActivityType, Events, GatewayIntentBits, IntentsBitField, Partials } from "discord.js";
 import * as LoggerHelper from "./loggerHelper.js";
 export let discordClient;
 export function init(onReady) {
@@ -6,6 +6,7 @@ export function init(onReady) {
             IntentsBitField.Flags.GuildVoiceStates, IntentsBitField.Flags.GuildMessageReactions], partials: [Partials.Message, Partials.Reaction, Partials.Channel] });
     discordClient.on(Events.ClientReady, async () => {
         LoggerHelper.dev(`Logged in as ${discordClient.user.tag}!`);
+        discordClient.user.setActivity("/help", { type: ActivityType.Playing });
         onReady(discordClient);
     });
     discordClient.login(process.env.discord_token).catch(reason => {
