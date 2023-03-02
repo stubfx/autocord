@@ -24,7 +24,7 @@ export function getSampleJob() {
                 }, {
                     "name": "message",
                     "type": "STRING",
-                    "value": "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
+                    "value": "Welcome {{username}}!"
                 }]
             }, {
                 "name": "Equals",
@@ -81,32 +81,19 @@ export function getSampleJob2() {
                 }, {
                     "name": "message",
                     "type": "STRING",
-                    "value": "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
+                    "value": "I'm sorry {{username}}!"
                 }]
             }, {
-                "name": "Equals",
-                "type": "CONDITION",
-                "description": "Checks if op1 = op2",
-                "store": {},
-                "acceptParams": [{"name": "op1", "type": "STRING"}, {"name": "op2", "type": "STRING"}],
-                "exposesArguments": [],
-                "params": [{"name": "op1", "type": "STRING", "value": "{{messageContent}}"}, {
-                    "name": "op2",
-                    "type": "STRING",
-                    "value": "Hello!"
-                }]
-            }, {
-                "name": "AssignRole",
+                "name": "BanUser",
                 "type": "TASK",
-                "description": "Assigns the given role to the user.",
+                "description": "Ban user by userId.",
                 "store": {},
-                "acceptParams": [{"name": "userId", "type": "STRING"}, {"name": "roleId", "type": "ROLE_ID"}],
+                "acceptParams": [{"name": "userId", "type": "STRING"}, {"name": "reason", "type": "STRING"}],
                 "exposesArguments": [],
-                "params": [{"name": "userId", "type": "STRING", "value": "{{userId}}"}, {
-                    "name": "roleId",
-                    "type": "ROLE_ID",
-                    "value": "1080193005803274351"
-                }]
+                "params": [
+                    {"name": "userId", "type": "STRING", "value": "{{userId}}"},
+                    {"name": "reason", "type": "STRING", "value": "Cause I'm cool."}
+                ]
             }]
         }, "guild": null, "store": {}
     }
