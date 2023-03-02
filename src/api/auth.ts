@@ -1,7 +1,7 @@
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
-import {PipelineFactory} from "../models/PipelineFactory.js";
+import {JobFactory} from "../models/JobFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {STORAGE} from "../schemas/schemas.js";
@@ -57,7 +57,7 @@ export default function (api, opts, done) {
             // no id, abort.
             return {}
         }
-        let jobInstance = PipelineFactory.createJob(rawJob)
+        let jobInstance = JobFactory.createJob(rawJob)
         await dbAdapter.deleteJob(guildId, jobInstance)
         return {}
     })
@@ -111,7 +111,7 @@ export default function (api, opts, done) {
             // map does not work?
             // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
             // @ts-ignore
-            jobs.push(PipelineFactory.createJob(job))
+            jobs.push(JobFactory.createJob(job))
         }
         return {
             storage,
@@ -122,7 +122,7 @@ export default function (api, opts, done) {
     api.post("/saveJob", async (request) => {
         let guildId = request.body["guildId"];
         let rawJob = request.body["job"];
-        let jobInstance = PipelineFactory.createJob(rawJob)
+        let jobInstance = JobFactory.createJob(rawJob)
         await dbAdapter.saveJob(guildId, jobInstance)
         LoggerHelper.success(`saved job for guild ${guildId}`)
         return {}
@@ -130,19 +130,19 @@ export default function (api, opts, done) {
 
     api.post("/getAvailableEventNames", async (): Promise<{ links: Array<EventLink> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Event).map(el => PipelineFactory.getEventByName(el))
+            links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
         }
     })
 
     api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<Condition> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Condition).map(el => PipelineFactory.getConditionByName(el))
+            links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))
         }
     })
 
     api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<Task> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Task).map(el => PipelineFactory.getTaskByName(el))
+            links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
         }
     })
 

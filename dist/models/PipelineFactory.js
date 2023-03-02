@@ -19,7 +19,7 @@ export class PipelineFactory {
         let job = new Job(jobInterface.id, jobInterface.name, storageData, guild);
         PipelineFactory.validateJob(jobInterface);
         for (let chainElement of jobInterface.chain.chainLinks) {
-            job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params));
+            job.addChainLink(PipelineFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params, true));
         }
         return job;
     }
@@ -40,61 +40,61 @@ export class PipelineFactory {
             throw new Error("Exceeded maximum chain length for this job.");
         }
     }
-    static getChainLink(type, name, params = []) {
+    static getChainLink(type, name, params = [], validate = false) {
         // TODO check if params match the actual chainLink to avoid db exploitation
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
-                return this.getEventByName(name, params);
+                return this.getEventByName(name, params, validate);
             case ChainLinkTypes.LinkType.CONDITION:
-                return this.getConditionByName(name, params);
+                return this.getConditionByName(name, params, validate);
             case ChainLinkTypes.LinkType.TASK:
-                return this.getTaskByName(name, params);
+                return this.getTaskByName(name, params, validate);
             default:
                 throw new Error(`Unknown chain type: ${type}`);
         }
     }
-    static getEventByName(chainLinkEventName, params = []) {
+    static getEventByName(chainLinkEventName, params = [], validate = false) {
         switch (chainLinkEventName) {
             case ChainLinkTypes.Event.MessageCreate:
-                return new MessageCreate(params);
+                return new MessageCreate(params, validate);
             case ChainLinkTypes.Event.VoiceStateUpdate:
-                return new VoiceStateUpdate(params);
+                return new VoiceStateUpdate(params, validate);
             case ChainLinkTypes.Event.ChannelCreate:
-                return new ChannelCreate(params);
+                return new ChannelCreate(params, validate);
             case ChainLinkTypes.Event.GuildMemberAdd:
-                return new GuildMemberAdd(params);
+                return new GuildMemberAdd(params, validate);
             case ChainLinkTypes.Event.MessageReactionAdd:
-                return new MessageReactionAdd(params);
+                return new MessageReactionAdd(params, validate);
             default:
                 throw new Error(`Unknown condition name: ${chainLinkEventName}`);
         }
     }
-    static getTaskByName(chainLinkTaskName, params = []) {
+    static getTaskByName(chainLinkTaskName, params = [], validate = false) {
         switch (chainLinkTaskName) {
             case ChainLinkTypes.Task.SendMessage:
-                return new SendMessage(params);
+                return new SendMessage(params, validate);
             case ChainLinkTypes.Task.BanUser:
-                return new BanUser(params);
+                return new BanUser(params, validate);
             case ChainLinkTypes.Task.IncreaseCounter:
-                return new IncreaseCounter(params);
+                return new IncreaseCounter(params, validate);
             case ChainLinkTypes.Task.AssignRole:
-                return new AssignRole(params);
+                return new AssignRole(params, validate);
             case ChainLinkTypes.Task.AddMessageReaction:
-                return new AddMessageReaction(params);
+                return new AddMessageReaction(params, validate);
             case ChainLinkTypes.Task.CreateChannel:
-                return new CreateChannel(params);
+                return new CreateChannel(params, validate);
             case ChainLinkTypes.Task.DeleteChannel:
-                return new DeleteChannel(params);
+                return new DeleteChannel(params, validate);
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`);
         }
     }
-    static getConditionByName(chainLinkConditionName, params = []) {
+    static getConditionByName(chainLinkConditionName, params = [], validate = false) {
         switch (chainLinkConditionName) {
             case ChainLinkTypes.Condition.Equals:
-                return new Equals(params);
+                return new Equals(params, validate);
             case ChainLinkTypes.Condition.MatchesRegex:
-                return new MatchesRegex(params);
+                return new MatchesRegex(params, validate);
             default:
                 throw new Error(`Unknown condition name: ${chainLinkConditionName}`);
         }

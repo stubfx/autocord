@@ -22,16 +22,19 @@ import {AddMessageReaction} from "./pipeline/tasks/AddMessageReaction.js";
 import {CreateChannel} from "./pipeline/tasks/CreateChannel.js";
 import {DeleteChannel} from "./pipeline/tasks/DeleteChannel.js";
 
-export class PipelineFactory {
+export class JobFactory {
 
     static createJob(jobInterface: JobInterface, storageData: any = {}, guild: AggregatedGuildInterface = null) : Job{
         let job = new Job(jobInterface.id, jobInterface.name, storageData, guild)
-        PipelineFactory.validateJob(jobInterface)
+        JobFactory.validateJob(jobInterface)
         for (let chainElement of jobInterface.chain.chainLinks) {
-            job.addChainLink(PipelineFactory.getChainLink(
+            let chainLink = JobFactory.getChainLink(
                 ChainLinkTypes.LinkType[chainElement.type],
-                chainElement.name, chainElement.params)
-            )
+                chainElement.name, chainElement.params);
+            // REMEMBER TO VALIDATE <3
+            // * battlefield theme in background *
+            chainLink.validate()
+            job.addChainLink(chainLink)
         }
         return job
     }

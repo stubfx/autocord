@@ -1,5 +1,5 @@
 import * as dbAdapter from "../dbAdapter.js";
-import {PipelineFactory} from "../models/PipelineFactory.js";
+import {JobFactory} from "../models/JobFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {GuildEventsCache} from "../cacheSystem/guildEventsCache.js";
 
@@ -29,7 +29,7 @@ export async function runEventForGuilds(guildId: string, eventName: string, even
                         ...eventArgs,
                         ...guildInterface.storage.data
                     }
-                    await PipelineFactory.createJob(job, storageData, guildInterface).run()
+                    await JobFactory.createJob(job, storageData, guildInterface).run()
                 }
             }
         } catch (e) {
