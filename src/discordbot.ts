@@ -8,7 +8,7 @@ export function init(onReady: (client: Discord.Client) => {}) {
         IntentsBitField.Flags.GuildVoiceStates, IntentsBitField.Flags.GuildMessageReactions], partials: [Partials.Message, Partials.Reaction, Partials.Channel]});
     discordClient.on(Events.ClientReady, async () => {
         LoggerHelper.dev(`Logged in as ${discordClient.user.tag}!`);
-        discordClient.user.setActivity("/help", {type: ActivityType.Playing})
+        discordClient.user.setActivity("/dashboard", {type: ActivityType.Playing})
         onReady(discordClient)
     });
 

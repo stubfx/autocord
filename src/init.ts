@@ -4,6 +4,7 @@ import * as dbAdapter from "./dbAdapter.js";
 import * as LoggerHelper from "./loggerHelper.js";
 import * as DiscordAdapter from "./DiscordAdapter.js";
 import * as DiscordEventHandler from "./eventLifecycle/DiscordEventHandler.js";
+import updateCommands from "./commandHandler.js";
 
 discordBot.init(async (client) => {
     LoggerHelper.init(client)
@@ -11,4 +12,5 @@ discordBot.init(async (client) => {
     await dbAdapter.init()
     DiscordAdapter.init(client)
     fastify.init()
+    await updateCommands(client)
 })

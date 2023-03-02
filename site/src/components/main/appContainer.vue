@@ -3,8 +3,8 @@
        v-if="page !== PAGES.MAIN_PAGE">
     <h1 class="text-2xl font-bold text-discord-1 my-3">AUTOCORD.IO</h1>
   </div>
-  <simple-button @on-click="logout" :text="'Logout'" type="LOGOUT" class="ml-20 mt-20"
-                 v-if="page === PAGES.DASHBOARD_PAGE"></simple-button>
+  <logout-button @on-click="logout" class="ml-20 mt-20"
+                 v-if="page === PAGES.DASHBOARD_PAGE"></logout-button>
   <div class="w-full min-h-full mt-3 py-20">
     <home-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></home-page>
     <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
@@ -20,10 +20,11 @@ import Logout_rounded from "../../assets/logout_rounded.vue";
 import {NetworkAdapter} from "../../network.js";
 import SimpleButton from "../simpleButton.vue";
 import HomePage from "../homePage/homePage.vue";
+import LogoutButton from "../buttons/logoutButton.vue";
 
 export default {
   name: "appContainer",
-  components: {HomePage, SimpleButton, Logout_rounded, DashboardPage, GuildDashboardView, GuildsSelector},
+  components: {LogoutButton, HomePage, SimpleButton, Logout_rounded, DashboardPage, GuildDashboardView, GuildsSelector},
   data() {
     return {
       page: PAGES.MAIN_PAGE,

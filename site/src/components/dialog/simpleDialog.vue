@@ -1,5 +1,9 @@
 <template>
-  <div class="fixed z-[99999] top-0 left-0 bg-discord-2 w-full h-full overflow-hidden"
+  <div class="fixed z-[99999] top-0 left-0 bg-black opacity-90 w-full h-full overflow-hidden"
+       v-if="isOpen" @click="onClickOutside()">
+<!--    this is just for the background-->
+  </div>
+  <div class="fixed z-[99999] top-0 left-0 w-full h-full overflow-hidden"
        v-if="isOpen" @click="onClickOutside()">
     <!--  dialog-->
     <div class="absolute top-0 left-0 flex w-screen h-screen justify-center items-center">

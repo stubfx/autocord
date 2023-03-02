@@ -1,21 +1,12 @@
 <template>
-  <div @click="onClick()" class="group cursor-pointer p bg-discord-2 rounded
-                   transition-colors duration-100
-                   w-fit
-                   hover:bg-discord-1
-                   data-[type=SAVE]:hover:bg-discord-success
-                   data-[type=DELETE]:hover:bg-discord-error
-                   data-[type=LOGIN]:hover:bg-discord-1
-                   data-[type=LOGIN]:border-discord-1
-                   data-[type=LOGIN]:border-2">
+  <div @click="onClick()" class="group cursor-pointer p rounded transition-colors duration-100
+                   w-fit">
     <div class="flex flex-row items-center h-full gap-2">
-      <icon_clyde class="fill-white"></icon_clyde>
+      <div class="w-[50px]">
+        <slot></slot>
+      </div>
       <div class="flex flex-col justify-center h-full">
-        <span class="font-semibold text-white tracking-wide
-                    group-data-[type=SAVE]:group-hover:text-black
-                    group-data-[type=DELETE]:group-hover:text-white
-                    group-data-[type=LOGIN]:group-hover:text-black
-                    group-data-[type=LOGOUT]:group-hover:text-black">{{ text }}</span>
+        <span class="font-semibold tracking-wide">{{ text }}</span>
       </div>
     </div>
   </div>

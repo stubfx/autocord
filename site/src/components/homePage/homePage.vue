@@ -2,8 +2,8 @@
   <div class="flex flex-col w-full gap items-center">
     <div class="flex flex-col container gap">
       <div class="flex flex-row gap">
-        <simple-button @on-click="login" :text="'Login'" type="LOGIN"></simple-button>
-        <app-button @on-click="supportServer" :text="'Support server'"></app-button>
+        <login-button @on-click="login" :text="'Login'" type="LOGIN"></login-button>
+        <support-server-button @on-click="supportServer"></support-server-button>
       </div>
       <h1 class="text-discord-1 text-9xl self-center">AUTOCORD.IO</h1>
       <h1 class="text-white text-2xl self-center mt-3">Discord automation made simple.</h1>
@@ -22,18 +22,18 @@
 </template>
 
 <script>
-import SimpleButton from "../simpleButton.vue";
 import {PAGES} from "../../pages.js";
 import {NetworkAdapter} from "../../network.js";
 import {openPopup} from "../../../popup.js";
 import GuildJob from "../dashboard/guildJob.vue";
 import {getSampleJob, getSampleJob2} from "../../sampleJob.js";
-import AppButton from "../buttons/appButton.vue";
+import SupportServerButton from "../buttons/supportServerButton.vue";
+import LoginButton from "../buttons/loginButton.vue";
 
 export default {
   name: "homePage",
   emits: ['onPageChange'],
-  components: {AppButton, GuildJob, SimpleButton},
+  components: {LoginButton, SupportServerButton, GuildJob},
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection

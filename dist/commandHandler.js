@@ -30,19 +30,21 @@ export default async function updateCommands(client) {
     try {
         LoggerHelper.dev(`Started refreshing application (/) commands.`);
         // The put method is used to fully refresh all commands in the guild with the current set
-        const data = await rest.put(
+        /*const data = */ await rest.put(
         // Routes.applicationGuildCommands(process.env.discord_application_id, guild.id),
         // for all guilds.
         // Routes.applicationCommands(process.env.discord_application_id, {body}),
         Routes.applicationCommands(process.env.discord_application_id), { body: restCommands });
-        // The put method is used to fully refresh all commands in the guild with the current set
-        const dataRestricted = await rest.put(
-        // Routes.applicationCommands(process.env.discord_application_id, {body}),
-        Routes.applicationGuildCommands(process.env.discord_application_id, process.env.discord_admin_guild), { body: restCommandsForAdminGuild });
-        // @ts-ignore
-        LoggerHelper.info(`Successfully reloaded ${data.length} application (/) commands.`);
-        // @ts-ignore
-        LoggerHelper.info(`Successfully reloaded ${dataRestricted.length} admin application (/) commands.`);
+        // // The put method is used to fully refresh all commands in the guild with the current set
+        // const dataRestricted = await rest.put(
+        //     // Routes.applicationCommands(process.env.discord_application_id, {body}),
+        //     Routes.applicationGuildCommands(process.env.discord_application_id, process.env.discord_admin_guild),
+        //     {body: restCommandsForAdminGuild},
+        // );
+        // // @ts-ignore
+        // LoggerHelper.info(`Successfully reloaded ${data.length} application (/) commands.`);
+        // // @ts-ignore
+        // LoggerHelper.info(`Successfully reloaded ${dataRestricted.length} admin application (/) commands.`);
     }
     catch (error) {
         // And of course, make sure you catch and log any errors!
