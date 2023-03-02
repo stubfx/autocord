@@ -6,7 +6,7 @@
   <simple-button @on-click="logout" :text="'Logout'" type="LOGOUT" class="ml-20 mt-20"
                  v-if="page === PAGES.DASHBOARD_PAGE"></simple-button>
   <div class="w-full min-h-full mt-3 py-20">
-    <splash-screen v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></splash-screen>
+    <home-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></home-page>
     <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
   </div>
 </template>
@@ -16,14 +16,14 @@ import {PAGES} from "../../pages.js";
 import GuildsSelector from "../guilds/guildsSelector.vue";
 import GuildDashboardView from "../dashboard/guildDashboardView.vue";
 import DashboardPage from "./dashboardPage.vue";
-import SplashScreen from "../splashScreen/splashScreen.vue";
 import Logout_rounded from "../../assets/logout_rounded.vue";
 import {NetworkAdapter} from "../../network.js";
 import SimpleButton from "../simpleButton.vue";
+import HomePage from "../homePage/homePage.vue";
 
 export default {
   name: "appContainer",
-  components: {SimpleButton, Logout_rounded, SplashScreen, DashboardPage, GuildDashboardView, GuildsSelector},
+  components: {HomePage, SimpleButton, Logout_rounded, DashboardPage, GuildDashboardView, GuildsSelector},
   data() {
     return {
       page: PAGES.MAIN_PAGE,

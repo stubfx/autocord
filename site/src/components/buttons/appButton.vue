@@ -1,0 +1,49 @@
+<template>
+  <div @click="onClick()" class="group cursor-pointer p bg-discord-2 rounded
+                   transition-colors duration-100
+                   w-fit
+                   hover:bg-discord-1
+                   data-[type=SAVE]:hover:bg-discord-success
+                   data-[type=DELETE]:hover:bg-discord-error
+                   data-[type=LOGIN]:hover:bg-discord-1
+                   data-[type=LOGIN]:border-discord-1
+                   data-[type=LOGIN]:border-2">
+    <div class="flex flex-row items-center h-full gap-2">
+      <icon_clyde class="fill-white"></icon_clyde>
+      <div class="flex flex-col justify-center h-full">
+        <span class="font-semibold text-white tracking-wide
+                    group-data-[type=SAVE]:group-hover:text-black
+                    group-data-[type=DELETE]:group-hover:text-white
+                    group-data-[type=LOGIN]:group-hover:text-black
+                    group-data-[type=LOGOUT]:group-hover:text-black">{{ text }}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Cancel_rounded from "../../assets/cancel_rounded.vue";
+import Login_rounded from "../../assets/login_rounded.vue";
+import Task_rounded from "../../assets/task_rounded.vue";
+import Close_rounded from "../../assets/close_rounded.vue";
+import Save_rounded from "../../assets/save_rounded.vue";
+import Icon_clyde from "../../assets/icon_clyde.vue";
+
+export default {
+  name: "appButton",
+  components: {Icon_clyde, Cancel_rounded, Login_rounded, Task_rounded, Close_rounded, Save_rounded},
+  emits: ['onClick'],
+  props: {
+    text: "NONE",
+  },
+  methods: {
+    onClick() {
+      this.$emit("onClick")
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
