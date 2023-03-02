@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full gap">
+  <div class="flex flex-col w-full gap lg:px-56">
     <div class="flex flex-row p bg-discord-5 rounded gap" v-if="page !== DASHBOARDPAGES.GUILD_SELECTION">
 <!--      <simple-select></simple-select>-->
       <home_rounded class="w-[40px] cursor-pointer fill-white"

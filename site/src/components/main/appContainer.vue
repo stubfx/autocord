@@ -3,7 +3,7 @@
        v-if="page !== PAGES.MAIN_PAGE">
     <h1 class="text-2xl font-bold text-discord-1 my-3">AUTOCORD.IO</h1>
   </div>
-  <div class="w-full min-h-full mt-3 py-20 px-56">
+  <div class="w-full min-h-full mt-3 py-20">
     <splash-screen v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></splash-screen>
     <dashboard-page v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
   </div>
