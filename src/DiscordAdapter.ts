@@ -50,6 +50,7 @@ export class DiscordAdapter {
         try {
             guild = await client.guilds.fetch(guildId)
         } catch (e) {
+            // save this from the console.
             LoggerHelper.consoleError(e)
         }
         return !!guild
