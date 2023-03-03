@@ -16,7 +16,7 @@ export function init(onReady) {
 }
 function changeActivityTask() {
     discordClient.user.setActivity("/help", { type: ActivityType.Playing });
-    setInterval(args => {
+    setInterval(() => {
         let activity;
         if (isPlayingHelp) {
             activity = "/help";

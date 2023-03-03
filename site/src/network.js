@@ -72,6 +72,10 @@ export class NetworkAdapter {
         return (await this._post(`/getAvailableEventNames`))['links']
     }
 
+    static async getBotGuildCount() {
+        return (await this._post(`/getBotGuildCount`))['guildCount']
+    }
+
     static async saveJob(guildId, job) {
         return (await this._post(`/auth/saveJob`, {guildId : guildId, job: job}))
     }

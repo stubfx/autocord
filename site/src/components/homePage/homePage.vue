@@ -7,6 +7,7 @@
       </div>
       <h1 class="text-discord-1 text-9xl self-center">AUTOCORD.IO</h1>
       <h1 class="text-white text-2xl self-center mt-3">Discord automation made simple.</h1>
+      <h1 class="text-white text-2xl self-center mt-3">Currenly in {{guildCount}} servers.</h1>
       <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
         <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
         <h1 class="text-4xl">❤️</h1>
@@ -19,8 +20,9 @@
         </div>
         <edit-job-view :is-sample="true"></edit-job-view>
         <h1 class="text-discord-1 text-8xl mt-10">What are you waiting for?</h1>
-        <h1 class="text-3xl">Join now and enjoy free additional tokens for you flows!</h1>
-        <login-button @on-click="login"></login-button>
+        <h1 class="text-3xl">Join while in <span class="text-discord-success">early access</span>
+          and enjoy <span class="text-discord-success">free</span> additional tokens for you flows!</h1>
+        <login-button @on-click="login" class="border-2 border-discord-success hover:border-discord-1 text-black"></login-button>
         <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
 <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
 <!--                allowfullscreen></iframe>-->
@@ -44,9 +46,15 @@ export default {
   emits: ['onPageChange'],
   components: {EditJobView, LoginButton, SupportServerButton, GuildJob},
   async mounted() {
+    this.guildCount = await NetworkAdapter.getBotGuildCount()
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection
       this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+    }
+  },
+  data() {
+    return {
+      guildCount : 0
     }
   },
   methods: {
