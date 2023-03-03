@@ -82,12 +82,12 @@ export default function (api, opts, done) {
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
-        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}` };
+        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.redirectUrl)}` };
     });
     api.post("/getAddBotToGuildPopupInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
-        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}` };
+        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.redirectUrl + '/popup')}` };
     });
     api.post("/getGuildJobs", async (request) => {
         let guildId = request.body["guildId"];
