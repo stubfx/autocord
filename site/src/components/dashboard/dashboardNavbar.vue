@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row p rounded gap">
+  <div class="flex flex-row rounded gap">
     <!--      <simple-select></simple-select>-->
     <div class="flex flex-row fill-white [&>*]:cursor-pointer gap">
       <home-button @click="onPageChange(DASHBOARDPAGES.GUILD_SELECTION)"></home-button>

@@ -3,7 +3,7 @@
 <!--       v-if="page !== PAGES.MAIN_PAGE">-->
 <!--    <h1 class="text-2xl font-bold text-discord-1 my-3">AUTOCORD.IO</h1>-->
 <!--  </div>-->
-  <div class="w-full mt-3">
+  <div class="w-full mt-3 pt-8">
     <home-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></home-page>
     <dashboard-page @on-logout="onPageChange(PAGES.MAIN_PAGE)" v-if="page === PAGES.DASHBOARD_PAGE"></dashboard-page>
   </div>
