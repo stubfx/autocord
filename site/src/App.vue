@@ -1,7 +1,7 @@
 <template>
   <div id="bg" class="fixed top-0 left-0 w-full h-full"></div>
   <div class="flex w-full h-full flex-col items-center absolute gap">
-    <div class="absolute top-0 left-0 w-full">
+    <div class="w-full py-5">
       <app-container></app-container>
     </div>
     <div class="flex flex-grow w-full justify-center items-end gap">
