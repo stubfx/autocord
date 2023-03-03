@@ -40,7 +40,7 @@ export default function (api, opts, done) {
     });
     api.post("/ownedGuilds", async (request) => {
         let partialGuilds = await new DiscordAdapter(request.session[sessionV.DISCORD_AUTHORIZATION_TOKEN]).getUserOwnedGuilds();
-        request.session.ownedGuilds = partialGuilds.filter(value => value.owner).map(value => value.id);
+        request.session.ownedGuilds = partialGuilds.map(value => value.id);
         return partialGuilds;
     });
     api.post("/user", async (request) => {
