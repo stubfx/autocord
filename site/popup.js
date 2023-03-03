@@ -6,7 +6,7 @@ export async function openPopup(url) {
     return new Promise((resolve) => {
         let intId = setInterval(async () => {
             try{
-                if (loginPopup.closed || loginPopup.location.pathname.includes('close')) {
+                if (loginPopup.closed || loginPopup.location.pathname.includes('popup')) {
                     if (!loginPopup.closed) {
                         loginPopup.close()
                     }

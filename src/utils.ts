@@ -10,7 +10,6 @@ export function getSessionExpirationDate() : Date{
     date.setDate(new Date().getDate() + 5)
     return date
 }
-
 export function getCorrectHttpsUrl(string) {
     let url;
     try {

@@ -25,7 +25,7 @@ export class NetworkAdapter {
     }
 
     static async getDiscordLoginUrl() {
-        return (await this._post('/getDiscordLoginUrl'))['url']
+        return (await this._post('/getDiscordLoginPopupUrl'))['url']
     }
 
     static async loginCheck() {

@@ -29,6 +29,10 @@ export default function (api, opts, done) {
                 return reply;
             }
         }
+        // this is wrong, not all the checks have the guild inside, just let it be.
+        // reply.code(401)
+        // reply.send({})
+        // return reply
     });
     api.post("/logout", async (request) => {
         await request.session.destroy();
@@ -78,7 +82,7 @@ export default function (api, opts, done) {
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
-        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${process.env.discord_oauth_redirectUrl}` };
+        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}` };
     });
     api.post("/getGuildJobs", async (request) => {
         let guildId = request.body["guildId"];
