@@ -10,7 +10,9 @@
       <h1 class="text-white text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
       <div class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
         <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
+        <h1 @on-click="supportServer" class="text-1xl">If you have any question or need some help, please join our Support server!</h1>
         <h1 class="text-4xl">❤️</h1>
+        <support-server-button @on-click="supportServer"></support-server-button>
         <div class="hidden flex-col md:flex items-center gap">
           <h1 class="text-4xl">Create cool automations!</h1>
           <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
