@@ -53,7 +53,7 @@ export class NetworkAdapter {
     }
 
     static async getDiscordBotInviteUrl(guildId) {
-        return (await this._post(`/auth/getAddBotToGuildInvite`, {guildId : guildId}))['url']
+        return (await this._post(`/auth/getAddBotToGuildPopupInvite`, {guildId : guildId}))['url']
     }
 
     static async getGuildData(guildId) {

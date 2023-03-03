@@ -10,7 +10,6 @@ export default function (api, opts, done) {
         let code = request.query["code"];
         const {type} = request.params;
         let isPopup = type === 'popup'
-        console.log(type)
         if (code) {
             try {
                 const tokenResponseData = await fetch('https://discord.com/api/oauth2/token', {
