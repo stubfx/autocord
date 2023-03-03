@@ -1,25 +1,31 @@
 <template>
   <simple-dialog ref="modal" :close-on-click-outside="false">
-    <div class="flex flex-col w-full">
-      <chain-link-element :link="chainLink"></chain-link-element>
-      <div ref="form" class="flex flex-col w-[400px]">
-        <template v-for="param in chainLink.params">
-          <label class="my-2">{{ param.name }}</label>
-          <div class="flex flex-row w-full gap">
-            <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
-            <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value"
-                   v-if="isStringOrForcedAs(param)"/>
-            <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
-              <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-discord-5">{{
-                  paramOption.name
-                }}
-              </option>
-            </select>
-          </div>
-        </template>
-        <save-button class="self-center mt-5" @onClick="close()"></save-button>
+<!--    <div class="grid grid-cols-4 max-w-[600px] gap">-->
+<!--      <div class="flex flex-col">-->
+<!--        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>-->
+<!--      </div>-->
+      <div class="flex flex-col gap col-span-3 max-w-[400px]">
+        <chain-link-element :link="chainLink"></chain-link-element>
+        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>
+        <div ref="form" class="flex flex-col w-[400px]">
+          <template v-for="param in chainLink.params">
+            <label class="my-2">{{ param.name }}</label>
+            <div class="flex flex-row w-full gap">
+              <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
+              <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value"
+                     v-if="isStringOrForcedAs(param)" @click="setFocusedParam(param)"/>
+              <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
+                <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-discord-5">{{
+                    paramOption.name
+                  }}
+                </option>
+              </select>
+            </div>
+          </template>
+          <save-button class="self-center mt-5" @onClick="close()"></save-button>
+        </div>
       </div>
-    </div>
+<!--    </div>-->
   </simple-dialog>
 </template>
 
@@ -31,20 +37,25 @@ import {ChainLinkParam} from "../../ParamTypes.js";
 import {NetworkAdapter} from "../../network.js";
 import Close_rounded from "../../assets/close_rounded.vue";
 import SaveButton from "../buttons/saveButton.vue";
+import {getExposedArgumentsInJob} from "../../../utils.js";
+import ExposedArgumentString from "../exposedArgumentString.vue";
 
 export default {
   name: "chainLinkParametersDialog",
-  components: {SaveButton, Close_rounded, Save_rounded, ChainLinkElement, SimpleDialog},
+  components: {ExposedArgumentString, SaveButton, Close_rounded, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
+      exposedArguments: [],
       chainLink: {},
       textChannels: [],
-      roles: []
+      roles: [],
+      focusedParam : null
     }
   },
   emits: ['onClose'],
   methods: {
-    open(chainLink) {
+    open(job, chainLink) {
+      this.exposedArguments = getExposedArgumentsInJob(job)
       let channelId
       let roles
       // map acceptParams to params, adding only if is not present yet.
@@ -110,11 +121,25 @@ export default {
       this.$refs.modal.close()
       this.$emit("onClose")
     },
+    setFocusedParam(param){
+      this.focusedParam = param
+    },
+    onArgClick(arg){
+      let argStr = `{{${arg}}}`
+      if (this.focusedParam) {
+        if (!this.focusedParam.value) {
+          // prevents null{{test}}
+          this.focusedParam.value = argStr
+        } else {
+          this.focusedParam.value += argStr
+        }
+      }
+    },
     hasOptions(param) {
       switch (param.type) {
         case ChainLinkParam.CHANNEL_ID:
         case ChainLinkParam.CATEGORY_ID:
-        // case ChainLinkParam.CHANNEL_TYPE:
+          // case ChainLinkParam.CHANNEL_TYPE:
         case ChainLinkParam.ROLE_ID:
           return true
       }
@@ -129,7 +154,7 @@ export default {
       // }
       // ]
       if (this.isChannelOrCategoryID(param.type)) {
-        switch (param.type){
+        switch (param.type) {
           case ChainLinkParam.CHANNEL_ID:
             return this.textChannels.filter(ch => ch.type === 0)
           case ChainLinkParam.CATEGORY_ID:

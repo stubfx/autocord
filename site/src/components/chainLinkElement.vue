@@ -12,7 +12,7 @@
       <div class="flex flex-col mx-2 w-full flex-grow h-full gap"
            :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
         <div class="flex flex-row gap-2 fill-discord-1 bg-discord-5 text-white p-2 px-4 rounded w-fit">
-          <payments_rounded class="w-6"></payments_rounded>{{ link.cost }}
+          <token_rounded class="w-6"></token_rounded>{{ link.cost }}
         </div>
         <div class="flex flex-row w-full items-center">
             <span class="font-semibold tracking-wide flex-grow"
@@ -36,10 +36,12 @@ import Info_rounded from "../assets/info_rounded.vue";
 import ExposedArgumentString from "./exposedArgumentString.vue";
 import LinkParamsViewBlock from "./linkParamsViewBlock.vue";
 import Payments_rounded from "../assets/payments_rounded.vue";
+import Token_rounded from "../assets/token_rounded.vue";
 
 export default {
   name: "chainLinkElement",
   components: {
+    Token_rounded,
     Payments_rounded,
     LinkParamsViewBlock,
     ExposedArgumentString,

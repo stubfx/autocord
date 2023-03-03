@@ -78,7 +78,7 @@ export default {
     },
     onLinkAdded(item) {
       if (item.acceptParams.length > 0) {
-        this.$refs.modal.open(item)
+        this.$refs.modal.open(this.job, item)
       }
     },
     async onSaveJob() {

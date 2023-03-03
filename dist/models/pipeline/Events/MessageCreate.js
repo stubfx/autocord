@@ -5,7 +5,7 @@ export class MessageCreate extends EventLink {
     description = "Fired when a user sends a message.";
     exposesArguments = [
         "channelId",
-        "userId ",
+        "userId",
         "username",
         "messageId",
         "messageContent",

@@ -81,7 +81,7 @@ export default {
         return
       }
       if (link.acceptParams.length > 0) {
-        this.$refs.modal.open(link)
+        this.$refs.modal.open(this.job, link)
       }
     }
   }

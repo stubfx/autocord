@@ -1,9 +1,7 @@
 <template>
-  <div class="flex flex-row flex-wrap">
+  <div class="flex flex-row flex-wrap cursor-pointer gap-1">
           <span class="font-light bg-discord-4 text-white p-1 px-2 rounded mr-0.5 mt-1" v-for="arg in arguments">
-<!--            {{link.acceptParams.join(", ")}}-->
-            <span>{{arg}}</span>
-<!--            <span v-pre>{{</span>{{arg}}<span v-pre>}}</span>-->
+            <span @click="$emit('onArgumentClick', arg)">{{arg}}</span>
           </span>
   </div>
 </template>
@@ -11,6 +9,7 @@
 <script>
 export default {
   name: "exposedArgumentString",
+  emits: ['onArgumentClick'],
   props: {
     arguments: {
       type: Array
