@@ -1,6 +1,5 @@
 import Discord, { PermissionsBitField, REST } from "discord.js";
 import { Routes } from "discord-api-types/v10";
-import * as LoggerHelper from "./loggerHelper.js";
 import { discordClient } from "./discordbot.js";
 let client = null;
 export function init(discordClient) {
@@ -41,7 +40,7 @@ export class DiscordAdapter {
         }
         catch (e) {
             // save this from the console.
-            LoggerHelper.consoleError(e);
+            // LoggerHelper.consoleError(e)
         }
         return !!guild;
     }
