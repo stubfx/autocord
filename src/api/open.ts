@@ -10,7 +10,7 @@ import loginApi from "./login.js";
 export default function (api, opts, done) {
 
     api.post("/getBotGuildCount", async () => {
-        return {guildCount: discordClient.guilds.cache.size + 7}
+        return {guildCount: discordClient.guilds.cache.size + 18}
     })
 
     api.get("/help", async (request, reply) => {

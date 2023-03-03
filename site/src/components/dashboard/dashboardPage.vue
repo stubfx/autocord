@@ -35,7 +35,9 @@ export default {
     },
     async logout() {
       await NetworkAdapter.logout()
-      this.$emit('onLogout')
+      // make sure to remove everything.
+      window.location.reload()
+      // this.$emit('onLogout')
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId

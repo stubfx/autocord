@@ -26,7 +26,7 @@
           <h1 class="text-3xl">Join while in <span class="text-discord-success">early access</span>
             and enjoy <span class="text-discord-success">free</span> additional tokens for you flows!</h1>
           <login-button @on-click="login"
-                        class="border-2 border-discord-success hover:border-discord-1 text-black"></login-button>
+                        class="border-2 border-discord-success hover:border-discord-1 text-black mt-2"></login-button>
           <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
           <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
           <!--                allowfullscreen></iframe>-->
