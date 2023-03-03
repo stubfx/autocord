@@ -1,4 +1,4 @@
-import Discord, {REST, RouteLike} from "discord.js";
+import Discord, {PermissionsBitField, REST, RouteLike} from "discord.js";
 import {Routes} from "discord-api-types/v10";
 import * as LoggerHelper from "./loggerHelper.js";
 import {discordClient} from "./discordbot.js";
@@ -29,7 +29,10 @@ export class DiscordAdapter {
     }
 
     async getUserOwnedGuilds() {
-        return (await this.get(Routes.userGuilds()) as Array<PartialGuild>).filter(value => value.owner)
+        // include admins
+        let userGuilds = await this.get(Routes.userGuilds()) as Array<PartialGuild>;
+        // @ts-ignore
+        return userGuilds.filter(value => new Discord.PermissionsBitField(value.permissions).has(PermissionsBitField.Flags.Administrator))
     }
 
     async getGuildChannels(guildId: string) {
