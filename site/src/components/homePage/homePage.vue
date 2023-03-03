@@ -5,27 +5,30 @@
         <login-button @on-click="login"></login-button>
         <support-server-button @on-click="supportServer"></support-server-button>
       </div>
-      <h1 class="text-discord-1 text-9xl self-center">AUTOCORD.IO</h1>
+      <h1 class="text-discord-1 self-center text-4xl sm:text-5xl lg:text-9xl">AUTOCORD.IO</h1>
       <h1 class="text-white text-2xl self-center mt-3">Discord automation made simple.</h1>
-      <h1 class="text-white text-2xl self-center mt-3">Currenly in {{guildCount}} servers!</h1>
-      <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
+      <h1 class="text-white text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
+      <div class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
         <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
         <h1 class="text-4xl">❤️</h1>
-        <h1 class="text-4xl">Create cool automations!</h1>
-        <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
-        <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
-        <div class="flex flex-col w-full py-10 items-center">
-          <h1 class="uppercase text-discord-1 text-8xl">Try me!</h1>
-          <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>
+        <div class="hidden flex-col md:flex items-center gap">
+          <h1 class="text-4xl">Create cool automations!</h1>
+          <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
+          <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
+          <div class="flex flex-col w-full py-10 items-center">
+            <h1 class="uppercase text-discord-1 text-8xl">Try me!</h1>
+            <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>
+          </div>
+          <edit-job-view :is-sample="true"></edit-job-view>
+          <h1 class="text-discord-1 text-8xl mt-10">What are you waiting for?</h1>
+          <h1 class="text-3xl">Join while in <span class="text-discord-success">early access</span>
+            and enjoy <span class="text-discord-success">free</span> additional tokens for you flows!</h1>
+          <login-button @on-click="login"
+                        class="border-2 border-discord-success hover:border-discord-1 text-black"></login-button>
+          <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
+          <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
+          <!--                allowfullscreen></iframe>-->
         </div>
-        <edit-job-view :is-sample="true"></edit-job-view>
-        <h1 class="text-discord-1 text-8xl mt-10">What are you waiting for?</h1>
-        <h1 class="text-3xl">Join while in <span class="text-discord-success">early access</span>
-          and enjoy <span class="text-discord-success">free</span> additional tokens for you flows!</h1>
-        <login-button @on-click="login" class="border-2 border-discord-success hover:border-discord-1 text-black"></login-button>
-        <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
-<!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-<!--                allowfullscreen></iframe>-->
       </div>
     </div>
   </div>
@@ -54,7 +57,7 @@ export default {
   },
   data() {
     return {
-      guildCount : 0
+      guildCount: 0
     }
   },
   methods: {
