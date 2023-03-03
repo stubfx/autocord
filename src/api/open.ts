@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import * as sessionV from "../sessionVariables.js";
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import {EventLink} from "../models/pipeline/EventLink.js";
