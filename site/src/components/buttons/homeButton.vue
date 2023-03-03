@@ -1,0 +1,20 @@
+<template>
+  <app-button text="" class="bg-discord-2 hover:bg-discord-success fill-white text-white">
+    <home_rounded></home_rounded>
+  </app-button>
+</template>
+
+<script>
+import AppButton from "./appButton.vue";
+import Logout_rounded from "../../assets/logout_rounded.vue";
+import Home_rounded from "../../assets/home_rounded.vue";
+
+export default {
+  name: "homeButton",
+  components: {Home_rounded, Logout_rounded, AppButton}
+}
+</script>
+
+<style scoped>
+
+</style>
