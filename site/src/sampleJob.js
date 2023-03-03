@@ -5,6 +5,7 @@ export function getSampleJob() {
             "chainLinks": [{
                 "name": "MessageCreate",
                 "type": "EVENT",
+                "cost": 1,
                 "description": "Fired when a user sends a message.",
                 "store": {},
                 "acceptParams": [],
@@ -13,6 +14,7 @@ export function getSampleJob() {
             }, {
                 "name": "SendMessage",
                 "type": "TASK",
+                "cost": 1,
                 "description": "Sends a message to the given channel.",
                 "store": {},
                 "acceptParams": [{"name": "channelId", "type": "CHANNEL_ID"}, {"name": "message", "type": "STRING"}],
@@ -29,6 +31,7 @@ export function getSampleJob() {
             }, {
                 "name": "Equals",
                 "type": "CONDITION",
+                "cost": 1,
                 "description": "Checks if op1 = op2",
                 "store": {},
                 "acceptParams": [{"name": "op1", "type": "STRING"}, {"name": "op2", "type": "STRING"}],
@@ -41,6 +44,7 @@ export function getSampleJob() {
             }, {
                 "name": "AssignRole",
                 "type": "TASK",
+                "cost": 1,
                 "description": "Assigns the given role to the user.",
                 "store": {},
                 "acceptParams": [{"name": "userId", "type": "STRING"}, {"name": "roleId", "type": "ROLE_ID"}],
@@ -62,6 +66,7 @@ export function getSampleJob2() {
             "chainLinks": [{
                 "name": "MessageCreate",
                 "type": "EVENT",
+                "cost": 1,
                 "description": "Fired when a user sends a message.",
                 "store": {},
                 "acceptParams": [],
@@ -70,6 +75,7 @@ export function getSampleJob2() {
             }, {
                 "name": "SendMessage",
                 "type": "TASK",
+                "cost": 1,
                 "description": "Sends a message to the given channel.",
                 "store": {},
                 "acceptParams": [{"name": "channelId", "type": "CHANNEL_ID"}, {"name": "message", "type": "STRING"}],
@@ -86,6 +92,7 @@ export function getSampleJob2() {
             }, {
                 "name": "BanUser",
                 "type": "TASK",
+                "cost": 1,
                 "description": "Ban user by userId.",
                 "store": {},
                 "acceptParams": [{"name": "userId", "type": "STRING"}, {"name": "reason", "type": "STRING"}],
