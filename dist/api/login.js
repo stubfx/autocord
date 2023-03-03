@@ -67,11 +67,11 @@ export default function (api, opts, done) {
     });
     api.get("/getDiscordLoginUrl", async () => {
         // redirect the browser to the discord login!
-        return { url: `https://discord.com/api/oauth2/authorize?client_id=${process.env.discord_application_id}&response_type=code&scope=identify%20guilds&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}` };
+        return { url: `https://discord.com/api/oauth2/authorize?client_id=${process.env.discord_application_id}&response_type=code&scope=identify%20guilds&redirect_uri=${encodeURIComponent(process.env.redirectUrl)}` };
     });
     api.post("/getDiscordLoginPopupUrl", async () => {
         // redirect the browser to the discord login!
-        return { url: `https://discord.com/api/oauth2/authorize?client_id=${process.env.discord_application_id}&response_type=code&scope=identify%20guilds&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}` };
+        return { url: `https://discord.com/api/oauth2/authorize?client_id=${process.env.discord_application_id}&response_type=code&scope=identify%20guilds&redirect_uri=${encodeURIComponent(process.env.redirectUrl + '/popup')}` };
     });
     done();
 }
