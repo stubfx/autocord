@@ -1,5 +1,5 @@
 <template>
-  <div id="bg" class="absolute top-0 left-0 w-screen h-screen"></div>
+  <div id="bg" class="fixed top-0 left-0 w-full h-full"></div>
   <div class="flex w-full h-full flex-col items-center absolute gap">
     <div class="absolute top-0 left-0 w-full">
       <app-container></app-container>
