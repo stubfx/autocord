@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col w-full gap md:px-6 lg:px-14 xl:px-32">
-    <dashboard-navbar @on-page-change="onPageChange" @on-logout="logout"></dashboard-navbar>
+    <dashboard-navbar :current-page="page" @on-page-change="onPageChange" @on-logout="logout"></dashboard-navbar>
     <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>
     <guild-dashboard-view v-if="page === DASHBOARDPAGES.JOB_LISTING"
                           @on-page-change="onPageChange"></guild-dashboard-view>
-    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-page-change="onPageChange"></edit-job-view>
+    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>
   </div>
 </template>
 
@@ -36,6 +36,11 @@ export default {
     async logout() {
       await NetworkAdapter.logout()
       this.$emit('onLogout')
+    },
+    async onSaveJob(job) {
+      let guildId = this.$store.guildId
+      await NetworkAdapter.saveJob(guildId, job)
+      this.$emit('onPageChange', DASHBOARDPAGES.JOB_LISTING)
     }
   }
 }

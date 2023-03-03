@@ -13,6 +13,11 @@ import * as sessionV from "./sessionVariables.js";
 import * as LoggerHelper from "./loggerHelper.js";
 import cors from '@fastify/cors'
 import {DiscordAdapter} from "./DiscordAdapter.js";
+import {EventLink} from "./models/pipeline/EventLink.js";
+import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
+import {JobFactory} from "./models/JobFactory.js";
+import {Condition} from "./models/pipeline/Condition.js";
+import {Task} from "./models/pipeline/Task.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -130,6 +135,24 @@ export async function init() {
 
     fastify.get("/help", async (request, reply) => {
         reply.redirect("/help.html")
+    })
+
+    fastify.post("/getAvailableEventNames", async (): Promise<{ links: Array<EventLink> }> => {
+        return {
+            links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
+        }
+    })
+
+    fastify.post("/getAvailableJobConditions", async (): Promise<{ links: Array<Condition> }> => {
+        return {
+            links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))
+        }
+    })
+
+    fastify.post("/getAvailableJobTasks", async (): Promise<{ links: Array<Task> }> => {
+        return {
+            links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
+        }
     })
 
 // Run the server and report out to the logs

@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full gap items-center">
     <div class="flex flex-col container gap">
       <div class="flex flex-row gap">
-        <login-button @on-click="login" :text="'Login'" type="LOGIN"></login-button>
+        <login-button @on-click="login"></login-button>
         <support-server-button @on-click="supportServer"></support-server-button>
       </div>
       <h1 class="text-discord-1 text-9xl self-center">AUTOCORD.IO</h1>
@@ -13,7 +13,15 @@
         <h1 class="text-4xl">Create cool automations!</h1>
         <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
         <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
-<!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
+        <div class="flex flex-col w-full py-10 items-center">
+          <h1 class="uppercase text-discord-1 text-8xl">Try me!</h1>
+          <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>
+        </div>
+        <edit-job-view :is-sample="true"></edit-job-view>
+        <h1 class="text-discord-1 text-8xl mt-10">What are you waiting for?</h1>
+        <h1 class="text-3xl">Join now and enjoy free additional tokens for you flows!</h1>
+        <login-button @on-click="login"></login-button>
+        <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
 <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
 <!--                allowfullscreen></iframe>-->
       </div>
@@ -29,11 +37,12 @@ import GuildJob from "../dashboard/guildJob.vue";
 import {getSampleJob, getSampleJob2} from "../../sampleJob.js";
 import SupportServerButton from "../buttons/supportServerButton.vue";
 import LoginButton from "../buttons/loginButton.vue";
+import EditJobView from "../job/editJobView.vue";
 
 export default {
   name: "homePage",
   emits: ['onPageChange'],
-  components: {LoginButton, SupportServerButton, GuildJob},
+  components: {EditJobView, LoginButton, SupportServerButton, GuildJob},
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection

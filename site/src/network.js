@@ -61,15 +61,15 @@ export class NetworkAdapter {
     }
 
     static async getAvailableJobTasks() {
-        return (await this._post(`/auth/getAvailableJobTasks`))['links']
+        return (await this._post(`/getAvailableJobTasks`))['links']
     }
 
     static async getAvailableJobConditions() {
-        return (await this._post(`/auth/getAvailableJobConditions`))['links']
+        return (await this._post(`/getAvailableJobConditions`))['links']
     }
 
     static async getAvailableEventNames() {
-        return (await this._post(`/auth/getAvailableEventNames`))['links']
+        return (await this._post(`/getAvailableEventNames`))['links']
     }
 
     static async saveJob(guildId, job) {

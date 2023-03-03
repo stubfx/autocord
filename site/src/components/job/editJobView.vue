@@ -20,12 +20,14 @@ import Sensor_rounded from "../../assets/sensor_rounded.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
-import {DASHBOARDPAGES} from "../../pages.js";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
 export default {
   name: "editJobView",
-  emits: ['onPageChange'],
+  emits: ['onSaveJob'],
+  props: {
+    isSample: false
+  },
   components: {
     ConfirmDeletionDialog,
     ChainLinkParametersDialog,
@@ -80,9 +82,7 @@ export default {
       }
     },
     async onSaveJob() {
-      let guildId = this.$store.guildId
-      await NetworkAdapter.saveJob(guildId, this.job)
-      this.$emit('onPageChange', DASHBOARDPAGES.JOB_LISTING)
+      this.$emit('onSaveJob', this.job)
     }
   }
 }

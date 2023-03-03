@@ -19,7 +19,7 @@ export default {
   components: {GuildCard},
   data() {
     return {
-      guilds: []
+      guilds: this.$store.guilds || []
     }
   },
   async mounted() {

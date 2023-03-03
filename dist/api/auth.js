@@ -3,7 +3,6 @@ import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../dbAdapter.js";
 import { JobFactory } from "../models/JobFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
-import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 import { STORAGE } from "../schemas/schemas.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
@@ -111,21 +110,6 @@ export default function (api, opts, done) {
         await dbAdapter.saveJob(guildId, jobInstance);
         LoggerHelper.success(`saved job for guild ${guildId}`);
         return {};
-    });
-    api.post("/getAvailableEventNames", async () => {
-        return {
-            links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
-        };
-    });
-    api.post("/getAvailableJobConditions", async () => {
-        return {
-            links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))
-        };
-    });
-    api.post("/getAvailableJobTasks", async () => {
-        return {
-            links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
-        };
     });
     // only for authenticated users with role.
     // api.register(async role => {
