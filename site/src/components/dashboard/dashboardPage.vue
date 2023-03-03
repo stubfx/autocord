@@ -40,7 +40,7 @@ export default {
     async onSaveJob(job) {
       let guildId = this.$store.guildId
       await NetworkAdapter.saveJob(guildId, job)
-      this.$emit('onPageChange', DASHBOARDPAGES.JOB_LISTING)
+      this.page = DASHBOARDPAGES.JOB_LISTING
     }
   }
 }

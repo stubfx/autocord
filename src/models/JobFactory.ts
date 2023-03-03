@@ -1,26 +1,19 @@
 import {JobInterface} from "./JobInterface.js";
 import {Job} from "./pipeline/Job.js";
 import {ChainLink} from "./pipeline/chain/ChainLink.js";
-import {SendMessage} from "./pipeline/tasks/SendMessage.js";
-import {BanUser} from "./pipeline/tasks/BanUser.js";
 import {Condition} from "./pipeline/Condition.js";
 import {Task} from "./pipeline/Task.js";
 import {ChainLinkTypes} from "./pipeline/chain/ChainLinkTypes.js";
-import {MessageCreate} from "./pipeline/Events/MessageCreate.js";
 import {EventLink} from "./pipeline/EventLink.js";
-import {VoiceStateUpdate} from "./pipeline/Events/VoiceStateUpdate.js";
-import {ChannelCreate} from "./pipeline/Events/ChannelCreate.js";
-import {GuildMemberAdd} from "./pipeline/Events/GuildMemberAdd.js";
-import {MessageReactionAdd} from "./pipeline/Events/MessageReactionAdd.js";
 import {ChainLinkParam} from "./ChainLinkInterface.js";
-import {Equals} from "./pipeline/conditions/Equals.js";
-import {MatchesRegex} from "./pipeline/conditions/MatchesRegex.js";
-import {AggregatedGuildInterface} from "./GuildInterface";
-import {IncreaseCounter} from "./pipeline/tasks/IncreaseCounter.js";
-import {AssignRole} from "./pipeline/tasks/AssignRole.js";
-import {AddMessageReaction} from "./pipeline/tasks/AddMessageReaction.js";
-import {CreateChannel} from "./pipeline/tasks/CreateChannel.js";
-import {DeleteChannel} from "./pipeline/tasks/DeleteChannel.js";
+import {AggregatedGuildInterface} from "./GuildInterface.js";
+import {ConditionDict} from "./pipeline/dictionaries/conditionDict.js";
+import {TaskDict} from "./pipeline/dictionaries/taskDict.js";
+import {EventDict} from "./pipeline/dictionaries/eventDict.js";
+
+const conditionDict = new ConditionDict()
+const taskDict = new TaskDict()
+const eventDict = new EventDict()
 
 export class JobFactory {
 
@@ -63,7 +56,6 @@ export class JobFactory {
     }
 
     static getChainLink(type: ChainLinkTypes.LinkType, name: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        // TODO check if params match the actual chainLink to avoid db exploitation
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
                 return this.getEventByName(name, params)
@@ -77,52 +69,16 @@ export class JobFactory {
     }
 
     static getEventByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : EventLink {
-        switch (chainLinkEventName) {
-            case ChainLinkTypes.Event.MessageCreate:
-                return new MessageCreate(params)
-            case ChainLinkTypes.Event.VoiceStateUpdate:
-                return new VoiceStateUpdate(params)
-            case ChainLinkTypes.Event.ChannelCreate:
-                return new ChannelCreate(params)
-            case ChainLinkTypes.Event.GuildMemberAdd:
-                return new GuildMemberAdd(params)
-            case ChainLinkTypes.Event.MessageReactionAdd:
-                return new MessageReactionAdd(params)
-            default:
-                throw new Error(`Unknown condition name: ${chainLinkEventName}`)
-        }
+        return eventDict.getEventByName(chainLinkEventName, params)
+
     }
 
     static getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : Task {
-        switch (chainLinkTaskName) {
-            case ChainLinkTypes.Task.SendMessage:
-                return new SendMessage(params)
-            case ChainLinkTypes.Task.BanUser:
-                return new BanUser(params)
-            case ChainLinkTypes.Task.IncreaseCounter:
-                return new IncreaseCounter(params)
-            case ChainLinkTypes.Task.AssignRole:
-                return new AssignRole(params)
-            case ChainLinkTypes.Task.AddMessageReaction:
-                return new AddMessageReaction(params)
-            case ChainLinkTypes.Task.CreateChannel:
-                return new CreateChannel(params)
-            case ChainLinkTypes.Task.DeleteChannel:
-                return new DeleteChannel(params)
-            default:
-                throw new Error(`Unknown task name: ${chainLinkTaskName}`)
-        }
+        return taskDict.getTaskByName(chainLinkTaskName, params)
     }
 
     static getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : Condition {
-        switch (chainLinkConditionName) {
-            case ChainLinkTypes.Condition.Equals:
-                return new Equals(params)
-            case ChainLinkTypes.Condition.MatchesRegex:
-                return new MatchesRegex(params)
-            default:
-                throw new Error(`Unknown condition name: ${chainLinkConditionName}`)
-        }
+        return conditionDict.getConditionByName(chainLinkConditionName, params)
     }
 
 }

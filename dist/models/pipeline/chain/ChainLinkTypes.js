@@ -17,7 +17,6 @@ export var ChainLinkTypes;
     let Task;
     (function (Task) {
         Task["SendMessage"] = "SendMessage";
-        Task["BanUser"] = "BanUser";
         Task["IncreaseCounter"] = "IncreaseCounter";
         Task["AssignRole"] = "AssignRole";
         Task["AddMessageReaction"] = "AddMessageReaction";

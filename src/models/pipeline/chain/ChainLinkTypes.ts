@@ -17,7 +17,6 @@ export namespace ChainLinkTypes {
 
     export enum Task {
         SendMessage = "SendMessage",
-        BanUser = "BanUser",
         IncreaseCounter = "IncreaseCounter",
         AssignRole = 'AssignRole',
         AddMessageReaction = 'AddMessageReaction',
