@@ -45,6 +45,7 @@ export default {
       let response = await NetworkAdapter.getGuildData(this.$store.guildId)
       this.jobs = response['jobs']
       this.storage = response['storage']
+      this.$store.storage = this.storage
     },
     addJob() {
       this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)

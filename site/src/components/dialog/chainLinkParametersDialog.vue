@@ -55,7 +55,7 @@ export default {
   emits: ['onClose'],
   methods: {
     open(job, chainLink) {
-      this.exposedArguments = getExposedArgumentsInJob(job)
+      this.exposedArguments = getExposedArgumentsInJob(job, this.$store.storage)
       let channelId
       let roles
       // map acceptParams to params, adding only if is not present yet.
