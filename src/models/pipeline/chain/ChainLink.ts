@@ -101,7 +101,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
                 throw new Error(`Param name be null.`)
             }
             if (!paramToCheck.value) {
-                throw new Error(`Param value be null.`)
+                throw new Error(`Param value cannot be null.`)
             }
             let acceptedParam = this.acceptParams[i]
             if (acceptedParam.name !== paramToCheck.name) {

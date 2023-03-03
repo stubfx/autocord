@@ -22,7 +22,7 @@
               </select>
             </div>
           </template>
-          <save-button class="self-center mt-5" @onClick="close()"></save-button>
+          <save-button class="self-center mt-5" @onClick="save()"></save-button>
         </div>
       </div>
 <!--    </div>-->
@@ -49,12 +49,14 @@ export default {
       chainLink: {},
       textChannels: [],
       roles: [],
-      focusedParam : null
+      focusedParam : null,
+      onSaveCB: null
     }
   },
   emits: ['onClose'],
   methods: {
-    open(job, chainLink) {
+    open(job, chainLink, onSave) {
+      this.onSaveCB = onSave
       this.exposedArguments = getExposedArgumentsInJob(job, this.$store.storage)
       let channelId
       let roles
@@ -116,6 +118,12 @@ export default {
     },
     isRoleID(type) {
       return type === ChainLinkParam.ROLE_ID
+    },
+    save() {
+      if (this.onSaveCB) {
+        this.onSaveCB()
+      }
+      this.close()
     },
     close() {
       this.$refs.modal.close()

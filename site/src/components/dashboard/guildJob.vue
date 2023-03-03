@@ -5,7 +5,7 @@
   <div class="flex flex-col bg-discord-5 p-6 rounded items-center shadow-2xl gap w-full">
     <div class="flex flex-row w-full items-center gap">
       <h1 v-if="!showSave" class="uppercase text-3xl text-white flex-grow">{{ job.name }}</h1>
-      <input v-else class="uppercase text-3xl bg-discord-3 text-white flex-grow p-1 rounded"  v-model="job.name">
+      <input v-else class="uppercase text-3xl bg-discord-3 text-white flex-grow p-1 rounded" v-model="job.name">
       <edit_rounded class="fill-discord-success rounded w-7 h-7 cursor-pointer"
                     v-if="editable" @click="onAddLink()"></edit_rounded>
       <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer" @click="deleteJob"
@@ -14,7 +14,8 @@
                     v-if="showSave"></save_rounded>
     </div>
     <div class="grid grid-flow-col gap w-full overflow-x-auto">
-      <chain-link-element :link="link" v-for="link in job.chain.chainLinks" @click="editLink(link)"></chain-link-element>
+      <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"
+                          @click="editLink(link)" @on-delete="onLinkDelete(index)"></chain-link-element>
     </div>
     <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-discord-4 rounded py-4 hover:bg-discord-2
 transition-colors overflow-hidden flex-grow items-center" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">
@@ -75,6 +76,20 @@ export default {
     },
     onAddLink() {
       this.$emit("onAddLink")
+    },
+    onLinkDelete(index) {
+      this.job.chain.chainLinks.splice(index, 1)
+      this.$emit('onJobUpdate', this.job)
+    },
+    isLinkDeletable(link) {
+      return link.type !== 'EVENT'
+          && !this.$props.isSample
+          // cannot delete link of a job with a single task/condition
+          // event would remain alone otherwise
+          // should check if there is at least a task tho.
+          // if you can see showSave, then the job will save only on that button,
+          // you are safe to delete the node.
+          && (this.job.chain.chainLinks.length > 2 || this.$props.showSave)
     },
     editLink(link) {
       if (this.$props.isSample) {

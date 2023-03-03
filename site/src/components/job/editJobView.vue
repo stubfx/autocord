@@ -61,7 +61,7 @@ export default {
         this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
         // then add the new one :P
         this.job.chain.chainLinks.unshift(item)
-        this.onLinkAdded(item)
+        this.onAddLink(item)
       } else if (item.type === "TASK" || item.type === "CONDITION") {
         // count events in chain (max 4)
         let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
@@ -71,14 +71,15 @@ export default {
           return accumulator
         }, 0)
         if (count < 4) {
-          this.job.chain.chainLinks.push(item)
-          this.onLinkAdded(item)
+          this.onAddLink(item)
         }
       }
     },
-    onLinkAdded(item) {
+    onAddLink(item) {
       if (item.acceptParams.length > 0) {
-        this.$refs.modal.open(this.job, item)
+        this.$refs.modal.open(this.job, item, () => {
+          this.job.chain.chainLinks.push(item)
+        })
       }
     },
     async onSaveJob() {

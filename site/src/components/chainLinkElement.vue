@@ -11,8 +11,16 @@
       <!--      </div>-->
       <div class="flex flex-col mx-2 w-full flex-grow h-full gap"
            :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
-        <div class="flex flex-row gap-2 fill-discord-1 bg-discord-5 text-white p-2 px-4 rounded w-fit">
-          <token_rounded class="w-6"></token_rounded>{{ link.cost }}
+        <div class="flex flex-row w-full">
+          <div class="flex flex-row flex-grow w-full">
+            <div class="flex flex-row gap-2 fill-discord-1 bg-discord-5 text-white p-2 px-4 rounded w-fit">
+              <token_rounded class="w-6"></token_rounded>
+              {{ link.cost }}
+            </div>
+          </div>
+          <div class="flex flex-row bg-discord-error p-2 rounded" v-show="showDelete" @click="onDelete" @click.stop>
+            <close_rounded class="fill-white rounded w-6 cursor-pointer"></close_rounded>
+          </div>
         </div>
         <div class="flex flex-row w-full items-center">
             <span class="font-semibold tracking-wide flex-grow"
@@ -37,10 +45,12 @@ import ExposedArgumentString from "./exposedArgumentString.vue";
 import LinkParamsViewBlock from "./linkParamsViewBlock.vue";
 import Payments_rounded from "../assets/payments_rounded.vue";
 import Token_rounded from "../assets/token_rounded.vue";
+import Close_rounded from "../assets/close_rounded.vue";
 
 export default {
   name: "chainLinkElement",
   components: {
+    Close_rounded,
     Token_rounded,
     Payments_rounded,
     LinkParamsViewBlock,
@@ -51,7 +61,14 @@ export default {
     Task_rounded
   },
   props: {
-    link: Object
+    link: Object,
+    showDelete: false
+  },
+  emits: ['onDelete'],
+  methods: {
+    onDelete() {
+      this.$emit('onDelete')
+    }
   }
 }
 </script>
