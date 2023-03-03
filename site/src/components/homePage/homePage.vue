@@ -7,7 +7,7 @@
       </div>
       <h1 class="text-discord-1 text-9xl self-center">AUTOCORD.IO</h1>
       <h1 class="text-white text-2xl self-center mt-3">Discord automation made simple.</h1>
-      <h1 class="text-white text-2xl self-center mt-3">Currenly in {{guildCount}} servers.</h1>
+      <h1 class="text-white text-2xl self-center mt-3">Currenly in {{guildCount}} servers!</h1>
       <div id="ciao" class="flex w-full h-full flex-col items-center justify-center text-white gap mt-10">
         <h1 class="text-6xl">This app is in <span class="text-discord-success">early access</span></h1>
         <h1 class="text-4xl">❤️</h1>
