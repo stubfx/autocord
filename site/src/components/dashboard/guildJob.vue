@@ -3,18 +3,20 @@
   </chain-link-parameters-dialog>
   <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
   <div class="flex flex-col job-bg p-6 rounded shadow-2xl gap h-fit w-job">
-    <div class="flex flex-row items-center gap">
+    <div class="flex flex-row gap">
       <div class="flex flex-row flex-grow overflow-hidden">
-<!--        prevents text overflow-->
+        <!--        prevents text overflow-->
         <h1 v-if="!showSave" class="text-3xl text-accent">{{ job.name }}</h1>
         <input v-else class="text-3xl bg-secondary text-accent rounded" v-model="job.name">
       </div>
-      <edit_rounded class="fill-success rounded w-token h-7 cursor-pointer"
-                    v-if="showEditButton" @click="onAddLink()"></edit_rounded>
-      <close_rounded class="fill-accent bg-error rounded w-token h-7 cursor-pointer" @click="deleteJob"
-                     v-if="deletable"></close_rounded>
-      <save_rounded class="fill-success rounded rounded w-token h-7 cursor-pointer" @click="onSaveJob"
-                    v-if="showSave"></save_rounded>
+      <div class="flex flex-row">
+        <edit_rounded class="fill-success rounded w-token cursor-pointer"
+                      v-if="showEditButton" @click="onAddLink()"></edit_rounded>
+        <close_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="deleteJob"
+                       v-if="deletable"></close_rounded>
+        <save_rounded class="fill-success rounded rounded w-token cursor-pointer" @click="onSaveJob"
+                      v-if="showSave"></save_rounded>
+      </div>
     </div>
     <div class="flex flex-col gap overflow-x-auto">
       <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"

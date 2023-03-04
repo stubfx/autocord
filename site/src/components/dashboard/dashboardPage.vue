@@ -1,18 +1,25 @@
 <template>
   <!--  <div class="flex flex-row w-full gap md:px-6 lg:px-14 xl:px-32">-->
-  <div class="flex flex-row w-full">
-    <div class="flex w-full gap">
-      <div class="fixed top-0 left-0 w-job h-full">
-        <dashboard-navbar class="w-job h-full" :current-page="page" @on-page-change="onPageChange" @on-logout="logout"
-                          @on-refresh="onRefresh"></dashboard-navbar>
-      </div>
-      <!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
-      <!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
-      <!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
-      <!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
-      <div class="w-full ml-job pl-10 pt-10">
-        <router-view></router-view>
-      </div>
+  <div class="fixed flex flex-row top-0 w-full z-10 bg-accent/10 backdrop-blur-lg">
+    <dashboard-navbar class="w-full" :current-page="page" @on-page-change="onPageChange" @on-logout="logout"
+                      @on-refresh="onRefresh"></dashboard-navbar>
+    <div class="w-job">
+      <!--      <guild-job :job></guild-job>-->
+      <!--      this is just a placeholder to avoid overlapping with the absolute element.-->
+    </div>
+  </div>
+  <div class="flex flex-row w-full pt-28 pl-20">
+    <!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
+    <!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
+    <!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
+    <!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
+    <router-view></router-view>
+    <div class="w-job">
+<!--      <guild-job :job></guild-job>-->
+<!--      this is just a placeholder to avoid overlapping with the absolute element.-->
+    </div>
+    <div class="fixed top-0 right-0 h-full w-job job-bg z-20">
+      adsf
     </div>
   </div>
 </template>
@@ -26,10 +33,11 @@ import EditJobView from "../job/editJobView.vue";
 import SimpleSelect from "../general/simpleSelect.vue";
 import DashboardNavbar from "./dashboardNavbar.vue";
 import {NetworkAdapter} from "../../network.js";
+import GuildJob from "./guildJob.vue";
 
 export default {
   name: "dashboardPage",
-  components: {DashboardNavbar, SimpleSelect, EditJobView, Home_rounded, GuildDashboardView, GuildsSelector},
+  components: {GuildJob, DashboardNavbar, SimpleSelect, EditJobView, Home_rounded, GuildDashboardView, GuildsSelector},
   emits: ['onLogout'],
   data() {
     return {

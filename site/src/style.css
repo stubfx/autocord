@@ -18,6 +18,7 @@
 
 .job-bg {
     /*@apply bg-tertiary;*/
-    @apply bg-tertiary/80;
-    @apply backdrop-blur-xl;
+    @apply bg-tertiary/60;
+    @apply backdrop-blur-2xl;
+    @apply shadow-2xl
 }

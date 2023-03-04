@@ -1,14 +1,12 @@
 <template>
-  <div class="flex flex-row gap job-bg">
     <!--      <simple-select></simple-select>-->
-    <div class="flex flex-col fill-accent [&>*]:cursor-pointer gap">
+    <div class="flex flex-row w-full fill-accent items-center [&>*]:cursor-pointer gap">
       <list-button @click="onGuildSelection"></list-button>
 <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
 <!--      <refresh-button @click="onRefresh"></refresh-button>-->
       <logout-button @on-click="onLogout"></logout-button>
       <support-server-button @on-click="supportServer"></support-server-button>
     </div>
-  </div>
 </template>
 
 <script>
