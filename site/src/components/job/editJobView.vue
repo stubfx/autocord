@@ -1,12 +1,17 @@
 <template>
   <chain-link-parameters-dialog ref="modal">
   </chain-link-parameters-dialog>
-  <div class="flex flex-col w-full h-full gap">
+  <div class="flex flex-row w-full h-full gap justify-center">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT"></guild-job>
-    <div class="flex flex-col bg-dark shadow-2xl rounded gap py">
-      <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
-      <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
-      <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>
+    <div class="flex flex-col job-bg shadow-2xl rounded gap py w-job">
+      <div class="flex flex-row gap">
+        <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)">
+          <div class="cursor-pointer p rounded bg-dark text-accent">{{listName}}</div>
+        </div>
+      </div>
+      <event-list-selection name="Events" :items="events" @onItemSelected="addLink" v-if="tab === 'Events'"></event-list-selection>
+      <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink" v-if="tab === 'Conditions'"></event-list-selection>
+      <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink" v-if="tab === 'Tasks'"></event-list-selection>
     </div>
   </div>
 </template>
@@ -39,6 +44,7 @@ export default {
         name: "New Job",
         chain: {chainLinks: []}
       },
+      tab: 'Events',
       events: [],
       tasks: [],
       conditions: []
@@ -91,6 +97,9 @@ export default {
         // this.page = DASHBOARDPAGES.JOB_LISTING
         this.$router.push({name: 'jobs'})
       }
+    },
+    changeTab(listName) {
+      this.tab = listName
     }
   }
 }

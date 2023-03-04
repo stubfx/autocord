@@ -2,26 +2,29 @@
   <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
   </chain-link-parameters-dialog>
   <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
-  <div class="flex flex-col bg-darky p-6 rounded items-center shadow-2xl gap w-full">
-    <div class="flex flex-row w-full items-center gap">
-      <h1 v-if="!showSave" class="text-3xl text-accent flex-grow">{{ job.name }}</h1>
-      <input v-else class="text-3xl bg-secondary text-accent flex-grow p-1 rounded" v-model="job.name">
-      <edit_rounded class="fill-success rounded w-7 h-7 cursor-pointer"
+  <div class="flex flex-col job-bg p-6 rounded shadow-2xl gap h-fit w-job">
+    <div class="flex flex-row items-center gap">
+      <div class="flex flex-row flex-grow overflow-hidden">
+<!--        prevents text overflow-->
+        <h1 v-if="!showSave" class="text-3xl text-accent">{{ job.name }}</h1>
+        <input v-else class="text-3xl bg-secondary text-accent rounded" v-model="job.name">
+      </div>
+      <edit_rounded class="fill-success rounded w-token h-7 cursor-pointer"
                     v-if="showEditButton" @click="onAddLink()"></edit_rounded>
-      <close_rounded class="fill-accent bg-error rounded w-7 h-7 cursor-pointer" @click="deleteJob"
+      <close_rounded class="fill-accent bg-error rounded w-token h-7 cursor-pointer" @click="deleteJob"
                      v-if="deletable"></close_rounded>
-      <save_rounded class="fill-success rounded rounded w-7 h-7 cursor-pointer" @click="onSaveJob"
+      <save_rounded class="fill-success rounded rounded w-token h-7 cursor-pointer" @click="onSaveJob"
                     v-if="showSave"></save_rounded>
     </div>
-    <div class="grid grid-flow-col gap w-full overflow-x-auto">
+    <div class="flex flex-col gap overflow-x-auto">
       <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"
                           @click="editLink(link)" @on-delete="onLinkDelete(index)"></chain-link-element>
     </div>
-    <div class="relative group flex flex-row justify-center w-full cursor-pointer bg-darky rounded py-4 hover:bg-primary
-transition-colors overflow-hidden flex-grow items-center" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">
+    <div class="relative group flex flex-row justify-center cursor-pointer bg-tertiary rounded py-4 hover:bg-primary
+transition-colors overflow-hidden items-center" v-if="job.chain.chainLinks.length < 5" @click="onAddLink()">
       <div class="absolute rounded-full bg-primary w-[48px] h-[48px] group-hover:bg-accent transition-all
                   group-hover:scale-[50] duration-700"></div>
-      <add_rounded class="rounded-full fill-accent w-[48px] group-hover:fill-accent z-10 group-hover:rotate-180
+      <add_rounded class="rounded-full fill-accent w-[48px] group-hover:fill-accent group-hover:rotate-180
       transition-all"></add_rounded>
     </div>
   </div>

@@ -1,11 +1,19 @@
 <template>
-  <div class="flex flex-col w-full gap md:px-6 lg:px-14 xl:px-32">
-    <dashboard-navbar :current-page="page" @on-page-change="onPageChange" @on-logout="logout" @on-refresh="onRefresh"></dashboard-navbar>
-<!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
-<!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
-<!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
-<!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
-    <router-view></router-view>
+  <!--  <div class="flex flex-row w-full gap md:px-6 lg:px-14 xl:px-32">-->
+  <div class="flex flex-row w-full">
+    <div class="flex w-full gap">
+      <div class="fixed top-0 left-0 w-job h-full">
+        <dashboard-navbar class="w-job h-full" :current-page="page" @on-page-change="onPageChange" @on-logout="logout"
+                          @on-refresh="onRefresh"></dashboard-navbar>
+      </div>
+      <!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
+      <!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
+      <!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
+      <!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
+      <div class="w-full ml-job pl-10 pt-10">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,7 +33,7 @@ export default {
   emits: ['onLogout'],
   data() {
     return {
-      userGuilds:[],
+      userGuilds: [],
       page: DASHBOARDPAGES.GUILD_SELECTION,
       DASHBOARDPAGES: DASHBOARDPAGES
     }

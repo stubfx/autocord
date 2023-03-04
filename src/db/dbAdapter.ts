@@ -70,8 +70,8 @@ export async function saveJob(guildId, job: Job): Promise<Boolean> {
         // then this must be a new job, awesome!
         // do we already have the guild?
         if (guild) {
-            // ok let's check if there are already 3 jobs inside then!
-            if (guild.jobs.length > 3) {
+            // ok let's check if there are already MAX_JOB_PER_GUILD jobs inside then!
+            if (guild.jobs.length > +process.env.MAX_JOB_PER_GUILD) {
                 // guild has already 3 jobs
                 // unlucky :/
                 return false

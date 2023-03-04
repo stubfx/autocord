@@ -1,11 +1,11 @@
 <template>
   <div @click="onClick()" class="group cursor-pointer p rounded transition-colors duration-100
-                   w-fit">
-    <div class="flex flex-row items-center h-full justify-center">
+                   w-fit h-fit">
+    <div class="flex flex-row items-center justify-center">
       <div class="w-[50px]">
         <slot></slot>
       </div>
-      <div class="flex flex-col justify-center h-full font-semibold tracking-wide ml-2" v-if="text">
+      <div class="flex flex-col justify-center font-semibold tracking-wide ml-2" v-if="text">
         {{ text }}
       </div>
     </div>

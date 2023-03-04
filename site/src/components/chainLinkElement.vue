@@ -1,30 +1,29 @@
 <template>
-  <div :data-linktype="link.type" class="group cursor-pointer p
+  <div :data-linktype="link.type" class="relative group cursor-pointer p
   rounded transition-colors duration-100
   data-[linktype=EVENT]:bg-success
-  bg-primary hover:text-dark hover:bg-accent flex-grow w-full h-full select-none">
-    <div class="flex flex-row h-full">
-      <!--      <div class="flex flex-col w-[60px] justify-start">-->
-      <!--        <sensor_rounded class="fill-black group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>-->
-      <!--        <task_rounded class="fill-gray-400  group-hover:fill-black" v-if="link.type === 'TASK'"></task_rounded>-->
-      <!--        <psicology_rounded class="fill-gray-400  group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>-->
-      <!--      </div>-->
-      <div class="flex flex-col mx-2 w-full flex-grow h-full gap"
-           :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-accent'">
-        <div class="flex flex-row w-full">
-          <div class="flex flex-row flex-grow w-full">
-            <div class="flex flex-row gap-2 fill-accent bg-dark text-accent p-2 px-4 rounded w-fit">
-              <token_rounded class="w-6"></token_rounded>
-              {{ link.cost }}
-            </div>
-          </div>
-          <div class="flex flex-row bg-error p-2 rounded" v-show="showDelete" @click="onDelete" @click.stop>
-            <close_rounded class="fill-accent rounded w-6 cursor-pointer"></close_rounded>
-          </div>
+  bg-primary hover:text-dark hover:bg-secondary flex-grow h-fit select-none">
+    <div class="flex flex-row w-full">
+      <div class="flex flex-row w-full items-center gap">
+        <div class="flex flex-row gap-2 fill-accent bg-dark text-accent p-2 px-4 rounded w-fit">
+          <token_rounded class="w-6"></token_rounded>
+          {{ link.cost }}
         </div>
-        <div class="flex flex-row w-full items-center">
-            <span class="font-semibold tracking-wide flex-grow"
-                  :class="link.type === 'EVENT' ? 'text-black' : 'text-accent'">{{ link.name }}</span>
+        <span class="font-semibold tracking-wide flex-grow"
+              :class="link.type === 'EVENT' ? 'text-black' : 'text-accent'">{{ link.name }}</span>
+        <expand_more_rounded class="w-token cursor-pointer transition-transform duration" :class="expanded ? 'rotate-180' : ''"
+                             @click="toggleExpand" @click.stop></expand_more_rounded>
+        <div class="flex flex-row">
+          <close_rounded class="w-token cursor-pointer" v-show="showDelete" @click="onDelete"
+                         @click.stop></close_rounded>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <div class="flex flex-col w-full flex-grow gap overflow-hidden"
+           :class="[link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-accent',
+           expanded ? 'h-fit' : 'h-0']">
+        <div class="flex flex-row w-full">
         </div>
         <span class="font-light">{{ link.description }}</span>
         <div class="flex flex-col flex-grow w-full h-full justify-end overflow-hidden">
@@ -46,10 +45,12 @@ import LinkParamsViewBlock from "./linkParamsViewBlock.vue";
 import Payments_rounded from "../assets/payments_rounded.vue";
 import Token_rounded from "../assets/token_rounded.vue";
 import Close_rounded from "../assets/close_rounded.vue";
+import Expand_more_rounded from "../assets/expand_more_rounded.vue";
 
 export default {
   name: "chainLinkElement",
   components: {
+    Expand_more_rounded,
     Close_rounded,
     Token_rounded,
     Payments_rounded,
@@ -65,9 +66,17 @@ export default {
     showDelete: false
   },
   emits: ['onDelete'],
+  data() {
+    return {
+      expanded: false
+    }
+  },
   methods: {
     onDelete() {
       this.$emit('onDelete')
+    },
+    toggleExpand() {
+      this.expanded = !this.expanded
     }
   }
 }

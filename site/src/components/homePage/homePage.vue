@@ -1,10 +1,7 @@
 <template>
+  <navbar></navbar>
   <div class="flex flex-col w-full gap items-center">
-    <div class="flex flex-col container gap">
-      <div class="flex flex-row gap">
-        <login-button @on-click="login"></login-button>
-        <support-server-button @on-click="supportServer"></support-server-button>
-      </div>
+    <div class="flex flex-col gap">
       <h1 class="text-accent self-center text-4xl sm:text-5xl lg:text-9xl">AUTOCORD.IO</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Discord automation made simple.</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
@@ -15,8 +12,10 @@
         <support-server-button @on-click="supportServer"></support-server-button>
         <div class="hidden flex-col md:flex items-center gap">
           <h1 class="text-4xl">Create cool automations!</h1>
-          <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
-          <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
+          <div class="flex flex-row gap">
+            <guild-job :job="getSampleJob()" :is-sample="true"></guild-job>
+            <guild-job :job="getSampleJob2()" :is-sample="true"></guild-job>
+          </div>
           <div class="flex flex-col w-full py-10 items-center">
             <h1 class="uppercase text-accent text-8xl">Try me!</h1>
             <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>
@@ -44,11 +43,12 @@ import {getSampleJob, getSampleJob2} from "../../sampleJob.js";
 import SupportServerButton from "../buttons/supportServerButton.vue";
 import LoginButton from "../buttons/loginButton.vue";
 import EditJobView from "../job/editJobView.vue";
+import Navbar from "../navbar.vue";
 
 export default {
   name: "homePage",
   emits: ['onPageChange'],
-  components: {EditJobView, LoginButton, SupportServerButton, GuildJob},
+  components: {Navbar, EditJobView, LoginButton, SupportServerButton, GuildJob},
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection

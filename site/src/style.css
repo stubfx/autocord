@@ -15,3 +15,9 @@
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
+
+.job-bg {
+    /*@apply bg-tertiary;*/
+    @apply bg-tertiary/80;
+    @apply backdrop-blur-xl;
+}

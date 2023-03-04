@@ -1,14 +1,24 @@
 <template>
-  <div class="flex flex-col items-center w-full text-accent">
-    <div class="flex flex-col items-center gap w-full">
+  <div class="flex flex-col w-full text-accent">
+    <div class="flex flex-col gap">
       <h2 class="text-3xl font-bold sm:text-4xl">Shared storage</h2>
-      <div class="flex flex-row w-full">
+      <div class="flex flex-row">
         <storage-view class="mt-5" :storage="storage"
                       @on-storage-data-added="refreshGuildData"
                       @on-storage-data-deleted="refreshGuildData"></storage-view>
       </div>
       <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
-      <div class="mt-2 flex flex-col justify-center gap w-full">
+      <div class="mt-2 flex flex-row flex-wrap gap">
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
+        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
         <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
                    @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
@@ -41,10 +51,24 @@ export default {
   },
   methods: {
     async refreshGuildData() {
-      let response = await NetworkAdapter.getGuildData(this.$store.guildId)
-      this.jobs = response['jobs']
-      this.storage = response['storage']
-      this.$store.storage = this.storage
+      if (!await NetworkAdapter.loginCheck()) {
+        // redirect to selection
+        // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+        this.$router.push('/')
+      } else {
+        let guildId = this.$route.params.guildId;
+        // did we have a selected guild?
+        if (guildId) {
+          this.$store.guildId = guildId
+          // awesome!
+          let response = await NetworkAdapter.getGuildData(this.$store.guildId)
+          this.jobs = response['jobs']
+          this.storage = response['storage']
+          this.$store.storage = this.storage
+        } else {
+          this.$router.push({name: 'guilds'})
+        }
+      }
     },
     addJob() {
       // this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)

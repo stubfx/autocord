@@ -1,9 +1,8 @@
 <template>
-
 <!--  <div class="fixed top-0 left-0 w-full h-full bg-dark"></div>-->
   <background-flare></background-flare>
   <div class="flex w-full h-full flex-col items-center absolute gap">
-    <div class="w-full py-5">
+    <div class="w-full">
       <router-view></router-view>
     </div>
     <div class="flex flex-grow w-full justify-center items-end gap">
@@ -15,9 +14,7 @@
 <script setup>
 
 
-
-import BackgroundFlare from "./components/backgroundFlare.vue";
-</script>
+import BackgroundFlare from "./components/backgroundFlare.vue";</script>
 
 <style scoped>
 /*#bg {*/

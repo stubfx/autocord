@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-row w-full">
+  <div class="flex flex-row">
     <add-storage-value-dialog ref="modal" @onClose="onStorageDataAdded"></add-storage-value-dialog>
     <confirm-deletion-dialog  ref="deleteModal"></confirm-deletion-dialog>
-    <div class="flex flex-row p bg-dark rounded w-full items-center gap-2">
+    <div class="flex flex-row p bg-dark rounded w-full items-center gap-2 job-bg">
       <div class="flex flex-row bg-secondary p-2 rounded hover:bg-error text-accent cursor-pointer"
            v-for="item in getStorageData()" @click="onDeleteStorageData(item)">
         <p>{{ item.name }} : {{ item.value.toString() || 'N/A' }}</p>

@@ -6,6 +6,17 @@ module.exports = {
     ],
     theme: {
         extend: {
+            margin: {
+                job: '420px'
+            },
+            width: {
+                job: '420px',
+                token: '40px'
+            },
+            height: {
+                'el-closed': '0',
+                'el-open': 'fit-content',
+            },
             borderRadius: {
                 'none': '0',
                 'sm': '.125rem',
@@ -14,26 +25,22 @@ module.exports = {
                 'full': '9999px',
             },
             gap: {
-                DEFAULT: '1.25rem'
+                DEFAULT: '.5rem'
+            },
+            transitionDuration: {
+                DEFAULT: '300ms'
             },
             padding: {
-                DEFAULT: '1.25rem'
+                DEFAULT: '.5rem'
             },
             colors: {
-                "accent": "#7289da",
+                "accent": "#ffffff",
                 "primary": "#424549",
-                "secondary": "#36393e",
-                "darky": "#282b30",
-                "dark": "#1e2124",
+                "secondary": "#1b3370",
+                "tertiary": "#1d1f23",
+                "dark": "#000d2f",
                 "success": '#57F287',
                 "error": '#ED4245',
-                // "accent": "#F9AC53",
-                // "primary": "#F62F80",
-                // "secondary": "#153CB4",
-                // "darky": "#94167F",
-                // "dark": "#1a0028",
-                // "success": '#1CE9A5',
-                // "error": '#ED4245'
             }
         },
     },
