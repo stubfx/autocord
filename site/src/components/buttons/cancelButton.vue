@@ -1,5 +1,5 @@
 <template>
-  <app-button>
+  <app-button text="Cancel" class="bg-primary hover:bg-accent fill-accent text-accent">
     <cancel_rounded></cancel_rounded>
   </app-button>
 </template>

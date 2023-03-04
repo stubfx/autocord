@@ -1,15 +1,15 @@
 <template>
 <!--  this is just to override settings coming from other buttons.-->
 <!--  bg-transparent hover:bg-transparent-->
-  <div @click="onClick()" class="group cursor-pointer p rounded transition-colors duration-100
-                   w-fit h-fit bg-transparent hover:bg-accent hover:fill-dark">
+  <div @click="onClick()" class="group cursor-pointer p-1 rounded transition-colors duration-100
+                   w-fit h-fit bg-secondary hover:bg-accent hover:fill-dark">
     <div class="flex flex-row items-center justify-center">
-      <div class="flex flex-col items-center justify-center w-token h-token m-2">
+      <div class="flex flex-col items-center justify-center button-icon m-2">
         <slot></slot>
       </div>
-<!--      <div class="flex flex-col justify-center font-semibold tracking-wide ml-2" v-if="text">-->
-<!--        {{ text }}-->
-<!--      </div>-->
+      <div class="flex flex-col justify-center font-semibold tracking-wide ml-2" v-if="text">
+        {{ text }}
+      </div>
     </div>
   </div>
 </template>

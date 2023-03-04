@@ -1,5 +1,5 @@
 <template>
-  <app-button>
+  <app-button text="" class="bg-primary hover:bg-success fill-accent text-accent">
     <refresh_rounded></refresh_rounded>
   </app-button>
 </template>

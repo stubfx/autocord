@@ -1,6 +1,5 @@
 <template>
-<!--  <app-button text="Support server" class="bg-primary hover:bg-accent fill-accent text-accent">-->
-  <app-button>
+  <app-button text="Support server">
     <icon_clyde></icon_clyde>
   </app-button>
 </template>

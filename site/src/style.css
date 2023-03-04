@@ -22,3 +22,8 @@
     @apply backdrop-blur-2xl;
     @apply shadow-2xl
 }
+
+.button-icon {
+    @apply w-5;
+    @apply h-5;
+}

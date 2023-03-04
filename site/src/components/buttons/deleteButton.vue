@@ -1,5 +1,5 @@
 <template>
-  <app-button>
+  <app-button text="Delete" class="bg-primary hover:bg-error fill-accent text-accent">
     <close_rounded></close_rounded>
   </app-button>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <app-button>
+  <app-button text="Login">
     <login_rounded></login_rounded>
   </app-button>
 </template>
