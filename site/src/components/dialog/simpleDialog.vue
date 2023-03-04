@@ -7,10 +7,10 @@
        v-if="isOpen" @click="onClickOutside()">
     <!--  dialog-->
     <div class="absolute top-0 left-0 flex w-screen h-screen justify-center items-center">
-      <div class="flex flex-col bg-discord-5 p rounded text-white gap" @click.stop>
+      <div class="flex flex-col bg-dark p rounded text-accent gap" @click.stop>
         <div class="flex flex-row w-full items-center">
-          <h1 class="flex-grow uppercase text-white text-2xl">{{title}}</h1>
-          <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer"
+          <h1 class="flex-grow uppercase text-accent text-2xl">{{title}}</h1>
+          <close_rounded class="fill-accent bg-error rounded w-7 h-7 cursor-pointer"
                          @click="onCancel()" v-show="!hideCloseButton"></close_rounded>
         </div>
         <slot></slot>

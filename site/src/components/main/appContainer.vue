@@ -1,7 +1,7 @@
 <template>
-<!--  <div class="flex w-full justify-center bg-discord-5 fixed top-0 left-0 z-[999999]"-->
+<!--  <div class="flex w-full justify-center bg-dark fixed top-0 left-0 z-[999999]"-->
 <!--       v-if="page !== PAGES.MAIN_PAGE">-->
-<!--    <h1 class="text-2xl font-bold text-discord-1 my-3">AUTOCORD.IO</h1>-->
+<!--    <h1 class="text-2xl font-bold text-accent my-3">AUTOCORD.IO</h1>-->
 <!--  </div>-->
   <div class="w-full mt-3 pt-8">
     <home-page v-if="page === PAGES.MAIN_PAGE" @on-page-change="onPageChange"></home-page>

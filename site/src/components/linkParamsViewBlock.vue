@@ -16,13 +16,13 @@ export default {
   methods: {
     formattedParamValue(value) {
       if (!value) {
-        return `<span class="text-discord-error">ERROR</span>`
+        return `<span class="text-error">ERROR</span>`
       }
       const str = value;
       const regex = /\{\{(\w+)}}/g;
 
       return str.replace(regex, (match, variable) => {
-        return `<span class="text-discord-success">${variable}</span>`;
+        return `<span class="text-success">${variable}</span>`;
       });
     }
   }

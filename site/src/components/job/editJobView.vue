@@ -3,7 +3,7 @@
   </chain-link-parameters-dialog>
   <div class="flex flex-col w-full h-full gap">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT"></guild-job>
-    <div class="flex flex-col bg-discord-5 shadow-2xl rounded gap py">
+    <div class="flex flex-col bg-dark shadow-2xl rounded gap py">
       <event-list-selection name="Events" :items="events" @onItemSelected="addLink"></event-list-selection>
       <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink"></event-list-selection>
       <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink"></event-list-selection>

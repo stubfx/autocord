@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row rounded gap">
     <!--      <simple-select></simple-select>-->
-    <div class="flex flex-row fill-white [&>*]:cursor-pointer gap">
+    <div class="flex flex-row fill-accent [&>*]:cursor-pointer gap">
       <list-button @click="onGuildSelection"></list-button>
 <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
 <!--      <refresh-button @click="onRefresh"></refresh-button>-->

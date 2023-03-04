@@ -1,5 +1,5 @@
 <template>
-  <app-button text="" class="bg-discord-2 hover:bg-discord-success fill-white text-white">
+  <app-button text="" class="bg-primary hover:bg-success fill-accent text-accent">
     <home_rounded></home_rounded>
   </app-button>
 </template>

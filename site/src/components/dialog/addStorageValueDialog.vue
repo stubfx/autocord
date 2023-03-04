@@ -1,7 +1,7 @@
 <template>
   <simple-dialog ref="modal" :close-on-click-outside="false" title="Add storage value">
     <div ref="form" class="flex flex-col w-[400px] items-center gap" @submit="close()">
-      <input class="bg-discord-3 rounded p-2 mt-2 w-full" type="text" v-model="value"/>
+      <input class="bg-secondary rounded p-2 mt-2 w-full" type="text" v-model="value"/>
       <save-button @onClick="close()"></save-button>
     </div>
   </simple-dialog>

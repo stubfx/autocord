@@ -1,8 +1,8 @@
 <template>
   <div :data-linktype="link.type" class="group cursor-pointer p
   rounded transition-colors duration-100
-  data-[linktype=EVENT]:bg-discord-success
-  bg-discord-2 hover:text-discord-5 hover:bg-discord-1 flex-grow w-full h-full select-none">
+  data-[linktype=EVENT]:bg-success
+  bg-primary hover:text-dark hover:bg-accent flex-grow w-full h-full select-none">
     <div class="flex flex-row h-full">
       <!--      <div class="flex flex-col w-[60px] justify-start">-->
       <!--        <sensor_rounded class="fill-black group-hover:fill-black" v-if="link.type === 'EVENT'"></sensor_rounded>-->
@@ -10,21 +10,21 @@
       <!--        <psicology_rounded class="fill-gray-400  group-hover:fill-black" v-if="link.type === 'CONDITION'"></psicology_rounded>-->
       <!--      </div>-->
       <div class="flex flex-col mx-2 w-full flex-grow h-full gap"
-           :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-white'">
+           :class="link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-accent'">
         <div class="flex flex-row w-full">
           <div class="flex flex-row flex-grow w-full">
-            <div class="flex flex-row gap-2 fill-discord-1 bg-discord-5 text-white p-2 px-4 rounded w-fit">
+            <div class="flex flex-row gap-2 fill-accent bg-dark text-accent p-2 px-4 rounded w-fit">
               <token_rounded class="w-6"></token_rounded>
               {{ link.cost }}
             </div>
           </div>
-          <div class="flex flex-row bg-discord-error p-2 rounded" v-show="showDelete" @click="onDelete" @click.stop>
-            <close_rounded class="fill-white rounded w-6 cursor-pointer"></close_rounded>
+          <div class="flex flex-row bg-error p-2 rounded" v-show="showDelete" @click="onDelete" @click.stop>
+            <close_rounded class="fill-accent rounded w-6 cursor-pointer"></close_rounded>
           </div>
         </div>
         <div class="flex flex-row w-full items-center">
             <span class="font-semibold tracking-wide flex-grow"
-                  :class="link.type === 'EVENT' ? 'text-black' : 'text-white'">{{ link.name }}</span>
+                  :class="link.type === 'EVENT' ? 'text-black' : 'text-accent'">{{ link.name }}</span>
         </div>
         <span class="font-light">{{ link.description }}</span>
         <div class="flex flex-col flex-grow w-full h-full justify-end overflow-hidden">

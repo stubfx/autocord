@@ -1,5 +1,5 @@
 <template>
-  <app-button text="Cancel" class="bg-discord-2 hover:bg-discord-1 fill-white text-white">
+  <app-button text="Cancel" class="bg-primary hover:bg-accent fill-accent text-accent">
     <cancel_rounded></cancel_rounded>
   </app-button>
 </template>

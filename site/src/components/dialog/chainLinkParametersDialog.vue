@@ -12,10 +12,10 @@
             <label class="my-2">{{ param.name }}</label>
             <div class="flex flex-row w-full gap">
               <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
-              <input class="bg-discord-3 rounded p-2 w-full" type="text" v-model="param.value"
+              <input class="bg-secondary rounded p-2 w-full" type="text" v-model="param.value"
                      v-if="isStringOrForcedAs(param)" @click="setFocusedParam(param)"/>
-              <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-discord-3 rounded p-2 w-full">
-                <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-discord-5">{{
+              <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-secondary rounded p-2 w-full">
+                <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-dark">{{
                     paramOption.name
                   }}
                 </option>

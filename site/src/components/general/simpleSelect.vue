@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col w-[400px] bg-discord-3 rounded appearance-none" @click="openSelect">
-    <div v-for="item in dataSet" class="absolute flex flex-row w-full text-white" v-if="isOpen">
-      <div class="bg-discord-error">
+  <div class="flex flex-col w-[400px] bg-secondary rounded appearance-none" @click="openSelect">
+    <div v-for="item in dataSet" class="absolute flex flex-row w-full text-accent" v-if="isOpen">
+      <div class="bg-error">
         {{ item.name }}
       </div>
     </div>

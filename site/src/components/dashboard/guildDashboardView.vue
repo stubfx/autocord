@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full text-white">
+  <div class="flex flex-col items-center w-full text-accent">
     <div class="flex flex-col items-center gap w-full">
       <h2 class="text-3xl font-bold sm:text-4xl">Shared storage</h2>
       <div class="flex flex-row w-full">

@@ -1,5 +1,5 @@
 <template>
-  <app-button text="Delete" class="bg-discord-2 hover:bg-discord-error fill-white text-white">
+  <app-button text="Delete" class="bg-primary hover:bg-error fill-accent text-accent">
     <close_rounded></close_rounded>
   </app-button>
 </template>

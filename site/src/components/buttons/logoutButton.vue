@@ -1,5 +1,5 @@
 <template>
-  <app-button text="Logout" class="bg-discord-2 hover:bg-discord-error fill-white text-white">
+  <app-button text="Logout" class="bg-primary hover:bg-error fill-accent text-accent">
     <logout_rounded></logout_rounded>
   </app-button>
 </template>
