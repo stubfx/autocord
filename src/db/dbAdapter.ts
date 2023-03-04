@@ -1,15 +1,15 @@
-import * as LoggerHelper from "./loggerHelper.js";
+import * as LoggerHelper from "../loggerHelper.js";
 import mongoose from "mongoose"
-import {Job} from "./models/pipeline/Job.js";
-import {GuildModel} from "./schemas/guildSchema.js";
-import {AggregatedGuildInterface} from "./models/GuildInterface.js";
-import {JobModel} from "./schemas/jobSchema.js";
-import {GuildStorage} from "./schemas/guildStorageSchema.js";
-import {JOBS, STORAGE} from "./schemas/schemas.js";
-import {skipEventsCache} from "./eventLifecycle/EventHandler.js";
+import {Job} from "../models/pipeline/Job.js";
+import {GuildModel} from "../schemas/guildSchema.js";
+import {AggregatedGuildInterface} from "../models/GuildInterface.js";
+import {JobModel} from "../schemas/jobSchema.js";
+import {GuildStorage} from "../schemas/guildStorageSchema.js";
+import {JOBS, STORAGE} from "../schemas/schemas.js";
+import {skipEventsCache} from "../eventLifecycle/EventHandler.js";
 
 
-let mongooseConnection = null
+export let mongooseConnection = null
 
 export async function init() {
     mongoose.set('strictQuery', false);
@@ -34,24 +34,6 @@ export async function deleteJob(guildId, job: Job): Promise<Boolean> {
         LoggerHelper.error(new Error("Job already has an id, but it does not match the guild?"))
         return false
     }
-}
-
-export async function addStorageData(guildId: string, storageDataName: string) {
-    let guild = await getGuild(guildId)
-    let storage = guild.storage
-    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
-        [`data.${storageDataName}`]: 0
-    })
-    return true
-}
-
-export async function deleteStorageData(guildId: string, storageDataName: string) {
-    let guild = await getGuild(guildId)
-    let storage = guild.storage
-    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
-        $unset : {[`data.${storageDataName}`]: ""}
-    })
-    return true
 }
 
 export async function createGuildWithStorage(guildId, mongoJobId: mongoose.Types.ObjectId = null) {
@@ -127,6 +109,24 @@ export async function increaseStorageCounter(storageId: string, counterName: str
     await GuildStorage.findOneAndUpdate({_id: storageId}, {
         $inc: {[`data.${counterName}`]: 1}
     })
+}
+
+export async function addStorageData(guildId: string, storageDataName: string) {
+    let guild = await getGuild(guildId)
+    let storage = guild.storage
+    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
+        [`data.${storageDataName}`]: 0
+    })
+    return true
+}
+
+export async function deleteStorageData(guildId: string, storageDataName: string) {
+    let guild = await getGuild(guildId)
+    let storage = guild.storage
+    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
+        $unset : {[`data.${storageDataName}`]: ""}
+    })
+    return true
 }
 
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
