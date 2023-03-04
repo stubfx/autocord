@@ -35,6 +35,7 @@ export var ChainLinkTypes;
         Param["ROLE_ID"] = "ROLE_ID";
         Param["CHANNEL_TYPE"] = "CHANNEL_TYPE";
         Param["CATEGORY_ID"] = "CATEGORY_ID";
+        Param["REGEX"] = "REGEX";
     })(Param = ChainLinkTypes.Param || (ChainLinkTypes.Param = {}));
 })(ChainLinkTypes || (ChainLinkTypes = {}));
 //# sourceMappingURL=ChainLinkTypes.js.map

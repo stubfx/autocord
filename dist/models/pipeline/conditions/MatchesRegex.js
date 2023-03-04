@@ -7,7 +7,7 @@ export class MatchesRegex extends Condition {
             type: ChainLinkTypes.Param.STRING
         }, {
             name: "regex",
-            type: ChainLinkTypes.Param.STRING
+            type: ChainLinkTypes.Param.REGEX
         }];
     description = "Checks if the given text matches a regex";
     async behavior(...args) {

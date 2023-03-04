@@ -36,6 +36,7 @@ export namespace ChainLinkTypes {
         ROLE_ID = 'ROLE_ID',
         CHANNEL_TYPE = 'CHANNEL_TYPE',
         CATEGORY_ID = 'CATEGORY_ID',
+        REGEX = 'REGEX',
     }
 
 }

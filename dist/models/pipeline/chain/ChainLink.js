@@ -1,5 +1,6 @@
 import { ChainLinkTypes } from "./ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
+import * as LoggerHelper from "../../../loggerHelper.js";
 export class ChainLink {
     name;
     type;
@@ -85,24 +86,38 @@ export class ChainLink {
             // ok same name
             let type = acceptedParam.type;
             switch (type) {
+                case ChainLinkTypes.Param.REGEX:
+                    // this can be really demanding if the regex is long or too complex
+                    this.checkParameterRegexLength(paramToCheck);
+                    break;
                 case ChainLinkTypes.Param.STRING:
                 case ChainLinkTypes.Param.CHANNEL_ID:
                 case ChainLinkTypes.Param.ROLE_ID:
                 case ChainLinkTypes.Param.CHANNEL_TYPE:
                 case ChainLinkTypes.Param.CATEGORY_ID:
-                    let length = paramToCheck.value.length;
-                    if (length > 150) {
-                        throw new Error(`Param value cannot be longer than 150 chars. Current ${length}`);
-                    }
+                    this.checkParameterStringLength(paramToCheck);
                     break;
                 default:
-                    throw Error('Excuse me wtf?');
+                    LoggerHelper.warn(`Missing validation for ${type}. Using default.`);
+                    this.checkParameterStringLength(paramToCheck);
             }
         }
         // congratulations!
     }
+    checkParameterStringLength(paramToCheck) {
+        let length = paramToCheck.value.length;
+        if (length > 150) {
+            throw new Error(`Param value cannot be longer than 150 chars. Current ${length}`);
+        }
+    }
     async fetchedGuild() {
         return await discordClient.guilds.fetch(this.guild.guildId);
+    }
+    checkParameterRegexLength(paramToCheck) {
+        let length = paramToCheck.value.length;
+        if (length > 10) {
+            throw new Error(`Regex value cannot be longer than 10 chars. Current ${length}`);
+        }
     }
 }
 //# sourceMappingURL=ChainLink.js.map

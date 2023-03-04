@@ -37,6 +37,10 @@ export function error(...data) {
     console.error(data);
     sendToDiscord(data, 0xED4245);
 }
+export function warn(...data) {
+    console.warn(data);
+    sendToDiscord(data, 0xFCBA03);
+}
 export function consoleError(data) {
     console.error(data);
 }
