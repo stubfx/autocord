@@ -2,7 +2,7 @@ import {ChainLinkTypes} from "./ChainLinkTypes.js";
 import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../../GuildInterface";
 import {discordClient} from "../../../discordbot.js";
-import * as LoggerHelper from "../../../loggerHelper.js";
+// import * as LoggerHelper from "../../../loggerHelper.js";
 
 export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
@@ -115,15 +115,15 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
                     // this can be really demanding if the regex is long or too complex
                     this.checkParameterRegexLength(paramToCheck);
                     break
-                case ChainLinkTypes.Param.STRING:
-                case ChainLinkTypes.Param.CHANNEL_ID:
-                case ChainLinkTypes.Param.ROLE_ID:
-                case ChainLinkTypes.Param.CHANNEL_TYPE:
-                case ChainLinkTypes.Param.CATEGORY_ID:
-                    this.checkParameterStringLength(paramToCheck);
-                    break
+                // case ChainLinkTypes.Param.STRING:
+                // case ChainLinkTypes.Param.CHANNEL_ID:
+                // case ChainLinkTypes.Param.ROLE_ID:
+                // case ChainLinkTypes.Param.CHANNEL_TYPE:
+                // case ChainLinkTypes.Param.CATEGORY_ID:
+                //     this.checkParameterStringLength(paramToCheck);
+                //     break
                 default:
-                    LoggerHelper.warn(`Missing validation for ${type}. Using default.`)
+                    // LoggerHelper.warn(`Missing validation for ${type}. Using default.`)
                     this.checkParameterStringLength(paramToCheck);
             }
         }
@@ -133,7 +133,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     private checkParameterStringLength(paramToCheck: ChainLinkParam) {
         let length = paramToCheck.value.length;
         if (length > 150) {
-            throw new Error(`Param value cannot be longer than 150 chars. Current ${length}`)
+            throw new Error(`Param value cannot be longer than 150 chars.`)
         }
     }
 
@@ -146,7 +146,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     private checkParameterRegexLength(paramToCheck: ChainLinkParam) {
         let length = paramToCheck.value.length;
         if (length > 10) {
-            throw new Error(`Regex value cannot be longer than 10 chars. Current ${length}`)
+            throw new Error(`Regex value cannot be longer than 10 chars.`)
         }
     }
 }
