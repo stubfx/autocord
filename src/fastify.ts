@@ -63,8 +63,8 @@ export async function init() {
         return payload
     })
 
-    fastify.register(openApi, {prefix: '/'})
-    fastify.register(authApi, {prefix: '/auth'})
+    fastify.register(openApi, {prefix: '/api'})
+    fastify.register(authApi, {prefix: '/api/auth'})
 
 // Run the server and report out to the logs
     fastify.listen(

@@ -1,10 +1,11 @@
 <template>
   <div class="flex flex-col w-full gap md:px-6 lg:px-14 xl:px-32">
     <dashboard-navbar :current-page="page" @on-page-change="onPageChange" @on-logout="logout" @on-refresh="onRefresh"></dashboard-navbar>
-    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>
-    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"
-                          @on-page-change="onPageChange"></guild-dashboard-view>
-    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>
+<!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
+<!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
+<!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
+<!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -29,6 +30,23 @@ export default {
       DASHBOARDPAGES: DASHBOARDPAGES
     }
   },
+  async mounted() {
+    if (!await NetworkAdapter.loginCheck()) {
+      // redirect to selection
+      // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+      this.$router.push('/')
+    } else {
+      let guildId = this.$route.params.guildId;
+      // did we have a selected guild?
+      if (guildId) {
+        this.$store.guildId = guildId
+        // awesome!
+        this.$router.push({name: 'jobs', params: {guildId: guildId}})
+      } else {
+        this.$router.push({name: 'guilds'})
+      }
+    }
+  },
   methods: {
     onRefresh() {
       this.$refs.jobListingComponent.refreshGuildData()
@@ -39,8 +57,9 @@ export default {
     async logout() {
       await NetworkAdapter.logout()
       // make sure to remove everything.
-      window.location.reload()
+      // window.location.reload()
       // this.$emit('onLogout')
+      this.$router.push('/')
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId

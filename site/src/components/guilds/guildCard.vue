@@ -1,7 +1,6 @@
 <template>
   <div class="group rounded flex flex-col items-center p hover:shadow-2xl hover:-translate-y-6 transition-all duration-300 bg-discord-5 cursor-pointer w-[200px]
-  h-100 hover:scale-110 hover:bg-discord-1 hover:text-discord-5"
-  @click="selectGuild()">
+  h-100 hover:scale-110 hover:bg-discord-1 hover:text-discord-5">
     <object :data="getImageUrl()" type="image/png" class="rounded w-full h-auto" v-if="guild.icon">
     </object>
 <!--    <object v-else data="/src/assets/broken_image_rounded.svg" type="image/png" class="rounded w-full h-auto fill-discord-2">-->
@@ -23,7 +22,6 @@
 <script>
 import {NetworkAdapter} from "../../network.js";
 import Broken_image_rounded from "../../assets/broken_image_rounded.vue";
-import {DASHBOARDPAGES} from "../../pages.js";
 import {openPopup} from "../../../popup.js";
 
 export default {
@@ -32,15 +30,14 @@ export default {
   props: {
     guild: Object
   },
-  emits: ['onPageChange'],
   methods: {
     getImageUrl() {
       return `https://cdn.discordapp.com/icons/${this.guild.id}/${this.guild.icon}.png`
     },
-    goToListingPage() {
-      this.$store.guildId = this.guild.id
-      this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
-    },
+    // goToListingPage() {
+    //   this.$store.guildId = this.guild.id
+    //   this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
+    // },
     async selectGuild() {
       // check if the bot is in the guild.
       if (await NetworkAdapter.isBotInGuild(this.guild.id)) {

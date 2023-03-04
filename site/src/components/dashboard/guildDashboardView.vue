@@ -21,7 +21,6 @@
 import {NetworkAdapter} from "../../network.js";
 import GuildJob from "./guildJob.vue";
 import GuildJobAddCard from "./guildJobAddCard.vue";
-import {DASHBOARDPAGES} from "../../pages.js";
 import StorageView from "../storageView.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 
@@ -48,11 +47,13 @@ export default {
       this.$store.storage = this.storage
     },
     addJob() {
-      this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
+      // this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
+      this.$router.push({name: 'editjob'})
     },
     addJobLink(job) {
       this.$store.currentJob = job
-      this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
+      // this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
+      this.$router.push({name: 'editjob'})
     },
     async onUpdateJob(job) {
       let guildId = this.$store.guildId

@@ -49,7 +49,10 @@ export default {
     let currentJob = this.$store.currentJob;
     if (currentJob) {
       this.job = currentJob
-    }
+    }/* else {
+      // nope.
+      this.$router.push({name: 'jobs'})
+    }*/
     this.events = await NetworkAdapter.getAvailableEventNames()
     this.tasks = await NetworkAdapter.getAvailableJobTasks()
     this.conditions = await NetworkAdapter.getAvailableJobConditions()
@@ -82,8 +85,12 @@ export default {
         })
       }
     },
-    async onSaveJob() {
-      this.$emit('onSaveJob', this.job)
+    async onSaveJob(job) {
+      let guildId = this.$store.guildId
+      if (await NetworkAdapter.saveJob(guildId, job)) {
+        // this.page = DASHBOARDPAGES.JOB_LISTING
+        this.$router.push({name: 'jobs'})
+      }
     }
   }
 }

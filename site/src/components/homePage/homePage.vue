@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import {PAGES} from "../../pages.js";
 import {NetworkAdapter} from "../../network.js";
 import {openPopup} from "../../../popup.js";
 import GuildJob from "../dashboard/guildJob.vue";
@@ -51,10 +50,12 @@ export default {
   emits: ['onPageChange'],
   components: {EditJobView, LoginButton, SupportServerButton, GuildJob},
   async mounted() {
-    this.guildCount = await NetworkAdapter.getBotGuildCount()
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection
-      this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+      // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+      this.$router.push('/dashboard')
+    } else {
+      this.guildCount = await NetworkAdapter.getBotGuildCount()
     }
   },
   data() {
@@ -70,7 +71,8 @@ export default {
       if (url) {
         await openPopup(url)
         if (await NetworkAdapter.loginCheck()) {
-          this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+          // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
+          this.$router.push('/dashboard')
         }
       }
     },
