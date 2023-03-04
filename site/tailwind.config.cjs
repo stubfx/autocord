@@ -15,6 +15,7 @@ module.exports = {
             },
             height: {
                 'el-closed': '0',
+                token: '40px',
                 'el-open': 'fit-content',
             },
             borderRadius: {

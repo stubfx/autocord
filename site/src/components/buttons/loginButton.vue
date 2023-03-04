@@ -1,5 +1,5 @@
 <template>
-  <app-button text="Login" class="bg-primary hover:bg-accent fill-accent text-accent">
+  <app-button>
     <login_rounded></login_rounded>
   </app-button>
 </template>

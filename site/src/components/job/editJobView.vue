@@ -13,6 +13,10 @@
       <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink" v-if="tab === 'Conditions'"></event-list-selection>
       <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink" v-if="tab === 'Tasks'"></event-list-selection>
     </div>
+    <div class="w-job"></div>
+    <div class="fixed top-0 right-0 h-full w-job job-bg z-20">
+      <div class="w-job"></div>
+    </div>
   </div>
 </template>
 

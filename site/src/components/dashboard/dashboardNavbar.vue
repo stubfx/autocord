@@ -1,6 +1,6 @@
 <template>
     <!--      <simple-select></simple-select>-->
-    <div class="flex flex-row w-full fill-accent items-center [&>*]:cursor-pointer gap">
+    <div class="flex flex-col h-full fill-accent items-center [&>*]:cursor-pointer gap pt-5">
       <list-button @click="onGuildSelection"></list-button>
 <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
 <!--      <refresh-button @click="onRefresh"></refresh-button>-->

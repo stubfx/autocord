@@ -1,26 +1,10 @@
 <template>
-  <!--  <div class="flex flex-row w-full gap md:px-6 lg:px-14 xl:px-32">-->
-  <div class="fixed flex flex-row top-0 w-full z-10 bg-accent/10 backdrop-blur-lg">
+  <div class="fixed flex flex-col top-0 h-full z-10 bg-tertiary">
     <dashboard-navbar class="w-full" :current-page="page" @on-page-change="onPageChange" @on-logout="logout"
                       @on-refresh="onRefresh"></dashboard-navbar>
-    <div class="w-job">
-      <!--      <guild-job :job></guild-job>-->
-      <!--      this is just a placeholder to avoid overlapping with the absolute element.-->
-    </div>
   </div>
-  <div class="flex flex-row w-full pt-28 pl-20">
-    <!--    <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>-->
-    <!--    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"-->
-    <!--                          @on-page-change="onPageChange"></guild-dashboard-view>-->
-    <!--    <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>-->
+  <div class="flex flex-row w-full pt-16 pl-32 pr-20">
     <router-view></router-view>
-    <div class="w-job">
-<!--      <guild-job :job></guild-job>-->
-<!--      this is just a placeholder to avoid overlapping with the absolute element.-->
-    </div>
-    <div class="fixed top-0 right-0 h-full w-job job-bg z-20">
-      adsf
-    </div>
   </div>
 </template>
 

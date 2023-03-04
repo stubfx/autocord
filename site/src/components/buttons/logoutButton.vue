@@ -1,5 +1,5 @@
 <template>
-  <app-button text="Logout" class="bg-primary hover:bg-error fill-accent text-accent">
+  <app-button>
     <logout_rounded></logout_rounded>
   </app-button>
 </template>
