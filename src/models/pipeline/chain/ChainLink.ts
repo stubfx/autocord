@@ -80,7 +80,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
             return
         }
         this.storage[paramName] = `${value}`
-        await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName])
+        if (this.storage[paramName] < 150) {
+            await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName])
+        }
+        // don't save this in the db for storage reasons.
     }
 
     private getStoreValue(paramName: string) {

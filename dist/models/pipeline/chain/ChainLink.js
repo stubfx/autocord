@@ -57,7 +57,10 @@ export class ChainLink {
             return;
         }
         this.storage[paramName] = `${value}`;
-        await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName]);
+        if (this.storage[paramName] < 150) {
+            await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName]);
+        }
+        // don't save this in the db for storage reasons.
     }
     getStoreValue(paramName) {
         return this.storage[paramName];
