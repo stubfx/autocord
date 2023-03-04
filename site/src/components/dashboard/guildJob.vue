@@ -5,7 +5,7 @@
   <div class="flex flex-col bg-discord-5 p-6 rounded items-center shadow-2xl gap w-full">
     <div class="flex flex-row w-full items-center gap">
       <h1 v-if="!showSave" class="text-3xl text-white flex-grow">{{ job.name }}</h1>
-      <input v-else class="uppercase text-3xl bg-discord-3 text-white flex-grow p-1 rounded" v-model="job.name">
+      <input v-else class="text-3xl bg-discord-3 text-white flex-grow p-1 rounded" v-model="job.name">
       <edit_rounded class="fill-discord-success rounded w-7 h-7 cursor-pointer"
                     v-if="showEditButton" @click="onAddLink()"></edit_rounded>
       <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer" @click="deleteJob"

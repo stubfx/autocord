@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       job: {
-        name: "new Job",
+        name: "New Job",
         chain: {chainLinks: []}
       },
       events: [],
