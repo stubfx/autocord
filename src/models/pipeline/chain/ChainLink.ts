@@ -3,6 +3,7 @@ import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../../GuildInterface";
 import {discordClient} from "../../../discordbot.js";
 import {setStorageValue} from "../../../db/storageDBAdapter.js";
+import {Guild} from "discord.js";
 
 export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
@@ -15,6 +16,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     guild: AggregatedGuildInterface
 
     private storage = {}
+
+    private fetchedGuild : Guild = null
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
@@ -61,8 +64,9 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     }
 
     async increaseStorageCounter(paramName: string, amount = 1) {
-        if (this.storage[paramName]) {
-            this.storage[paramName] += amount
+        // this may be an empty string.
+        if (this.storage[paramName] !== undefined) {
+            this.storage[paramName] = +this.storage[paramName] + amount
             await this.setStorageValue(paramName, this.storage[paramName])
         }
     }
@@ -157,8 +161,11 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         }
     }
 
-    protected async fetchedGuild() {
-        return await discordClient.guilds.fetch(this.guild.guildId)
+    protected async getFetchedGuild() {
+        if (!this.fetchedGuild) {
+            this.fetchedGuild = await discordClient.guilds.fetch(this.guild.guildId)
+        }
+        return this.fetchedGuild
     }
 
     protected abstract behavior(): Promise<Boolean>

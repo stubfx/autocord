@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import * as LoggerHelper from "../loggerHelper.js";
+import { LoggerHelper } from "../loggerHelper.js";
 import * as EventHandler from "./EventHandler.js";
 import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 import { discordClient } from "../discordbot.js";

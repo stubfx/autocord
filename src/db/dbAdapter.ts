@@ -1,4 +1,4 @@
-import * as LoggerHelper from "../loggerHelper.js";
+import {LoggerHelper} from "../loggerHelper.js";
 import mongoose from "mongoose"
 import {Job} from "../models/pipeline/Job.js";
 import {GuildModel} from "../schemas/guildSchema.js";

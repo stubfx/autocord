@@ -3,6 +3,7 @@ export class Job {
     id;
     name;
     chain;
+    cost = 0;
     guild;
     storage;
     constructor(id, name, storageData = {}, guild = null) {
@@ -14,6 +15,7 @@ export class Job {
     }
     addChainLink(chainLink) {
         this.chain.addLink(chainLink);
+        this.cost += 1;
     }
     getChainLinks() {
         return this.chain.chainLinks;

@@ -8,6 +8,7 @@ export class ChainLink {
     cost = 1;
     guild;
     storage = {};
+    fetchedGuild = null;
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams = [];
@@ -41,8 +42,9 @@ export class ChainLink {
         return this.storage[paramName] = value;
     }
     async increaseStorageCounter(paramName, amount = 1) {
-        if (this.storage[paramName]) {
-            this.storage[paramName] += amount;
+        // this may be an empty string.
+        if (this.storage[paramName] !== undefined) {
+            this.storage[paramName] = +this.storage[paramName] + amount;
             await this.setStorageValue(paramName, this.storage[paramName]);
         }
     }
@@ -129,8 +131,11 @@ export class ChainLink {
             throw new Error(`Param value cannot be longer than 150 chars.`);
         }
     }
-    async fetchedGuild() {
-        return await discordClient.guilds.fetch(this.guild.guildId);
+    async getFetchedGuild() {
+        if (!this.fetchedGuild) {
+            this.fetchedGuild = await discordClient.guilds.fetch(this.guild.guildId);
+        }
+        return this.fetchedGuild;
     }
     checkParameterRegexLength(paramToCheck) {
         let length = paramToCheck.value.length;

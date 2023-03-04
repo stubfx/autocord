@@ -38,6 +38,9 @@ export class JobFactory {
     }
 
     static validateJobInterface(jobInterface: JobInterface) {
+        if (!jobInterface.name || jobInterface.name.length < 3 || jobInterface.name.length > 80) {
+            throw new Error("Job name error.")
+        }
         if (jobInterface.chain.chainLinks.length < 2) {
             throw new Error("This job has only 1 item? Only an event?")
         }

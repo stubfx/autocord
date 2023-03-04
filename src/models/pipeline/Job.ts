@@ -9,6 +9,8 @@ export class Job {
     readonly name: string
     private chain: Chain
 
+    private cost: number = 0
+
     private readonly guild: AggregatedGuildInterface
 
     private readonly storage: any
@@ -23,6 +25,7 @@ export class Job {
 
     addChainLink(chainLink: ChainLink<any>) {
         this.chain.addLink(chainLink)
+        this.cost += 1
     }
 
     getChainLinks(): Array<ChainLink<any>> {

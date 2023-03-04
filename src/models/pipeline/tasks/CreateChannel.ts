@@ -31,7 +31,7 @@ export class CreateChannel extends Task {
         let category = this.getResolvedParam("category");
         let type = this.getResolvedParam("type");
         let name = this.getResolvedParam("name");
-        let guild = await this.fetchedGuild()
+        let guild = await this.getFetchedGuild()
         let channel = await guild.channels.create({name: name, type: +type, parent: category})
         // @ts-ignore
         this.setStorageParam('newChannelId', channel.id)

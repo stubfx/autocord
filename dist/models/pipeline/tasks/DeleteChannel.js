@@ -11,7 +11,7 @@ export class DeleteChannel extends Task {
         let category = this.getResolvedParam("category");
         let type = this.getResolvedParam("type");
         let name = this.getResolvedParam("name");
-        let guild = await this.fetchedGuild();
+        let guild = await this.getFetchedGuild();
         await guild.channels.create({ name: name, type: +type, parent: category });
         return true;
     }

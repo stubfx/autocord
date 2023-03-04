@@ -1,6 +1,5 @@
 import Discord, {PermissionsBitField, REST, RouteLike} from "discord.js";
 import {Routes} from "discord-api-types/v10";
-import * as LoggerHelper from "./loggerHelper.js";
 import {discordClient} from "./discordbot.js";
 
 let client = null

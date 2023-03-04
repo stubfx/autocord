@@ -5,7 +5,7 @@
     <div class="flex flex-row p bg-discord-5 rounded w-full items-center gap-2">
       <div class="flex flex-row bg-discord-3 p-2 rounded hover:bg-discord-error text-white cursor-pointer"
            v-for="item in getStorageData()" @click="onDeleteStorageData(item)">
-        <p>{{ item.name }} : {{ item.value}}</p>
+        <p>{{ item.name }} : {{ item.value.toString() || 'N/A' }}</p>
       </div>
       <add_rounded class="w-10 h-10 bg-discord-3 rounded fill-white hover:bg-discord-success
     hover:fill-black cursor-pointer transition-colors" @click="onAddStorageData"></add_rounded>

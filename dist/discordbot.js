@@ -1,5 +1,5 @@
 import Discord, { ActivityType, Events, GatewayIntentBits, IntentsBitField, Partials } from "discord.js";
-import * as LoggerHelper from "./loggerHelper.js";
+import { LoggerHelper } from "./loggerHelper.js";
 export let discordClient;
 let isPlayingHelp = true;
 export function init(onReady) {

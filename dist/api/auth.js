@@ -3,7 +3,7 @@ import * as sessionV from "../sessionVariables.js";
 import * as dbAdapter from "../db/dbAdapter.js";
 import * as storageDBAdapter from "../db/storageDBAdapter.js";
 import { JobFactory } from "../models/JobFactory.js";
-import * as LoggerHelper from "../loggerHelper.js";
+import { LoggerHelper } from "../loggerHelper.js";
 import { STORAGE } from "../schemas/schemas.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {

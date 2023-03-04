@@ -8,6 +8,7 @@ import {AddMessageReaction} from "../tasks/AddMessageReaction.js";
 import {CreateChannel} from "../tasks/CreateChannel.js";
 import {DeleteChannel} from "../tasks/DeleteChannel.js";
 import {SetStorageValue} from "../tasks/dataMutators/SetStorageValue.js";
+import {UpdateChannel} from "../tasks/UpdateChannel.js";
 
 export class TaskDict {
 
@@ -25,6 +26,8 @@ export class TaskDict {
                 return new AddMessageReaction(params)
             case ChainLinkTypes.Task.CreateChannel:
                 return new CreateChannel(params)
+            case ChainLinkTypes.Task.UpdateChannel:
+                return new UpdateChannel(params)
             case ChainLinkTypes.Task.DeleteChannel:
                 return new DeleteChannel(params)
             default:

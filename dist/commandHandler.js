@@ -2,7 +2,7 @@ import { ButtonInteraction, ChatInputCommandInteraction, Collection, Events, RES
 import { Routes } from "discord-api-types/v10";
 import discordCommands from "./handlerData/discord-commands.js";
 import discordCTAs from "./handlerData/discord-cta.js";
-import * as LoggerHelper from "./loggerHelper.js";
+import { LoggerHelper } from "./loggerHelper.js";
 const commands = new Collection();
 const restCommands = [];
 const restCommandsForAdminGuild = [];

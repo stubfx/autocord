@@ -23,6 +23,7 @@ export namespace ChainLinkTypes {
         CreateChannel = 'CreateChannel',
         DeleteChannel = 'DeleteChannel',
         SetStorageValue = 'SetStorageValue',
+        UpdateChannel = 'UpdateChannel',
 
     }
 

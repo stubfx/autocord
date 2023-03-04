@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import * as sessionV from "../sessionVariables.js";
 import {DiscordAdapter} from "../DiscordAdapter.js";
-import * as LoggerHelper from "../loggerHelper.js";
+import {LoggerHelper} from "../loggerHelper.js";
 
 
 export default function (api, opts, done) {

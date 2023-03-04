@@ -23,6 +23,7 @@ export var ChainLinkTypes;
         Task["CreateChannel"] = "CreateChannel";
         Task["DeleteChannel"] = "DeleteChannel";
         Task["SetStorageValue"] = "SetStorageValue";
+        Task["UpdateChannel"] = "UpdateChannel";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {
