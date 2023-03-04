@@ -4,12 +4,12 @@ export class Job {
     name;
     chain;
     guild;
-    store;
+    storage;
     constructor(id, name, storageData = {}, guild = null) {
         this.id = id;
         this.name = name;
-        this.store = storageData || {};
-        this.chain = new Chain(this.store);
+        this.storage = storageData || {};
+        this.chain = new Chain(this.storage);
         this.guild = guild;
     }
     addChainLink(chainLink) {

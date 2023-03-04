@@ -1,4 +1,4 @@
-import * as dbAdapter from "../dbAdapter.js";
+import * as dbAdapter from "../db/dbAdapter.js";
 import { JobFactory } from "../models/JobFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import { GuildEventsCache } from "../cacheSystem/guildEventsCache.js";

@@ -2,7 +2,7 @@ import {ChainLinkTypes} from "./ChainLinkTypes.js";
 import {ChainLinkInterface, ChainLinkParam} from "../../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../../GuildInterface";
 import {discordClient} from "../../../discordbot.js";
-// import * as LoggerHelper from "../../../loggerHelper.js";
+import {setStorageValue} from "../../../db/storageDBAdapter.js";
 
 export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
 
@@ -14,7 +14,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     guild: AggregatedGuildInterface
 
-    private store = {}
+    private storage = {}
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
@@ -26,7 +26,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
             value: any
         }> | null
     }> = []
-    // used to help the user know which params the link adds to the store
+    // used to help the user know which params the link adds to the storage
     // this won't be saved into the db
     exposesArguments: Array<string> = []
     // this holds the actual param data.
@@ -42,21 +42,45 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         this.params = params
     }
 
-    getResolvedParam(paramName: string) {
+    getResolvedParam(paramName: string) : string {
         return this.resolveStringEmbeds(this.getParam(paramName))
     }
 
-    getParam(paramName: string) {
+    getParam(paramName: string): string {
         // let it throw an error on null, if it happens, something has gone wrong.
-        return this.params.find(value => value.name === paramName).value
+        let param = this.params.find(value => value.name === paramName).value
+        // if it does not exist, check in the storage?
+        if (!param) {
+            param = this.storage[paramName]
+        }
+        return param
     }
 
-    addParam(paramName: string, value: string) {
-        return this.store[paramName] = value
+    setStorageParam(paramName: string, value: string) {
+        return this.storage[paramName] = value
+    }
+
+    async increaseStorageCounter(paramName: string, amount = 1) {
+        if (this.storage[paramName]) {
+            this.storage[paramName] += amount
+            await this.setStorageValue(paramName, this.storage[paramName])
+        }
+    }
+
+    async setStorageValue(paramName: string, value) {
+        // if (!paramName || !(paramName in this.storage) || !value) {
+        // compare with undefined is 16% faster than using "in"
+        if (!paramName || this.storage[paramName] === undefined || !value) {
+            // make sure stuff exists.
+            // save db queries whenever possible
+            return
+        }
+        this.storage[paramName] = `${value}`
+        await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName])
     }
 
     private getStoreValue(paramName: string) {
-        return this.store[paramName]
+        return this.storage[paramName]
     }
 
     resolveStringEmbeds(toResolve: string) {
@@ -71,14 +95,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         });
     }
 
-    run(guildInterface: AggregatedGuildInterface, store: any): Promise<Boolean> {
+    run(guildInterface: AggregatedGuildInterface, storage: any): Promise<Boolean> {
         this.guild = guildInterface
-        this.store = store || {}
+        this.storage = storage || {}
         return this.behavior()
-    }
-
-    increaseStorageCounter(paramName: string) {
-        return this.store[paramName]++
     }
 
     validate() {

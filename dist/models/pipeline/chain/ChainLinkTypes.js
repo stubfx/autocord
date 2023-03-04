@@ -17,11 +17,12 @@ export var ChainLinkTypes;
     let Task;
     (function (Task) {
         Task["SendMessage"] = "SendMessage";
-        Task["IncreaseCounter"] = "IncreaseCounter";
+        Task["IncreaseStorageCounter"] = "IncreaseStorageCounter";
         Task["AssignRole"] = "AssignRole";
         Task["AddMessageReaction"] = "AddMessageReaction";
         Task["CreateChannel"] = "CreateChannel";
         Task["DeleteChannel"] = "DeleteChannel";
+        Task["SetStorageValue"] = "SetStorageValue";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {

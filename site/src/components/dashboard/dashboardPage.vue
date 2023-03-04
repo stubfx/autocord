@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col w-full gap md:px-6 lg:px-14 xl:px-32">
-    <dashboard-navbar :current-page="page" @on-page-change="onPageChange" @on-logout="logout"></dashboard-navbar>
+    <dashboard-navbar :current-page="page" @on-page-change="onPageChange" @on-logout="logout" @on-refresh="onRefresh"></dashboard-navbar>
     <guilds-selector v-if="page === DASHBOARDPAGES.GUILD_SELECTION" @on-page-change="onPageChange"></guilds-selector>
-    <guild-dashboard-view v-if="page === DASHBOARDPAGES.JOB_LISTING"
+    <guild-dashboard-view ref="jobListingComponent" v-if="page === DASHBOARDPAGES.JOB_LISTING"
                           @on-page-change="onPageChange"></guild-dashboard-view>
     <edit-job-view v-if="page === DASHBOARDPAGES.JOB_DETAIL" @on-save-job="onSaveJob"></edit-job-view>
   </div>
@@ -30,6 +30,9 @@ export default {
     }
   },
   methods: {
+    onRefresh() {
+      this.$refs.jobListingComponent.refreshGuildData()
+    },
     onPageChange(page) {
       this.page = page
     },

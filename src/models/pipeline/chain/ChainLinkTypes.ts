@@ -17,11 +17,12 @@ export namespace ChainLinkTypes {
 
     export enum Task {
         SendMessage = "SendMessage",
-        IncreaseCounter = "IncreaseCounter",
+        IncreaseStorageCounter = "IncreaseStorageCounter",
         AssignRole = 'AssignRole',
         AddMessageReaction = 'AddMessageReaction',
         CreateChannel = 'CreateChannel',
         DeleteChannel = 'DeleteChannel',
+        SetStorageValue = 'SetStorageValue',
 
     }
 

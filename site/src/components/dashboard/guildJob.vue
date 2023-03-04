@@ -7,7 +7,7 @@
       <h1 v-if="!showSave" class="uppercase text-3xl text-white flex-grow">{{ job.name }}</h1>
       <input v-else class="uppercase text-3xl bg-discord-3 text-white flex-grow p-1 rounded" v-model="job.name">
       <edit_rounded class="fill-discord-success rounded w-7 h-7 cursor-pointer"
-                    v-if="editable" @click="onAddLink()"></edit_rounded>
+                    v-if="showEditButton" @click="onAddLink()"></edit_rounded>
       <close_rounded class="fill-white bg-discord-error rounded w-7 h-7 cursor-pointer" @click="deleteJob"
                      v-if="deletable"></close_rounded>
       <save_rounded class="fill-discord-success rounded rounded w-7 h-7 cursor-pointer" @click="onSaveJob"
@@ -53,8 +53,9 @@ export default {
     job: Object,
     deletable: false,
     showSave: false,
-    editable: false,
-    isSample: false
+    showEditButton: false,
+    isSample: false,
+    mode: 'DISPLAY'
   },
   emits: ['onAddLink', 'onSaveJob', 'onJobDeleted', 'onJobDeleted', "onJobUpdate"],
   methods: {
@@ -83,6 +84,7 @@ export default {
     },
     isLinkDeletable(link) {
       return link.type !== 'EVENT'
+          && this.$props.mode === 'EDIT'
           && !this.$props.isSample
           // cannot delete link of a job with a single task/condition
           // event would remain alone otherwise

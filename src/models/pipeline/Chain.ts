@@ -4,12 +4,12 @@ import {AggregatedGuildInterface} from "../GuildInterface";
 
 export class Chain {
 
-    private readonly store : any = {}
+    private readonly storage : any = {}
 
     public chainLinks: Array<ChainLink<any>> = []
 
-    constructor(store: any) {
-        this.store = store
+    constructor(storage: any) {
+        this.storage = storage
     }
 
     async run(guildInterface: AggregatedGuildInterface) {
@@ -21,10 +21,10 @@ export class Chain {
                     taskResult = true
                     break;
                 case ChainLinkTypes.LinkType.CONDITION:
-                    taskResult = await chainLink.run(guildInterface, this.store)
+                    taskResult = await chainLink.run(guildInterface, this.storage)
                     break;
                 case ChainLinkTypes.LinkType.TASK:
-                    taskResult = await chainLink.run(guildInterface, this.store)
+                    taskResult = await chainLink.run(guildInterface, this.storage)
             }
             if (!taskResult) {
                 break;

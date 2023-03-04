@@ -11,9 +11,10 @@ export class MatchesRegex extends Condition {
         }];
     description = "Checks if the given text matches a regex";
     async behavior(...args) {
-        let text = this.getParam("text") || "";
+        let text = this.getResolvedParam("text") || "";
+        // do not resolve regex.
         let regex = this.getParam("regex");
-        return !!(this.resolveStringEmbeds(text)).match(regex);
+        return !!(text).match(regex);
     }
 }
 //# sourceMappingURL=MatchesRegex.js.map

@@ -10,7 +10,7 @@
       <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
       <div class="mt-2 flex flex-col justify-center gap w-full">
         <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :editable="true"></guild-job>
+                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
     </div>

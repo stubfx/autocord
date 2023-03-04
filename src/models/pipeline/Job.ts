@@ -3,7 +3,6 @@ import {ChainLink} from "./chain/ChainLink.js";
 import {JobInterface} from "../JobInterface.js";
 import {ChainLinkInterface} from "../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../GuildInterface";
-import * as LoggerHelper from "../../loggerHelper.js";
 
 export class Job {
     readonly id: string
@@ -12,13 +11,13 @@ export class Job {
 
     private readonly guild: AggregatedGuildInterface
 
-    private readonly store: any
+    private readonly storage: any
 
     constructor(id: string, name: string, storageData: any = {}, guild: AggregatedGuildInterface = null) {
         this.id = id
         this.name = name
-        this.store = storageData || {}
-        this.chain = new Chain(this.store)
+        this.storage = storageData || {}
+        this.chain = new Chain(this.storage)
         this.guild = guild
     }
 

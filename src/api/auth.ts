@@ -1,6 +1,7 @@
 import {DiscordAdapter} from "../DiscordAdapter.js";
 import * as sessionV from "../sessionVariables.js";
-import * as dbAdapter from "../dbAdapter.js";
+import * as dbAdapter from "../db/dbAdapter.js";
+import * as storageDBAdapter from "../db/storageDBAdapter.js"
 import {JobFactory} from "../models/JobFactory.js";
 import * as LoggerHelper from "../loggerHelper.js";
 import {STORAGE} from "../schemas/schemas.js";
@@ -80,13 +81,13 @@ export default function (api, opts, done) {
     api.post("/addStorageData", async (request) => {
         let guildId = request.body["guildId"];
         let dataName = request.body["dataName"];
-        return await dbAdapter.addStorageData(guildId, dataName)
+        return await storageDBAdapter.addStorageData(guildId, dataName)
     })
 
     api.post("/deleteStorageData", async (request) => {
         let guildId = request.body["guildId"];
         let dataName = request.body["dataName"];
-        return await dbAdapter.deleteStorageData(guildId, dataName)
+        return await storageDBAdapter.deleteStorageData(guildId, dataName)
     })
 
     api.post("/getAddBotToGuildInvite", async (request) => {

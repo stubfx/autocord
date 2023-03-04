@@ -1,17 +1,17 @@
 import { ChainLinkTypes } from "./ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
-import * as LoggerHelper from "../../../loggerHelper.js";
+import { setStorageValue } from "../../../db/storageDBAdapter.js";
 export class ChainLink {
     name;
     type;
     description = "Missing description :P";
     cost = 1;
     guild;
-    store = {};
+    storage = {};
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams = [];
-    // used to help the user know which params the link adds to the store
+    // used to help the user know which params the link adds to the storage
     // this won't be saved into the db
     exposesArguments = [];
     // this holds the actual param data.
@@ -30,13 +30,35 @@ export class ChainLink {
     }
     getParam(paramName) {
         // let it throw an error on null, if it happens, something has gone wrong.
-        return this.params.find(value => value.name === paramName).value;
+        let param = this.params.find(value => value.name === paramName).value;
+        // if it does not exist, check in the storage?
+        if (!param) {
+            param = this.storage[paramName];
+        }
+        return param;
     }
-    addParam(paramName, value) {
-        return this.store[paramName] = value;
+    setStorageParam(paramName, value) {
+        return this.storage[paramName] = value;
+    }
+    async increaseStorageCounter(paramName, amount = 1) {
+        if (this.storage[paramName]) {
+            this.storage[paramName] += amount;
+            await this.setStorageValue(paramName, this.storage[paramName]);
+        }
+    }
+    async setStorageValue(paramName, value) {
+        // if (!paramName || !(paramName in this.storage) || !value) {
+        // compare with undefined is 16% faster than using "in"
+        if (!paramName || this.storage[paramName] === undefined || !value) {
+            // make sure stuff exists.
+            // save db queries whenever possible
+            return;
+        }
+        this.storage[paramName] = `${value}`;
+        await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName]);
     }
     getStoreValue(paramName) {
-        return this.store[paramName];
+        return this.storage[paramName];
     }
     resolveStringEmbeds(toResolve) {
         if (!toResolve || typeof toResolve !== "string") {
@@ -48,13 +70,10 @@ export class ChainLink {
             return this.getStoreValue(variable) || match;
         });
     }
-    run(guildInterface, store) {
+    run(guildInterface, storage) {
         this.guild = guildInterface;
-        this.store = store || {};
+        this.storage = storage || {};
         return this.behavior();
-    }
-    increaseStorageCounter(paramName) {
-        return this.store[paramName]++;
     }
     validate() {
         // make all the checks here!
@@ -90,15 +109,15 @@ export class ChainLink {
                     // this can be really demanding if the regex is long or too complex
                     this.checkParameterRegexLength(paramToCheck);
                     break;
-                case ChainLinkTypes.Param.STRING:
-                case ChainLinkTypes.Param.CHANNEL_ID:
-                case ChainLinkTypes.Param.ROLE_ID:
-                case ChainLinkTypes.Param.CHANNEL_TYPE:
-                case ChainLinkTypes.Param.CATEGORY_ID:
-                    this.checkParameterStringLength(paramToCheck);
-                    break;
+                // case ChainLinkTypes.Param.STRING:
+                // case ChainLinkTypes.Param.CHANNEL_ID:
+                // case ChainLinkTypes.Param.ROLE_ID:
+                // case ChainLinkTypes.Param.CHANNEL_TYPE:
+                // case ChainLinkTypes.Param.CATEGORY_ID:
+                //     this.checkParameterStringLength(paramToCheck);
+                //     break
                 default:
-                    LoggerHelper.warn(`Missing validation for ${type}. Using default.`);
+                    // LoggerHelper.warn(`Missing validation for ${type}. Using default.`)
                     this.checkParameterStringLength(paramToCheck);
             }
         }
@@ -107,7 +126,7 @@ export class ChainLink {
     checkParameterStringLength(paramToCheck) {
         let length = paramToCheck.value.length;
         if (length > 150) {
-            throw new Error(`Param value cannot be longer than 150 chars. Current ${length}`);
+            throw new Error(`Param value cannot be longer than 150 chars.`);
         }
     }
     async fetchedGuild() {
@@ -116,7 +135,7 @@ export class ChainLink {
     checkParameterRegexLength(paramToCheck) {
         let length = paramToCheck.value.length;
         if (length > 10) {
-            throw new Error(`Regex value cannot be longer than 10 chars. Current ${length}`);
+            throw new Error(`Regex value cannot be longer than 10 chars.`);
         }
     }
 }

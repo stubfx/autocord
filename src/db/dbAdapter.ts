@@ -105,30 +105,6 @@ export async function getGuild(guildId: string) {
     return GuildModel.findOne({guildId: guildId}).populate(STORAGE).populate(JOBS)
 }
 
-export async function increaseStorageCounter(storageId: string, counterName: string) {
-    await GuildStorage.findOneAndUpdate({_id: storageId}, {
-        $inc: {[`data.${counterName}`]: 1}
-    })
-}
-
-export async function addStorageData(guildId: string, storageDataName: string) {
-    let guild = await getGuild(guildId)
-    let storage = guild.storage
-    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
-        [`data.${storageDataName}`]: 0
-    })
-    return true
-}
-
-export async function deleteStorageData(guildId: string, storageDataName: string) {
-    let guild = await getGuild(guildId)
-    let storage = guild.storage
-    await GuildStorage.findOneAndUpdate({_id: storage._id}, {
-        $unset : {[`data.${storageDataName}`]: ""}
-    })
-    return true
-}
-
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
     let guild = await GuildModel.findOne({guildId: guildId})
         .populate(STORAGE)
@@ -138,30 +114,4 @@ export async function forGuildListeningForEvent(guildId: string, eventName, func
         })
     // @ts-ignore
     await func(guild as AggregatedGuildInterface)
-}
-
-let invitesCache = {};
-let topicsCache = {};
-/**
- * holds current articles for this news batch
- * so each server that has the same combo (topic+language) will receive the same one.
- */
-let currentArticlesCache = {}
-
-export function prepareForNewBatch() {
-    clearTopicsCache()
-    clearCurrentArticlesCache()
-}
-
-export function clearTopicsCache() {
-    topicsCache = {}
-}
-
-export function clearInvitesCache() {
-    invitesCache = {}
-}
-
-
-export function clearCurrentArticlesCache() {
-    currentArticlesCache = {}
 }
