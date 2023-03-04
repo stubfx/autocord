@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import HomePage from "./components/homePage/homePage.vue";
 import DashboardPage from "./components/dashboard/dashboardPage.vue";
 import GuildsSelectionPage from "./components/guilds/guildsSelectionPage.vue";
@@ -43,6 +43,6 @@ const routes = [
 // keep it simple for now.
 export default createRouter({
     // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes, // short for `routes: routes`
 })
