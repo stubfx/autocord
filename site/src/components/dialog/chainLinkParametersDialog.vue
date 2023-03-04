@@ -111,7 +111,7 @@ export default {
       return !this.hasOptions(param)
     },
     isStringOrForcedAs(param) {
-      return param.forceString || param.type === ChainLinkParam.STRING
+      return param.forceString || param.type === ChainLinkParam.STRING || param.type === ChainLinkParam.REGEX
     },
     isChannelOrCategoryID(type) {
       return type === ChainLinkParam.CHANNEL_ID || type === ChainLinkParam.CATEGORY_ID

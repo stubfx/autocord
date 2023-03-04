@@ -3,5 +3,7 @@ export class ChainLinkParam {
     static CHANNEL_ID = 'CHANNEL_ID'
     static ROLE_ID = 'ROLE_ID'
     static CATEGORY_ID = 'CATEGORY_ID';
+
+    static REGEX = 'REGEX'
     static CHANNEL_TYPE = 'CHANNEL_TYPE';
 }
