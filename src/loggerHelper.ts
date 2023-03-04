@@ -2,39 +2,45 @@ import {EmbedBuilder} from "discord.js";
 
 let client = null
 
-/**
- *
- * @param logArray
- * @return {Array<any>}
- */
-function getSanitizedLog(logArray) {
-    /**
-     *
-     * @type {Array<string>}
-     */
-    let log = []
-    for (let data of logArray) {
-        try {
-            log.push(data.toString().replace(/[^a-zA-Z0-9: ()?!]/g, "[%]"))
-        } catch (e) {
-            log.push(`"SANITIZE ERROR" : ${e}`)
-        }
-    }
-    return log
-}
+// /**
+//  *
+//  * @param logArray
+//  * @return {Array<any>}
+//  */
+// function getSanitizedLog(logArray) {
+//     /**
+//      *
+//      * @type {Array<string>}
+//      */
+//     let log = []
+//     for (let data of logArray) {
+//         try {
+//             log.push(data.toString().replace(/[^a-zA-Z0-9: ()?!]/g, "[%]"))
+//         } catch (e) {
+//             log.push(`"SANITIZE ERROR" : ${e}`)
+//         }
+//     }
+//     return log
+// }
 
 export function init(discordClient) {
     client = discordClient
 }
 
-export function error(...errors) {
-    console.error(errors)
-    client.channels.fetch(process.env.discord_log_channel_id)
-        .then(async channel => {
-            // await channel.send({embeds: [exampleEmbed]});
-            await channel.send({embeds: [getLogEmbed(0xED4245, errors)]});
-        })
-        .catch(console.error);
+function sendToDiscord(data, hexColor: number) {
+    if (!process.env.dev) {
+        client.channels.fetch(process.env.discord_log_channel_id)
+            .then(async channel => {
+                // await channel.send({embeds: [exampleEmbed]});
+                await channel.send({embeds: [getLogEmbed(hexColor, data)]});
+            })
+            .catch(console.error);
+    }
+}
+
+export function error(...data) {
+    console.error(data)
+    sendToDiscord(data, 0xED4245);
 }
 
 export function consoleError(data) {
@@ -42,26 +48,13 @@ export function consoleError(data) {
 }
 
 export function success(...data) {
-    // clear data in case of template string multiline
     console.info(data)
-    client.channels.fetch(process.env.discord_log_channel_id)
-        .then(async channel => {
-            // await channel.send({embeds: [exampleEmbed]});
-            // await channel.send(`:green_circle:\`${log.toString()}\``);
-            await channel.send({embeds: [getLogEmbed(0x57F287, data)]});
-        })
-        .catch(console.error);
+    sendToDiscord(data, 0x57F287)
 }
 
 export function info(...data) {
     console.log(data)
-    client.channels.fetch(process.env.discord_log_channel_id)
-        .then(async channel => {
-            // await channel.send({embeds: [exampleEmbed]});
-            // await channel.send(`\`${data}\``);
-            await channel.send({embeds: [getLogEmbed(0x3498DB, data)]});
-        })
-        .catch(console.error);
+    sendToDiscord(data, 0x3498DB)
 }
 
 export function dev(data) {
