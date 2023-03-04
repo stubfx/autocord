@@ -4,7 +4,6 @@ import {JobFactory} from "../models/JobFactory.js";
 import {Condition} from "../models/pipeline/Condition.js";
 import {Task} from "../models/pipeline/Task.js";
 import {discordClient} from "../discordbot.js";
-import loginApi from "./login.js";
 
 
 export default function (api, opts, done) {
@@ -34,8 +33,6 @@ export default function (api, opts, done) {
             links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
         }
     })
-
-    api.register(loginApi)
 
     done()
 }

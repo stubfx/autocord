@@ -11,6 +11,7 @@ import authApi from './api/auth.js';
 import openApi from './api/open.js';
 import { LoggerHelper } from "./loggerHelper.js";
 import cors from '@fastify/cors';
+import loginApi from "./api/login.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export async function init() {
     const fastify = Fastify({
@@ -58,6 +59,7 @@ export async function init() {
     });
     fastify.register(openApi, { prefix: '/api' });
     fastify.register(authApi, { prefix: '/api/auth' });
+    fastify.register(loginApi);
     // Run the server and report out to the logs
     fastify.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
         if (err) {

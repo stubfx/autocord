@@ -23,11 +23,11 @@ export class NetworkAdapter {
     }
 
     static async getDiscordLoginUrl() {
-        return (await this._post('/api/getDiscordLoginPopupUrl'))['url']
+        return (await this._post('/getDiscordLoginPopupUrl'))['url']
     }
 
     static async loginCheck() {
-        return (await this._post('/api/logincheck'))['result']
+        return (await this._post('/logincheck'))['result']
     }
 
     static async logout() {
