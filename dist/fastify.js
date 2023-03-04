@@ -43,7 +43,7 @@ export async function init() {
     fastify.setNotFoundHandler({
         preHandler: fastify.rateLimit()
     }, function (request, reply) {
-        reply.code(404).send('There you go: https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        reply.redirect('/');
     });
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, "/site"),
