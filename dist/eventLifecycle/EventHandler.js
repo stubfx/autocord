@@ -19,18 +19,18 @@ export async function runEventForGuilds(guildId, eventName, eventArgs = {}) {
         try {
             for (let job of guildInterface.jobs) {
                 // find the right job
-                // TODO check if necessary? Data is already coming from db.
-                if (job.chain && job.chain.chainLinks[0].name === eventName) {
-                    // found it!
-                    // make sure to enrich the storage data with the actual storage + eventArgs
-                    let storageData = {
-                        ...eventArgs,
-                        ...guildInterface.storage.data
-                    };
-                    LoggerHelper.dev(`Guild: ${guildId} - event: ${eventName} - Job: ${job.name}(${job.id})`);
-                    await JobFactory.createJob(job, storageData, guildInterface).run();
-                }
+                // check if necessary? Data is already coming from db.
+                // if (job.chain && job.chain.chainLinks[0].name === eventName) {
+                // found it!
+                // make sure to enrich the storage data with the actual storage + eventArgs
+                let storageData = {
+                    ...eventArgs,
+                    ...guildInterface.storage.data
+                };
+                LoggerHelper.dev(`Guild: ${guildId} - event: ${eventName} - Job: ${job.name}(${job.id})`);
+                await JobFactory.createJob(job, storageData, guildInterface).run();
             }
+            // }
         }
         catch (e) {
             // wont explode for the command itself as we are not waiting for it.
