@@ -6,7 +6,6 @@ import {GuildEventsCache} from "../cacheSystem/guildEventsCache.js";
 export const skipEventsCache = new GuildEventsCache()
 
 export async function runEventForGuilds(guildId: string, eventName: string, eventArgs = {}) {
-    console.log(`Guild: ${guildId} event: ${eventName}`)
     if (skipEventsCache.isEventInCache(guildId, eventName)) {
         // do not run if the guild is not listening for this event
         // save cpu and db calls
@@ -22,6 +21,7 @@ export async function runEventForGuilds(guildId: string, eventName: string, even
         try {
             for (let job of guildInterface.jobs) {
                 // find the right job
+                // TODO check if necessary? Data is already coming from db.
                 if (job.chain && job.chain.chainLinks[0].name === eventName) {
                     // found it!
                     // make sure to enrich the storage data with the actual storage + eventArgs
@@ -29,6 +29,7 @@ export async function runEventForGuilds(guildId: string, eventName: string, even
                         ...eventArgs,
                         ...guildInterface.storage.data
                     }
+                    LoggerHelper.dev(`Guild: ${guildId} - event: ${eventName} - Job: ${job.name}(${job.id})`)
                     await JobFactory.createJob(job, storageData, guildInterface).run()
                 }
             }
