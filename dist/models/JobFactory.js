@@ -17,7 +17,7 @@ export class JobFactory {
             // * battlefield theme in background *
             chainLink.validate();
             jobCost += chainLink.cost;
-            if (jobCost > +process.env.JOB_COST) {
+            if (jobCost > +process.env.MAX_JOB_COST) {
                 throw new Error(`Job is too expensive: ${jobCost}`);
             }
             job.addChainLink(chainLink);
