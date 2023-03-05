@@ -7,6 +7,7 @@ export var ChainLinkTypes;
         Event["ChannelCreate"] = "ChannelCreate";
         Event["VoiceStateUpdate"] = "VoiceStateUpdate";
         Event["GuildMemberAdd"] = "GuildMemberAdd";
+        Event["onEveryHour"] = "onEveryHour";
     })(Event = ChainLinkTypes.Event || (ChainLinkTypes.Event = {}));
     let LinkType;
     (function (LinkType) {
@@ -29,6 +30,7 @@ export var ChainLinkTypes;
     (function (Condition) {
         Condition["Equals"] = "Equals";
         Condition["MatchesRegex"] = "MatchesRegex";
+        Condition["Random"] = "Random";
     })(Condition = ChainLinkTypes.Condition || (ChainLinkTypes.Condition = {}));
     let Param;
     (function (Param) {
@@ -38,6 +40,7 @@ export var ChainLinkTypes;
         Param["CHANNEL_TYPE"] = "CHANNEL_TYPE";
         Param["CATEGORY_ID"] = "CATEGORY_ID";
         Param["REGEX"] = "REGEX";
+        Param["NUMBER"] = "NUMBER";
     })(Param = ChainLinkTypes.Param || (ChainLinkTypes.Param = {}));
 })(ChainLinkTypes || (ChainLinkTypes = {}));
 //# sourceMappingURL=ChainLinkTypes.js.map

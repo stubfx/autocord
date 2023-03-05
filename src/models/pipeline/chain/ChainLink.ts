@@ -24,6 +24,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     acceptParams: Array<{
         name: string,
         type: ChainLinkTypes.Param,
+        description?: string,
         options?: Array<{
             name: string,
             value: any

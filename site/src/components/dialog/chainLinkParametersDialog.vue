@@ -111,7 +111,17 @@ export default {
       return !this.hasOptions(param)
     },
     isStringOrForcedAs(param) {
-      return param.forceString || param.type === ChainLinkParam.STRING || param.type === ChainLinkParam.REGEX
+      let values = [
+        // 'STRING',
+        'CHANNEL_ID',
+        'ROLE_ID',
+        'CHANNEL_TYPE',
+        'CATEGORY_ID',
+        'REGEX',
+        // 'NUMBER'
+      ]
+      // not forcestring nor one of the params above.
+      return param.forceString || !values.includes(param.type)
     },
     isChannelOrCategoryID(type) {
       return type === ChainLinkParam.CHANNEL_ID || type === ChainLinkParam.CATEGORY_ID

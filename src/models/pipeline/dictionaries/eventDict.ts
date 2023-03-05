@@ -6,6 +6,7 @@ import {VoiceStateUpdate} from "../Events/VoiceStateUpdate.js";
 import {ChannelCreate} from "../Events/ChannelCreate.js";
 import {GuildMemberAdd} from "../Events/GuildMemberAdd.js";
 import {MessageReactionAdd} from "../Events/MessageReactionAdd.js";
+import {OnEveryHour} from "../Events/customEvents/OnEveryHour.js";
 
 export class EventDict {
 
@@ -21,6 +22,8 @@ export class EventDict {
                 return new GuildMemberAdd(params)
             case ChainLinkTypes.Event.MessageReactionAdd:
                 return new MessageReactionAdd(params)
+            case ChainLinkTypes.Event.onEveryHour:
+                return new OnEveryHour(params)
             default:
                 throw new Error(`Unknown condition name: ${chainLinkEventName}`)
         }

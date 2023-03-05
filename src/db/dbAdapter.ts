@@ -108,10 +108,24 @@ export async function getGuild(guildId: string) {
 export async function forGuildListeningForEvent(guildId: string, eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
     let guild = await GuildModel.findOne({guildId: guildId})
         .populate(STORAGE)
+        // .populate(JOBS)
         .populate({
             path: JOBS,
             match: {'chain.chainLinks.0.name': eventName}
         })
     // @ts-ignore
     await func(guild as AggregatedGuildInterface)
+}
+
+export async function forAllGuildsListeningForEvent(eventName, func: (guildInterface: AggregatedGuildInterface) => Promise<void>) {
+    let cursor = await GuildModel.find()
+        .populate(STORAGE)
+        .populate({
+            path: JOBS,
+            match: {'chain.chainLinks.0.name': eventName}
+        }).cursor()
+    for (let guild = await cursor.next(); guild != null; guild = await cursor.next()) {
+        // @ts-ignore
+        await func(guild as AggregatedGuildInterface)
+    }
 }

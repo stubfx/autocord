@@ -44,12 +44,11 @@ export default {
     }
   },
   async mounted() {
-    // reset current job
-    this.$store.currentJob = null
     await this.refreshGuildData()
   },
   methods: {
     async refreshGuildData() {
+      this.$store.currentJob = null
       this.sideViewJob = null
       if (!await NetworkAdapter.loginCheck()) {
         // redirect to selection

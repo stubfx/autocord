@@ -89,7 +89,6 @@ export default {
       }
     },
     onAddLink(item) {
-      console.log('aaaa')
       if (item.acceptParams.length > 0) {
         this.$refs.modal.open(this.job, item, () => {
           this.job.chain.chainLinks.push(item)

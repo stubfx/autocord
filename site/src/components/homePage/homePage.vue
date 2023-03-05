@@ -18,9 +18,9 @@
               <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>
               <p class="text-xl" v-pre>
                 <span class="text-success">When a user sends a message&nbsp;</span>
-                send a message back saying "Welcome <span class="text-success">{{username}}</span>!", <br>then if the
+                send a message back saying "Welcome <span class="text-success">username</span>!", <br>then if the
                 user
-                sent "Hello!" (<span class="text-success">{{messageContent}}</span> == "Hello!") assign them a role!
+                sent "Hello!" (<span class="text-success">messageContent</span> == "Hello!") assign them a role!
               </p>
             </div>
             <guild-job :job="getSampleJob()" :is-sample="true" :expanded="true"></guild-job>
@@ -30,8 +30,8 @@
               <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>
               <p class="text-xl" v-pre>
                 <span class="text-success">When a user sends a message&nbsp;</span>
-                send a message back saying "I'm sorry <span class="text-success">{{username}}</span>!", <br>
-                then ban the user by <span class="text-success">{{userId}}</span>!.
+                send a message back saying "I'm sorry <span class="text-success">username</span>!", <br>
+                then ban the user by <span class="text-success">userId</span>!.
               </p>
             </div>
             <guild-job :job="getSampleJob2()" :is-sample="true" :expanded="true"></guild-job>

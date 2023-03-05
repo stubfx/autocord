@@ -30,7 +30,7 @@ export function init(discordClient: Discord.Client) {
 
     client.on(Discord.Events.MessageCreate, async data => {
         if (isMe_id(data.author.id)) return
-        await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
+        await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
             channelId: data.channelId,
             userId: data.author.id,
             username: data.author.username,
@@ -41,7 +41,7 @@ export function init(discordClient: Discord.Client) {
 
     client.on(Discord.Events.MessageReactionAdd, async (data, user) => {
         if (isMe_id(user.id)) return
-        await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
+        await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
             userId: user.id,
             username: user.username,
             emojiName: data.emoji.name
@@ -50,12 +50,12 @@ export function init(discordClient: Discord.Client) {
 
     // user joins a guild
     client.on(Discord.Events.GuildMemberAdd, async data => {
-        await EventHandler.runEventForGuilds(data.message.guild.id, ChainLinkTypes.Event.GuildMemberAdd)
+        await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.GuildMemberAdd)
     })
 
     // random user joins voice channel, (we cannot check the user unfortunately.)
     client.on(Discord.Events.VoiceStateUpdate, async (oldState: VoiceState, newState: VoiceState) => {
-        await EventHandler.runEventForGuilds(newState.guild.id, ChainLinkTypes.Event.VoiceStateUpdate, {
+        await EventHandler.runEventForGuild(newState.guild.id, ChainLinkTypes.Event.VoiceStateUpdate, {
             channelId: newState.channelId || oldState.channelId,
             channelName: newState.channel ? newState.channel.name : oldState.channel.name,
             userId: newState.member ? newState.member.id : newState.member.id,
@@ -65,6 +65,6 @@ export function init(discordClient: Discord.Client) {
     })
 
     client.on(Discord.Events.ChannelCreate, async data => {
-        await EventHandler.runEventForGuilds(data.guild.id, ChainLinkTypes.Event.ChannelCreate)
+        await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.ChannelCreate)
     })
 }

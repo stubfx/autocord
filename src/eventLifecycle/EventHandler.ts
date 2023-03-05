@@ -5,19 +5,28 @@ import {GuildEventsCache} from "../cacheSystem/guildEventsCache.js";
 
 export const skipEventsCache = new GuildEventsCache()
 
-export async function runEventForGuilds(guildId: string, eventName: string, eventArgs = {}) {
+export async function runEventForGuild(guildId: string, eventName: string, eventArgs = {}) {
     if (skipEventsCache.isEventInCache(guildId, eventName)) {
         // do not run if the guild is not listening for this event
         // save cpu and db calls
         console.log(`SKIPPING Guild: ${guildId} event: ${eventName}`)
         return
     }
-    await dbAdapter.forGuildListeningForEvent(guildId, eventName, async guildInterface => {
-        if (!guildInterface || guildInterface.jobs.length < 1) {
-            // no guild, no party.
-            skipEventsCache.addGuildEvent(guildId, eventName)
-            return
-        }
+    await dbAdapter.forGuildListeningForEvent(guildId, eventName, runJobEventForGuild(eventName, eventArgs))
+}
+
+export async function runEventForAllGuilds(eventName: string, eventArgs = {}) {
+    await dbAdapter.forAllGuildsListeningForEvent(eventName, runJobEventForGuild(eventName, eventArgs))
+}
+
+function runJobEventForGuild(eventName: string, eventArgs: {}) {
+    return async guildInterface => {
+        // don't even check for events, yet.
+        // if (!guildInterface || guildInterface.jobs.length < 1) {
+        //     // no guild, no party.
+        //     skipEventsCache.addGuildEvent(guildInterface.guildId, eventName)
+        //     return
+        // }
         try {
             for (let job of guildInterface.jobs) {
                 // find the right job
@@ -29,14 +38,12 @@ export async function runEventForGuilds(guildId: string, eventName: string, even
                     ...eventArgs,
                     ...guildInterface.storage.data
                 }
-                LoggerHelper.dev(`Guild: ${guildId} - event: ${eventName} - Job: ${job.name}(${job.id})`)
+                LoggerHelper.dev(`Guild: ${guildInterface.guildId} - event: ${eventName} - Job: ${job.name}(${job.id})`)
                 await JobFactory.createJob(job, storageData, guildInterface).run()
             }
-            // }
         } catch (e) {
-            // wont explode for the command itself as we are not waiting for it.
             LoggerHelper.error(e)
         }
 
-    })
+    };
 }

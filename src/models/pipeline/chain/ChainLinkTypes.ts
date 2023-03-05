@@ -6,6 +6,7 @@ export namespace ChainLinkTypes {
         ChannelCreate = "ChannelCreate",
         VoiceStateUpdate = "VoiceStateUpdate",
         GuildMemberAdd = "GuildMemberAdd",
+        onEveryHour = 'onEveryHour',
     }
 
     export enum LinkType {
@@ -30,6 +31,7 @@ export namespace ChainLinkTypes {
     export enum Condition {
         Equals = "Equals",
         MatchesRegex = "MatchesRegex",
+        Random = 'Random',
     }
 
     export enum Param {
@@ -39,6 +41,7 @@ export namespace ChainLinkTypes {
         CHANNEL_TYPE = 'CHANNEL_TYPE',
         CATEGORY_ID = 'CATEGORY_ID',
         REGEX = 'REGEX',
+        NUMBER = 'NUMBER',
     }
 
 }
