@@ -17,9 +17,9 @@
               <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>
               <p class="text-xl" v-pre>
                 <span class="text-success">When a user sends a message&nbsp;</span>
-                send a message back saying "Welcome <span class="text-success">{{ username }}!</span>", <br>then if the
+                send a message back saying "Welcome <span class="text-success">{{username}}</span>!", <br>then if the
                 user
-                sent "Hello!" (<span class="text-success">{{ messageContent }}</span> == "Hello!") assign him a role!
+                sent "Hello!" (<span class="text-success">{{messageContent}}</span> == "Hello!") assign them a role!
               </p>
             </div>
             <guild-job :job="getSampleJob()" :is-sample="true" :expanded="true"></guild-job>
@@ -29,9 +29,8 @@
               <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>
               <p class="text-xl" v-pre>
                 <span class="text-success">When a user sends a message&nbsp;</span>
-                send a message back saying "Welcome <span class="text-success">{{ username }}!</span>", <br>then if the
-                user
-                sent "Hello!" (<span class="text-success">{{ messageContent }}</span> == "Hello!") assign him a role!
+                send a message back saying "I'm sorry <span class="text-success">{{username}}</span>!", <br>
+                then ban the user by <span class="text-success">{{userId}}</span>!.
               </p>
             </div>
             <guild-job :job="getSampleJob2()" :is-sample="true" :expanded="true"></guild-job>
@@ -48,14 +47,14 @@
         <!--            <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>-->
         <!--          </div>-->
         <!--          <edit-job-view :is-sample="true" :expanded="true"></edit-job-view>-->
-                  <h1 class="text-accent text-8xl mt-10">What are you waiting for?</h1>
-                  <h1 class="text-3xl">Join while in <span class="text-success">early access</span>
-                    and enjoy <span class="text-success">free</span> additional tokens for you flows!</h1>
-                  <login-button @on-click="login"
-                                class="border-2 mt-2 text-2xl"></login-button>
-                  <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
-                  <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-                  <!--                allowfullscreen></iframe>-->
+        <h1 class="text-accent text-8xl mt-10">What are you waiting for?</h1>
+        <h1 class="text-3xl">Join while in <span class="text-success">early access</span>
+          and enjoy <span class="text-success">free</span> additional tokens for you flows!</h1>
+        <login-button @on-click="login"
+                      class="border-2 mt-2 text-2xl"></login-button>
+        <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
+        <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
+        <!--                allowfullscreen></iframe>-->
         <!--        </div>-->
       </div>
     </div>
