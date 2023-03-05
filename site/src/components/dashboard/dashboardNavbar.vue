@@ -7,7 +7,7 @@
       <list_alt_rounded @click="onGuildSelection" class="hover:bg-accent hover:fill-dark"></list_alt_rounded>
       <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
       <!--      <refresh-button @click="onRefresh"></refresh-button>-->
-      <icon_clyde @on-click="supportServer" class="hover:bg-primary hover:fill-accent"></icon_clyde>
+      <icon_clyde @click="supportServer" class="hover:bg-primary hover:fill-accent"></icon_clyde>
     </div>
   </div>
 </template>
