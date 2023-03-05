@@ -20,9 +20,7 @@
 </template>
 
 <script>
-import {NetworkAdapter} from "../../network.js";
 import Broken_image_rounded from "../../assets/broken_image_rounded.vue";
-import {openPopup} from "../../../popup.js";
 
 export default {
   name: "guildCard",
@@ -34,23 +32,6 @@ export default {
     getImageUrl() {
       return `https://cdn.discordapp.com/icons/${this.guild.id}/${this.guild.icon}.png`
     },
-    // goToListingPage() {
-    //   this.$store.guildId = this.guild.id
-    //   this.$emit('onPageChange',DASHBOARDPAGES.JOB_LISTING)
-    // },
-    async selectGuild() {
-      // check if the bot is in the guild.
-      if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
-        this.goToListingPage()
-      } else {
-        // if not, make it join!
-        let url = await NetworkAdapter.getDiscordBotInviteUrl(this.guild.id)
-        await openPopup(url)
-        if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
-          this.goToListingPage()
-        }
-      }
-    }
   }
 }
 </script>

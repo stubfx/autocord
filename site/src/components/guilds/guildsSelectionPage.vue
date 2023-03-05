@@ -12,6 +12,7 @@
 
 import GuildCard from "./guildCard.vue";
 import {NetworkAdapter} from "../../network.js";
+import {openPopup} from "../../../popup.js";
 
 export default {
   name: "guildsSelector",
@@ -26,9 +27,22 @@ export default {
     this.$store.guilds = this.guilds
   },
   methods: {
-    onGuildSelection(guild) {
+    goToListingPage() {
       this.$store.guildId = guild.id
       this.$router.push({name: 'jobs', params: {guildId: guild.id}})
+    },
+    async onGuildSelection(guild) {
+      // check if the bot is in the guild.
+      if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
+        this.goToListingPage(guild)
+      } else {
+        // if not, make it join!
+        let url = await NetworkAdapter.getDiscordBotInviteUrl(this.guild.id)
+        await openPopup(url)
+        if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
+          this.goToListingPage(guild)
+        }
+      }
     }
   }
 }
