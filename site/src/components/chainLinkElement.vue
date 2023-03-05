@@ -11,7 +11,7 @@
         </div>
         <span class="font-semibold tracking-wide flex-grow"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-accent'">{{ link.name }}</span>
-        <expand_more_rounded class="w-token cursor-pointer transition-transform duration" :class="expanded ? 'rotate-180' : ''"
+        <expand_more_rounded class="w-token cursor-pointer transition-transform duration" :class="isElExpanded ? 'rotate-180' : ''"
                              @click="toggleExpand" @click.stop></expand_more_rounded>
         <div class="flex flex-row">
           <close_rounded class="w-token cursor-pointer" v-show="showDelete" @click="onDelete"
@@ -21,8 +21,8 @@
     </div>
     <div class="flex flex-col">
       <div class="flex flex-col w-full flex-grow gap overflow-hidden"
-           :class="[link.type === 'EVENT' ? 'text-black' : 'text-gray-400 group-hover:text-accent',
-           expanded ? 'h-fit' : 'h-0']">
+           :class="[link.type === 'EVENT' ? 'text-black' : 'text-accent group-hover:text-accent',
+           isElExpanded ? 'h-fit' : 'h-0']">
         <div class="flex flex-row w-full">
         </div>
         <span class="font-light">{{ link.description }}</span>
@@ -63,12 +63,13 @@ export default {
   },
   props: {
     link: Object,
-    showDelete: false
+    showDelete: false,
+    expanded: false
   },
   emits: ['onDelete'],
   data() {
     return {
-      expanded: false
+      isElExpanded: this.$props.expanded
     }
   },
   methods: {
@@ -76,7 +77,7 @@ export default {
       this.$emit('onDelete')
     },
     toggleExpand() {
-      this.expanded = !this.expanded
+      this.isElExpanded = !this.isElExpanded
     }
   }
 }

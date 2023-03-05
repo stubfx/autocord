@@ -20,7 +20,7 @@
     </div>
     <div class="flex flex-col gap overflow-x-auto">
       <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"
-                          @click="editLink(link)" @on-delete="onLinkDelete(index)"></chain-link-element>
+                          @click="editLink(link)" @on-delete="onLinkDelete(index)" :expanded="expanded"></chain-link-element>
     </div>
   </div>
 </template>
@@ -53,7 +53,8 @@ export default {
     showSave: false,
     showEditButton: false,
     isSample: false,
-    mode: 'DISPLAY'
+    mode: 'DISPLAY',
+    expanded: false
   },
   emits: ['onAddLink', 'onSaveJob', 'onJobDeleted', 'onJobDeleted', "onJobUpdate"],
   methods: {
