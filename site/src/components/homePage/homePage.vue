@@ -9,6 +9,7 @@
         <h1 class="text-6xl">This app is in <span class="text-success">early access</span></h1>
         <h1 @on-click="supportServer" class="text-1xl">If you have any question or need some help, please join our
           Support server!</h1>
+        <login-with-discord-button></login-with-discord-button>
         <h1 class="text-4xl">❤️</h1>
         <support-server-button @on-click="supportServer" class="p-2 border-2"></support-server-button>
         <div class="flex flex-col w-8/12 gap-16">
@@ -70,11 +71,12 @@ import SupportServerButton from "../buttons/supportServerButton.vue";
 import LoginButton from "../buttons/loginButton.vue";
 import EditJobView from "../job/editJobView.vue";
 import Navbar from "./navbar.vue";
+import LoginWithDiscordButton from "../buttons/loginWithDiscordButton.vue";
 
 export default {
   name: "homePage",
   emits: ['onPageChange'],
-  components: {Navbar, EditJobView, LoginButton, SupportServerButton, GuildJob},
+  components: {LoginWithDiscordButton, Navbar, EditJobView, LoginButton, SupportServerButton, GuildJob},
   async mounted() {
     if (await NetworkAdapter.loginCheck()) {
       // redirect to selection
