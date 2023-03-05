@@ -7,7 +7,7 @@ export var ChainLinkTypes;
         Event["ChannelCreate"] = "ChannelCreate";
         Event["VoiceStateUpdate"] = "VoiceStateUpdate";
         Event["GuildMemberAdd"] = "GuildMemberAdd";
-        Event["onEveryHour"] = "onEveryHour";
+        Event["EveryHour"] = "EveryHour";
     })(Event = ChainLinkTypes.Event || (ChainLinkTypes.Event = {}));
     let LinkType;
     (function (LinkType) {

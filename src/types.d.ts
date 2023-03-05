@@ -19,7 +19,7 @@ declare type UserObject = {
     "accent_color":	number|null//	the user's banner color encoded as an integer representation of hexadecimal color code	identify
     locale?:	string//	the user's chosen language option	identify
     verified?:	boolean//	whether the email on this account has been verified	email
-    email?:	string|null//	the user's email	email
+    email?:	string|null//	the user's email
     flags:	number|null//	the flags on a user's account	identify
     premium_type:	number|null//	the type of Nitro subscription on a user's account	identify
     public_flags:	number|null//	the public flags on a user's account	identify

@@ -6,7 +6,7 @@ export namespace ChainLinkTypes {
         ChannelCreate = "ChannelCreate",
         VoiceStateUpdate = "VoiceStateUpdate",
         GuildMemberAdd = "GuildMemberAdd",
-        onEveryHour = 'onEveryHour',
+        EveryHour = 'EveryHour',
     }
 
     export enum LinkType {

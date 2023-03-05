@@ -12,7 +12,7 @@ export class ClockEmitter {
     }
     async emit() {
         try {
-            await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.onEveryHour, {});
+            await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.EveryHour, {});
         }
         catch (e) {
             LoggerHelper.error(e);
