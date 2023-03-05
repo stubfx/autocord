@@ -36,16 +36,16 @@
 </template>
 
 <script>
-import Task_rounded from "../assets/task_rounded.vue";
-import Psicology_rounded from "../assets/psicology_rounded.vue";
-import Sensor_rounded from "../assets/sensor_rounded.vue";
-import Info_rounded from "../assets/info_rounded.vue";
+import Task_rounded from "../../assets/task_rounded.vue";
+import Psicology_rounded from "../../assets/psicology_rounded.vue";
+import Sensor_rounded from "../../assets/sensor_rounded.vue";
+import Info_rounded from "../../assets/info_rounded.vue";
 import ExposedArgumentString from "./exposedArgumentString.vue";
-import LinkParamsViewBlock from "./linkParamsViewBlock.vue";
-import Payments_rounded from "../assets/payments_rounded.vue";
-import Token_rounded from "../assets/token_rounded.vue";
-import Close_rounded from "../assets/close_rounded.vue";
-import Expand_more_rounded from "../assets/expand_more_rounded.vue";
+import LinkParamsViewBlock from ".././linkParamsViewBlock.vue";
+import Payments_rounded from "../../assets/payments_rounded.vue";
+import Token_rounded from "../../assets/token_rounded.vue";
+import Close_rounded from "../../assets/close_rounded.vue";
+import Expand_more_rounded from "../../assets/expand_more_rounded.vue";
 
 export default {
   name: "chainLinkElement",

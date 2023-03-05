@@ -23,7 +23,7 @@
 
 <script>
 import GuildJob from "../dashboard/guildJob.vue";
-import ChainLinkElement from "../chainLinkElement.vue";
+import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
 import {NetworkAdapter} from "../../network.js";
 import EventListSelection from "./eventListSelection.vue";
 import Sensor_rounded from "../../assets/sensor_rounded.vue";

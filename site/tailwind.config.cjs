@@ -34,6 +34,10 @@ module.exports = {
             padding: {
                 DEFAULT: '.5rem'
             },
+            fontFamily: {
+                'discord-light': 'discordFontLight',
+                'discord-medium': 'discordFontMedium'
+            },
             colors: {
                 "accent": "#ffffff",
                 "primary": "#5865F2",// blurple

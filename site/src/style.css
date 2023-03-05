@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'discordFontLight';
+    src:  url('assets/ABCGintoNord-light.woff2') format('woff2'),
+    url('assets/ABCGintoNord-light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'discordFontMedium';
+    src:  url('assets/ABCGintoNord-Medium.woff2') format('woff2'),
+    url('assets/ABCGintoNord-Medium.woff') format('woff');
+}
+
 *::-webkit-scrollbar {
     width: 5px;
     height: 10px;

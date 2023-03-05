@@ -2,7 +2,7 @@
   <navbar></navbar>
   <div class="flex flex-col w-full gap items-center">
     <div class="flex flex-col gap mt-52 w-full">
-      <h1 class="text-accent self-center text-4xl sm:text-5xl lg:text-9xl">AUTOCORD</h1>
+      <h1 class="text-accent self-center text-4xl sm:text-5xl lg:text-9xl font-discord-medium">AUTOCORD</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Discord automation made simple.</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
       <div class="flex w-full h-full flex-col items-center justify-center text-accent gap-4 mt-10">

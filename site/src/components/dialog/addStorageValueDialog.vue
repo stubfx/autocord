@@ -9,7 +9,7 @@
 
 <script>
 import Save_rounded from "../../assets/save_rounded.vue";
-import ChainLinkElement from "../chainLinkElement.vue";
+import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
 import SimpleDialog from "./simpleDialog.vue";
 import {NetworkAdapter} from "../../network.js";
 import SaveButton from "../buttons/saveButton.vue";

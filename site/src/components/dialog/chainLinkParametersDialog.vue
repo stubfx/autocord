@@ -31,14 +31,14 @@
 
 <script>
 import SimpleDialog from "./simpleDialog.vue";
-import ChainLinkElement from "../chainLinkElement.vue";
+import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
 import {ChainLinkParam} from "../../ParamTypes.js";
 import {NetworkAdapter} from "../../network.js";
 import Close_rounded from "../../assets/close_rounded.vue";
 import SaveButton from "../buttons/saveButton.vue";
 import {getExposedArgumentsInJob} from "../../../utils.js";
-import ExposedArgumentString from "../exposedArgumentString.vue";
+import ExposedArgumentString from "../chainLinkElement/exposedArgumentString.vue";
 
 export default {
   name: "chainLinkParametersDialog",

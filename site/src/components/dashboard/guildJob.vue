@@ -30,7 +30,7 @@ import Add_rounded from "../../assets/add_rounded.vue";
 import Task_rounded from "../../assets/task_rounded.vue";
 import Psicology_rounded from "../../assets/psicology_rounded.vue";
 import Sensor_rounded from "../../assets/sensor_rounded.vue";
-import ChainLinkElement from "../chainLinkElement.vue";
+import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import Close_rounded from "../../assets/close_rounded.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
