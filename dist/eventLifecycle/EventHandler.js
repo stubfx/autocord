@@ -17,6 +17,9 @@ export async function runEventForAllGuilds(eventName, eventArgs = {}) {
 }
 function runJobEventForGuild(eventName, eventArgs) {
     return async (guildInterface) => {
+        if (!guildInterface) {
+            return;
+        }
         // don't even check for events, yet.
         // if (!guildInterface || guildInterface.jobs.length < 1) {
         //     // no guild, no party.

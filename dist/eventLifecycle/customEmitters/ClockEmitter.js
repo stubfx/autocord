@@ -6,7 +6,7 @@ export class ClockEmitter {
         this.startHourlyEmitter();
     }
     startHourlyEmitter() {
-        setInterval(args => {
+        setInterval(() => {
             this.emit();
         }, 60 * 60 * 1000);
     }
