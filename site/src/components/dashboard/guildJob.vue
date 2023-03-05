@@ -1,7 +1,6 @@
 <template>
   <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
   </chain-link-parameters-dialog>
-  <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
   <div class="flex flex-col job-bg p-6 rounded shadow-default gap h-fit w-job">
     <div class="flex flex-row gap">
       <div class="flex flex-row flex-grow overflow-hidden">
@@ -10,17 +9,20 @@
         <input v-else class="text-3xl bg-secondary text-accent rounded" v-model="job.name">
       </div>
       <div class="flex flex-ro gap">
+        <expand_rounded class="fill-success rounded w-token cursor-pointer"
+                      v-if="showExpandButton" @click="onJobExpand"></expand_rounded>
         <edit_rounded class="fill-success rounded w-token cursor-pointer"
                       v-if="showEditButton" @click="onAddLink()"></edit_rounded>
-        <close_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="deleteJob"
-                       v-if="deletable"></close_rounded>
+        <delete_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="deleteJob"
+                       v-if="deletable"></delete_rounded>
         <save_rounded class="fill-success rounded rounded w-token cursor-pointer" @click="onSaveJob"
                       v-if="showSave"></save_rounded>
       </div>
     </div>
     <div class="flex flex-col gap overflow-x-auto">
       <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"
-                          @click="editLink(link)" @on-delete="onLinkDelete(index)" :expanded="expanded"></chain-link-element>
+                          @click="editLink(link)" @on-delete="onLinkDelete(index)" :expanded="expanded"
+                          :show-expand-button="showLinksExpandButton"></chain-link-element>
     </div>
   </div>
 </template>
@@ -34,13 +36,18 @@ import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import Close_rounded from "../../assets/close_rounded.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
-import {NetworkAdapter} from "../../network.js";
 import Save_rounded from "../../assets/save_rounded.vue";
 import Edit_rounded from "../../assets/edit_rounded.vue";
+import Expand_more_rounded from "../../assets/expand_more_rounded.vue";
+import Expand_rounded from "../../assets/expand_rounded.vue";
+import Delete_rounded from "../../assets/delete_rounded.vue";
 
 export default {
   name: "guildJob",
   components: {
+    Delete_rounded,
+    Expand_rounded,
+    Expand_more_rounded,
     Edit_rounded,
     Save_rounded,
     ConfirmDeletionDialog,
@@ -54,9 +61,12 @@ export default {
     showEditButton: false,
     isSample: false,
     mode: 'DISPLAY',
-    expanded: false
+    expanded: false,
+    showLinksExpandButton: false,
+    onLinkClickDialog: false,
+    showExpandButton: false
   },
-  emits: ['onAddLink', 'onSaveJob', 'onJobDeleted', 'onJobDeleted', "onJobUpdate"],
+  emits: ['onAddLink', 'onSaveJob', "onJobUpdate", 'onJobExpand', 'onJobDelete'],
   methods: {
     onSaveJob() {
       this.$emit('onSaveJob', this.job)
@@ -65,17 +75,15 @@ export default {
       this.$emit('onJobUpdate', this.job)
     },
     deleteJob() {
-      if (this.$props.isSample) {
-        return
+      if (!this.$props.isSample) {
+        this.$emit('onJobDelete')
       }
-      this.$refs.deleteModal.open(async () => {
-        let guildId = this.$store.guildId
-        await NetworkAdapter.deleteJob(guildId, this.job)
-        this.$emit('onJobDeleted', this.job)
-      })
     },
     onAddLink() {
       this.$emit("onAddLink")
+    },
+    onJobExpand() {
+      this.$emit("onJobExpand")
     },
     onLinkDelete(index) {
       this.job.chain.chainLinks.splice(index, 1)
@@ -93,7 +101,7 @@ export default {
           && (this.job.chain.chainLinks.length > 2 || this.$props.showSave)
     },
     editLink(link) {
-      if (this.$props.isSample) {
+      if (this.$props.isSample || !this.$props.onLinkClickDialog) {
         return
       }
       if (link.acceptParams.length > 0) {

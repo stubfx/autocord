@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-col w-full text-accent">
+  <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
+  <div class="flex flex-row w-full text-accent">
     <div class="flex flex-col gap">
       <h2 class="text-3xl font-bold sm:text-4xl">Shared storage</h2>
       <div class="flex flex-row">
@@ -10,9 +11,16 @@
       <h2 class="text-3xl font-bold sm:text-4xl">Jobs</h2>
       <div class="mt-2 flex flex-row flex-wrap gap">
         <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
+                   @on-job-deleted="onJobDelete" :deletable="false" :show-edit-button="false" :show-expand-button="true"
+                   @onJobExpand="onJobExpand(job)"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
+    </div>
+    <div class="w-job" v-if="!!sideViewJob"></div>
+    <div class="fixed top-0 right-0 h-full w-job job-bg z-20 overflow-y-auto overflow-x-hidden" v-if="!!sideViewJob">
+      <guild-job :job="sideViewJob" @onAddLink="addJobLink" @onJobUpdate="onUpdateJob"
+                 @onJobDelete="onJobDelete" :deletable="true" :show-edit-button="true" :expanded="true"
+                 v-if="!!sideViewJob"></guild-job>
     </div>
   </div>
 </template>
@@ -32,6 +40,7 @@ export default {
     return {
       jobs: [],
       storage: {},
+      sideViewJob: null
     }
   },
   async mounted() {
@@ -41,6 +50,7 @@ export default {
   },
   methods: {
     async refreshGuildData() {
+      this.sideViewJob = null
       if (!await NetworkAdapter.loginCheck()) {
         // redirect to selection
         // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
@@ -60,21 +70,30 @@ export default {
         }
       }
     },
+    onJobExpand(job) {
+      this.$store.currentJob = job
+      // show current job in side view
+      this.sideViewJob = job
+    },
     addJob() {
       // this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
       this.$router.push({name: 'editjob'})
     },
-    addJobLink(job) {
-      this.$store.currentJob = job
+    addJobLink() {
+      this.$store.currentJob = this.sideViewJob
       // this.$emit('onPageChange', DASHBOARDPAGES.JOB_DETAIL)
       this.$router.push({name: 'editjob'})
     },
-    async onUpdateJob(job) {
+    async onUpdateJob() {
       let guildId = this.$store.guildId
-      await NetworkAdapter.saveJob(guildId, job)
+      await NetworkAdapter.saveJob(guildId, this.sideViewJob)
     },
-    async onJobDeleted() {
-      await this.refreshGuildData()
+    async onJobDelete() {
+      this.$refs.deleteModal.open(async () => {
+        let guildId = this.$store.guildId
+        await NetworkAdapter.deleteJob(guildId, this.sideViewJob)
+        await this.refreshGuildData()
+      })
     }
   }
 }

@@ -12,7 +12,7 @@
         <span class="font-semibold tracking-wide flex-grow"
               :class="link.type === 'EVENT' ? 'text-black' : 'text-accent'">{{ link.name }}</span>
         <expand_more_rounded class="w-token cursor-pointer transition-transform duration" :class="isElExpanded ? 'rotate-180' : ''"
-                             @click="toggleExpand" @click.stop></expand_more_rounded>
+                             @click="toggleExpand" @click.stop v-if="!!showExpandButton"></expand_more_rounded>
         <div class="flex flex-row">
           <close_rounded class="w-token cursor-pointer" v-show="showDelete" @click="onDelete"
                          @click.stop></close_rounded>
@@ -63,8 +63,9 @@ export default {
   },
   props: {
     link: Object,
-    showDelete: false,
-    expanded: false
+    showDelete: Boolean,
+    expanded: Boolean,
+    showExpandButton: Boolean
   },
   emits: ['onDelete'],
   data() {
