@@ -10,7 +10,7 @@
         <h1 @on-click="supportServer" class="text-1xl">If you have any question or need some help, please join our
           Support server!</h1>
         <h1 class="text-4xl">❤️</h1>
-        <support-server-button @on-click="supportServer" class="p-2"></support-server-button>
+        <support-server-button @on-click="supportServer" class="p-2 border-2"></support-server-button>
         <div class="flex flex-col w-8/12 gap-16">
           <div class="flex flex-row justify-around mt-10 gap-10 items-center">
             <div class="flex flex-col gap">
@@ -48,14 +48,14 @@
         <!--            <h1 class="mt-5">You can do cooooler stuff after the login ❤️</h1>-->
         <!--          </div>-->
         <!--          <edit-job-view :is-sample="true" :expanded="true"></edit-job-view>-->
-        <!--          <h1 class="text-accent text-8xl mt-10">What are you waiting for?</h1>-->
-        <!--          <h1 class="text-3xl">Join while in <span class="text-success">early access</span>-->
-        <!--            and enjoy <span class="text-success">free</span> additional tokens for you flows!</h1>-->
-        <!--          <login-button @on-click="login"-->
-        <!--                        class="border-2 border-success hover:border-accent text-black mt-2"></login-button>-->
-        <!--          &lt;!&ndash;        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"&ndash;&gt;-->
-        <!--          &lt;!&ndash;                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"&ndash;&gt;-->
-        <!--          &lt;!&ndash;                allowfullscreen></iframe>&ndash;&gt;-->
+                  <h1 class="text-accent text-8xl mt-10">What are you waiting for?</h1>
+                  <h1 class="text-3xl">Join while in <span class="text-success">early access</span>
+                    and enjoy <span class="text-success">free</span> additional tokens for you flows!</h1>
+                  <login-button @on-click="login"
+                                class="border-2 mt-2 text-2xl"></login-button>
+                  <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
+                  <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
+                  <!--                allowfullscreen></iframe>-->
         <!--        </div>-->
       </div>
     </div>
