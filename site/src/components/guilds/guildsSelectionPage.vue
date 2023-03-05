@@ -27,7 +27,7 @@ export default {
     this.$store.guilds = this.guilds
   },
   methods: {
-    goToListingPage() {
+    goToListingPage(guild) {
       this.$store.guildId = guild.id
       this.$router.push({name: 'jobs', params: {guildId: guild.id}})
     },
