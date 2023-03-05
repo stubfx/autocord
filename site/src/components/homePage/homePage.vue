@@ -9,7 +9,7 @@
         <h1 class="text-6xl">This app is in <span class="text-success">early access</span></h1>
         <h1 @on-click="supportServer" class="text-1xl">If you have any question or need some help, please join our
           Support server!</h1>
-        <login-with-discord-button></login-with-discord-button>
+        <login-with-discord-button  @click="login"></login-with-discord-button>
         <h1 class="text-4xl">❤️</h1>
         <support-server-button @on-click="supportServer" class="p-2 border-2"></support-server-button>
         <div class="flex flex-col w-8/12 gap-16">
@@ -51,7 +51,7 @@
         <h1 class="text-accent text-8xl mt-10">What are you waiting for?</h1>
         <h1 class="text-3xl">Join while in <span class="text-success">early access</span>
           and enjoy <span class="text-success">free</span> additional tokens for you flows!</h1>
-        <login-button @on-click="login"
+        <login-button @click="login"
                       class="border-2 mt-2 text-2xl"></login-button>
         <!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/je2mOH8_sWw" title="YouTube video player"-->
         <!--                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
