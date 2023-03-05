@@ -1,13 +1,13 @@
 <template>
   <!--      <simple-select></simple-select>-->
-  <div class="flex flex-col h-full fill-accent items-center pt-5">
-    <div class="flex flex-col dashboard-navbar ">
-      <logout_rounded @click="onLogout"></logout_rounded>
+  <div class="flex flex-col h-full fill-accent items-center pt-5 shadow-default">
+    <div class="flex flex-col dashboard-navbar">
+      <logout_rounded @click="onLogout" class="hover:bg-error hover:fill-accent"></logout_rounded>
 <!--      <refresh_rounded @click="onRefresh"></refresh_rounded>-->
-      <list_alt_rounded @click="onGuildSelection"></list_alt_rounded>
+      <list_alt_rounded @click="onGuildSelection" class="hover:bg-accent hover:fill-dark"></list_alt_rounded>
       <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
       <!--      <refresh-button @click="onRefresh"></refresh-button>-->
-      <icon_clyde @on-click="supportServer"></icon_clyde>
+      <icon_clyde @on-click="supportServer" class="hover:bg-primary hover:fill-accent"></icon_clyde>
     </div>
   </div>
 </template>
@@ -69,8 +69,9 @@ export default {
 
 .dashboard-navbar > * {
   @apply cursor-pointer;
-  @apply hover:bg-accent;
-  @apply hover:fill-dark;
+  @apply transition-colors;
+  /*@apply hover:bg-accent;*/
+  /*@apply hover:fill-dark;*/
   @apply p-4;
 }
 </style>

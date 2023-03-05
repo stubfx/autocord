@@ -3,10 +3,10 @@
   </chain-link-parameters-dialog>
   <div class="flex flex-row w-full h-full gap justify-center">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT"></guild-job>
-    <div class="flex flex-col job-bg shadow-2xl rounded gap py w-job">
+    <div class="flex flex-col job-bg shadow-default rounded gap py w-job">
       <div class="flex flex-row gap p w-full justify-around">
         <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)"
-             class="flex flex-row flex-grow justify-center bg-dark rounded text-accent hover:bg-primary hover:text-dark font-bold">
+             class="flex flex-row flex-grow justify-center bg-dark rounded text-accent hover:bg-primary font-bold transition-colors">
           <div class="cursor-pointer p">{{listName}}</div>
         </div>
       </div>

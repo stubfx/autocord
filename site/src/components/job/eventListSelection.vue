@@ -4,7 +4,7 @@
 <!--    <div class="grid lg:grid-cols-1 xl:grid-cols-2 auto-cols-fr mt-5 items-center gap grid-flow-row-dense-->
 <!--                auto-rows-fr">-->
     <div class="flex flex-col gap">
-        <chain-link-element :link="item" @click="onItemSelected(item)" v-for="item in items"></chain-link-element>
+        <chain-link-element :link="item" @click="onItemSelected(item)" v-for="item in items" :expanded="true"></chain-link-element>
     </div>
   </div>
 </template>

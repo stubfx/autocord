@@ -2,7 +2,7 @@
   <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
   </chain-link-parameters-dialog>
   <confirm-deletion-dialog ref="deleteModal"></confirm-deletion-dialog>
-  <div class="flex flex-col job-bg p-6 rounded shadow-2xl gap h-fit w-job">
+  <div class="flex flex-col job-bg p-6 rounded shadow-default gap h-fit w-job">
     <div class="flex flex-row gap">
       <div class="flex flex-row flex-grow overflow-hidden">
         <!--        prevents text overflow-->

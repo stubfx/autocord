@@ -1,5 +1,5 @@
 <template>
-<div class="group relative flex flex-col flex-wrap overflow-hidden bg-dark p-6 rounded items-center shadow-2xl transition-opacity cursor-pointer
+<div class="group relative flex flex-col flex-wrap overflow-hidden bg-dark p-6 rounded items-center shadow-default transition-opacity cursor-pointer
             justify-center min-h-[400px] job-bg w-job">
   <add_rounded class="max-w-[350px] absolute rounded-full fill-accent w-full transition-colors group-hover:fill-black z-10"></add_rounded>
   <add_rounded class="max-w-[350px] absolute rounded-full fill-accent w-full transition-colors group-hover:scale-[20] transition-transform"></add_rounded>

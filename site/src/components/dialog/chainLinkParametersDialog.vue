@@ -5,7 +5,7 @@
 <!--        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>-->
 <!--      </div>-->
       <div class="flex flex-col gap col-span-3 max-w-[400px]">
-        <chain-link-element :link="chainLink"></chain-link-element>
+        <chain-link-element :link="chainLink" :expanded="true"></chain-link-element>
         <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>
         <div ref="form" class="flex flex-col w-[400px]">
           <template v-for="param in chainLink.params">

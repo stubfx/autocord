@@ -28,11 +28,17 @@
     outline: 1px solid slategrey;
 }
 
+.shadow-default {
+    @apply shadow-xl;
+    @apply hover:shadow-2xl;
+    @apply transition-shadow;
+}
+
 .job-bg {
     /*@apply bg-tertiary;*/
     @apply bg-tertiary/60;
     @apply backdrop-blur-2xl;
-    @apply shadow-2xl
+    @apply shadow-default;
 }
 
 .button-icon {

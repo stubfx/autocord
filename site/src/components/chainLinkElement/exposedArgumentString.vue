@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-row flex-wrap cursor-pointer gap-1">
-          <chip class="font-light bg-tertiary text-accent p-1 px-2 rounded mr-0.5 mt-1" v-for="arg in arguments" :text="arg"></chip>
+    <chip v-for="arg in arguments" :text="arg"
+          class="font-light bg-tertiary text-accent p-1 px-2 rounded mr-0.5 mt-1"
+          @click="$emit('onArgumentClick', arg)"></chip>
   </div>
 </template>
 
