@@ -36,10 +36,10 @@ module.exports = {
             },
             colors: {
                 "accent": "#ffffff",
-                "primary": "#424549",
-                "secondary": "#1b3370",
-                "tertiary": "#1d1f23",
-                "dark": "#000d2f",
+                "primary": "#985194",
+                "secondary": "#911989",
+                "tertiary": "#281150",
+                "dark": "#000923",
                 "success": '#57F287',
                 "error": '#ED4245',
             }

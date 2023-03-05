@@ -1,12 +1,15 @@
 <template>
-    <!--      <simple-select></simple-select>-->
-    <div class="flex flex-col h-full fill-accent items-center [&>*]:cursor-pointer gap pt-5">
-      <list-button @click="onGuildSelection"></list-button>
-<!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
-<!--      <refresh-button @click="onRefresh"></refresh-button>-->
-      <logout-button @on-click="onLogout"></logout-button>
-      <support-server-button @on-click="supportServer"></support-server-button>
+  <!--      <simple-select></simple-select>-->
+  <div class="flex flex-col h-full fill-accent items-center pt-5">
+    <div class="flex flex-col dashboard-navbar ">
+      <refresh_rounded @click="onRefresh"></refresh_rounded>
+      <list_alt_rounded @click="onGuildSelection"></list_alt_rounded>
+      <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
+      <!--      <refresh-button @click="onRefresh"></refresh-button>-->
+      <logout_rounded @on-click="onLogout"></logout_rounded>
+      <icon_clyde @on-click="supportServer"></icon_clyde>
     </div>
+  </div>
 </template>
 
 <script>
@@ -18,17 +21,25 @@ import SupportServerButton from "../buttons/supportServerButton.vue";
 import ListButton from "../buttons/listButton.vue";
 import RefreshButton from "../buttons/refreshButton.vue";
 import BackButton from "../buttons/backButton.vue";
+import List_alt_rounded from "../../assets/list_alt_rounded.vue";
+import Icon_clyde from "../../assets/icon_clyde.vue";
+import Refresh_rounded from "../../assets/refresh_rounded.vue";
 
 export default {
   name: "dashboardNavbar",
-  components: {BackButton, RefreshButton, ListButton, SupportServerButton, LogoutButton, HomeButton, Logout_rounded},
+  components: {
+    Refresh_rounded,
+    Icon_clyde,
+    List_alt_rounded,
+    BackButton, RefreshButton, ListButton, SupportServerButton, LogoutButton, HomeButton, Logout_rounded
+  },
   emits: ['onLogout', 'onRefresh'],
   props: {
     currentPage: String
   },
   data() {
     return {
-      userGuilds:[],
+      userGuilds: [],
       page: DASHBOARDPAGES.GUILD_SELECTION,
       DASHBOARDPAGES: DASHBOARDPAGES
     }
@@ -51,5 +62,15 @@ export default {
 </script>
 
 <style scoped>
+.dashboard-navbar {
+  @apply w-[80px];
+  @apply gap;
+}
 
+.dashboard-navbar > * {
+  @apply cursor-pointer;
+  @apply hover:bg-accent;
+  @apply hover:fill-dark;
+  @apply p-4;
+}
 </style>

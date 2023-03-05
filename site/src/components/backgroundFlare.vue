@@ -1,8 +1,8 @@
 <template>
   <div ref="bg" class="fixed justify-around items-center top-0 gap left-0 w-full h-full">
 <!--    <div class="bg-accent w-20 h-20 animateme" v-for="item in getItems()"></div>-->
-    <bg_wave class="absolute w-full h-auto bottom-0 fill-secondary"></bg_wave>
-    <bg_wave class="absolute w-full h-auto bottom-0 fill-tertiary/60 -mb-3"></bg_wave>
+<!--    <bg_wave class="absolute w-full h-auto bottom-0 fill-secondary"></bg_wave>-->
+    <bg_wave class="absolute w-full h-auto bottom-0 fill-secondary -mb-52"></bg_wave>
   </div>
 </template>
 

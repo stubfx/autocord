@@ -1,6 +1,6 @@
 <template>
 <!--  <div class="fixed top-0 left-0 w-full h-full bg-dark"></div>-->
-  <background-flare></background-flare>
+<!--  <background-flare></background-flare>-->
   <div class="flex w-full h-full flex-col items-center absolute gap">
     <div class="w-full">
       <router-view></router-view>
@@ -11,16 +11,8 @@
   </div>
 </template>
 
-<script setup>
-
-
-import BackgroundFlare from "./components/backgroundFlare.vue";</script>
+<script setup></script>
 
 <style scoped>
-/*#bg {*/
-/*  background-image: url("/src/assets/bg-sample.png");*/
-/*  background-position: center;*/
-/*  background-repeat: no-repeat;*/
-/*  background-size: cover;*/
-/*}*/
+
 </style>

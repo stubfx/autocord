@@ -1,6 +1,6 @@
 <template>
   <div class="fixed flex flex-row w-full backdrop-blur-lg bg-primary/30 opacity-100 z-50">
-    <div class="flex flex-row gap p">
+    <div class="flex flex-row gap p-4">
       <login-button @on-click="login"></login-button>
       <support-server-button @on-click="supportServer"></support-server-button>
     </div>

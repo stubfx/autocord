@@ -1,7 +1,7 @@
 <template>
   <navbar></navbar>
   <div class="flex flex-col w-full gap items-center">
-    <div class="flex flex-col gap">
+    <div class="flex flex-col gap mt-20">
       <h1 class="text-accent self-center text-4xl sm:text-5xl lg:text-9xl">AUTOCORD.IO</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Discord automation made simple.</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
