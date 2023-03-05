@@ -1,6 +1,6 @@
 <template>
 <!--  <div class="fixed top-0 left-0 w-full h-full bg-dark"></div>-->
-<!--  <background-flare></background-flare>-->
+  <background-flare></background-flare>
   <div class="flex w-full h-full flex-col items-center absolute gap">
     <div class="w-full">
       <router-view></router-view>
@@ -11,7 +11,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script>
+import {defineComponent} from "vue";
+import BackgroundFlare from "./components/backgroundFlare.vue";
+
+export default defineComponent({
+  components: {BackgroundFlare}
+})
+</script>
 
 <style scoped>
 

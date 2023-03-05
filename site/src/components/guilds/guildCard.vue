@@ -1,6 +1,6 @@
 <template>
-  <div class="group rounded flex flex-col items-center p hover:shadow-2xl hover:-translate-y-6 transition-all duration-300 bg-dark cursor-pointer w-[200px]
-  h-100 hover:scale-110 hover:bg-accent hover:text-dark">
+  <div class="group rounded flex flex-col items-center p hover:shadow-2xl hover:-translate-y-6 transition-all duration-300 bg-tertiary cursor-pointer w-[200px]
+  h-100 hover:scale-110 hover:bg-accent hover:text-dark grayscale hover:grayscale-0">
     <object :data="getImageUrl()" type="image/png" class="rounded w-full h-auto" v-if="guild.icon">
     </object>
 <!--    <object v-else data="/src/assets/broken_image_rounded.svg" type="image/png" class="rounded w-full h-auto fill-primary">-->

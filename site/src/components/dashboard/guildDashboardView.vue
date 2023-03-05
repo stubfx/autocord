@@ -11,16 +11,6 @@
       <div class="mt-2 flex flex-row flex-wrap gap">
         <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
                    @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
-        <guild-job v-for="job in jobs" :job="job" @onAddLink="addJobLink(job)" @onJobUpdate="onUpdateJob(job)"
-                   @on-job-deleted="onJobDeleted" :deletable="true" :show-edit-button="true"></guild-job>
         <guild-job-add-card @click="addJob()"></guild-job-add-card>
       </div>
     </div>

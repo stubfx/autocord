@@ -3,7 +3,7 @@
   <div class="flex flex-col h-full fill-accent items-center pt-5">
     <div class="flex flex-col dashboard-navbar ">
       <logout_rounded @click="onLogout"></logout_rounded>
-      <refresh_rounded @click="onRefresh"></refresh_rounded>
+<!--      <refresh_rounded @click="onRefresh"></refresh_rounded>-->
       <list_alt_rounded @click="onGuildSelection"></list_alt_rounded>
       <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
       <!--      <refresh-button @click="onRefresh"></refresh-button>-->

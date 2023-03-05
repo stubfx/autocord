@@ -36,10 +36,10 @@ module.exports = {
             },
             colors: {
                 "accent": "#ffffff",
-                "primary": "#985194",
-                "secondary": "#911989",
-                "tertiary": "#281150",
-                "dark": "#000923",
+                "primary": "#5865F2",// blurple
+                "secondary": "#424549",
+                "tertiary": "#36393e",
+                "dark": "#23272A",
                 "success": '#57F287',
                 "error": '#ED4245',
             }

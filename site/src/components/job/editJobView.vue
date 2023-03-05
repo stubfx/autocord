@@ -4,9 +4,10 @@
   <div class="flex flex-row w-full h-full gap justify-center">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT"></guild-job>
     <div class="flex flex-col job-bg shadow-2xl rounded gap py w-job">
-      <div class="flex flex-row gap">
-        <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)">
-          <div class="cursor-pointer p rounded bg-dark text-accent">{{listName}}</div>
+      <div class="flex flex-row gap p w-full justify-around">
+        <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)"
+             class="flex flex-row flex-grow justify-center bg-dark rounded text-accent hover:bg-primary hover:text-dark font-bold">
+          <div class="cursor-pointer p">{{listName}}</div>
         </div>
       </div>
       <event-list-selection name="Events" :items="events" @onItemSelected="addLink" v-if="tab === 'Events'"></event-list-selection>
