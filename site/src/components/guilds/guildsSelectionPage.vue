@@ -19,7 +19,7 @@ export default {
   components: {GuildCard},
   data() {
     return {
-      guilds: this.$store.guilds || []
+      guilds: this.$store.guilds || [],
     }
   },
   async mounted() {
@@ -33,13 +33,13 @@ export default {
     },
     async onGuildSelection(guild) {
       // check if the bot is in the guild.
-      if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
+      if (await NetworkAdapter.isBotInGuild(guild.id)) {
         this.goToListingPage(guild)
       } else {
         // if not, make it join!
-        let url = await NetworkAdapter.getDiscordBotInviteUrl(this.guild.id)
+        let url = await NetworkAdapter.getDiscordBotInviteUrl(guild.id)
         await openPopup(url)
-        if (await NetworkAdapter.isBotInGuild(this.guild.id)) {
+        if (await NetworkAdapter.isBotInGuild(guild.id)) {
           this.goToListingPage(guild)
         }
       }
