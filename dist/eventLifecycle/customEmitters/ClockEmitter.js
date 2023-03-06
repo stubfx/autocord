@@ -46,7 +46,7 @@ export class ClockEmitter {
     }
     async emitRandomly() {
         // less than 5% every 2 secs.
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.003) {
             try {
                 await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.Randomly, {});
             }
