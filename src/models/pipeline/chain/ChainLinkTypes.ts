@@ -7,6 +7,8 @@ export namespace ChainLinkTypes {
         VoiceStateUpdate = "VoiceStateUpdate",
         GuildMemberAdd = "GuildMemberAdd",
         EveryHour = 'EveryHour',
+        EveryDay = 'EveryDay',
+        Randomly = 'Randomly',
     }
 
     export enum LinkType {

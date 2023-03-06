@@ -8,6 +8,8 @@ export var ChainLinkTypes;
         Event["VoiceStateUpdate"] = "VoiceStateUpdate";
         Event["GuildMemberAdd"] = "GuildMemberAdd";
         Event["EveryHour"] = "EveryHour";
+        Event["EveryDay"] = "EveryDay";
+        Event["Randomly"] = "Randomly";
     })(Event = ChainLinkTypes.Event || (ChainLinkTypes.Event = {}));
     let LinkType;
     (function (LinkType) {

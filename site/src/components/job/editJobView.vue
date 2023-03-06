@@ -5,7 +5,7 @@
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT" :expanded="true"></guild-job>
     <div class="w-job"></div>
     <div class="fixed top-0 right-0 h-full w-job job-bg z-20 overflow-y-auto overflow-x-hidden">
-      <div class="flex flex-col job-bg shadow-default rounded gap py w-job">
+      <div class="flex flex-col rounded gap py">
         <div class="flex flex-row gap p w-full justify-around">
           <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)"
                class="flex flex-row flex-grow justify-center bg-dark rounded text-accent hover:bg-primary font-bold transition-colors">

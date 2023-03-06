@@ -1,10 +1,10 @@
 import {EventLink} from "../../EventLink.js";
 import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 
-export class EveryHour extends EventLink {
-    name = ChainLinkTypes.Event.EveryHour;
+export class Randomly extends EventLink {
+    name = ChainLinkTypes.Event.Randomly;
 
-    description = "Fired once every hour."
+    description = "Fired randomly i guess?"
 
     async behavior(...args) : Promise<Boolean> {
         console.log(this.name)

@@ -5,6 +5,8 @@ import { ChannelCreate } from "../Events/ChannelCreate.js";
 import { GuildMemberAdd } from "../Events/GuildMemberAdd.js";
 import { MessageReactionAdd } from "../Events/MessageReactionAdd.js";
 import { EveryHour } from "../Events/customEvents/EveryHour.js";
+import { EveryDay } from "../Events/customEvents/EveryDay.js";
+import { Randomly } from "../Events/customEvents/Randomly.js";
 export class EventDict {
     getEventByName(chainLinkEventName, params = []) {
         switch (chainLinkEventName) {
@@ -20,8 +22,12 @@ export class EventDict {
                 return new MessageReactionAdd(params);
             case ChainLinkTypes.Event.EveryHour:
                 return new EveryHour(params);
+            case ChainLinkTypes.Event.EveryDay:
+                return new EveryDay(params);
+            case ChainLinkTypes.Event.Randomly:
+                return new Randomly(params);
             default:
-                throw new Error(`Unknown condition name: ${chainLinkEventName}`);
+                throw new Error(`Unknown event name: ${chainLinkEventName}`);
         }
     }
 }

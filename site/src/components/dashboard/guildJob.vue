@@ -1,7 +1,7 @@
 <template>
   <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
   </chain-link-parameters-dialog>
-  <div class="flex flex-col job-bg p-6 rounded shadow-default gap h-fit w-job">
+  <div class="flex flex-col p-6 rounded gap h-fit w-job" :class="!removeBg ? 'job-bg shadow-default' : ''">
     <div class="flex flex-row gap">
       <div class="flex flex-row flex-grow overflow-hidden">
         <!--        prevents text overflow-->
@@ -64,7 +64,8 @@ export default {
     expanded: false,
     showLinksExpandButton: false,
     onLinkClickDialog: false,
-    showExpandButton: false
+    showExpandButton: false,
+    removeBg: false
   },
   emits: ['onAddLink', 'onSaveJob', "onJobUpdate", 'onJobExpand', 'onJobDelete'],
   methods: {

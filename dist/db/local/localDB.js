@@ -7,14 +7,18 @@ import { JSONFile } from "lowdb/node";
 // File path
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const guildsFile = join(__dirname, 'localDB.json');
-// Configure lowdb to write to JSONFile
-// const adapter = new JSONFile(file)
 const localDB = new lowdb.Low(new JSONFile(guildsFile));
 // Read data from JSON file, this will set db.data content
 await localDB.read();
 if (!localDB.data) {
-    localDB.data = {};
+    localDB.data = {
+        clock: {
+            everyHour: new Date(),
+            everyDay: new Date(),
+            random: new Date()
+        }
+    };
     await localDB.write();
 }
-export { localDB };
+export default localDB;
 //# sourceMappingURL=localDB.js.map

@@ -11,3 +11,4 @@
 /src/server.js
 /src/utils.js
 /node_modules/
+/dist/db/local/localDB.json

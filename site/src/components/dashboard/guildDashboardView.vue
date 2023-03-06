@@ -20,7 +20,7 @@
     <div class="fixed top-0 right-0 h-full w-job job-bg z-20 overflow-y-auto overflow-x-hidden" v-if="!!sideViewJob">
       <guild-job :job="sideViewJob" @onAddLink="addJobLink" @onJobUpdate="onUpdateJob"
                  @onJobDelete="onJobDelete" :deletable="true" :show-edit-button="true" :expanded="true"
-                 v-if="!!sideViewJob"></guild-job>
+                 v-if="!!sideViewJob" :remove-bg="true"></guild-job>
     </div>
   </div>
 </template>
