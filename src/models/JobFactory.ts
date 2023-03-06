@@ -53,7 +53,7 @@ export class JobFactory {
         if (eventCount !== 1) {
             throw new Error("This job has more/less than 1 item in the chain")
         }
-        if (jobInterface.chain.chainLinks.length > 5) {
+        if (jobInterface.chain.chainLinks.length > +process.env.MAX_JOB_LINKS) {
             throw new Error("Exceeded maximum chain length for this job.")
         }
     }

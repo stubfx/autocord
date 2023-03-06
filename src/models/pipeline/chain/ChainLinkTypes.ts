@@ -27,6 +27,7 @@ export namespace ChainLinkTypes {
         DeleteChannel = 'DeleteChannel',
         SetStorageValue = 'SetStorageValue',
         UpdateChannel = 'UpdateChannel',
+        RandomListElement = 'RandomListElement',
 
     }
 
@@ -44,6 +45,7 @@ export namespace ChainLinkTypes {
         CATEGORY_ID = 'CATEGORY_ID',
         REGEX = 'REGEX',
         NUMBER = 'NUMBER',
+        LIST = 'LIST',
     }
 
 }

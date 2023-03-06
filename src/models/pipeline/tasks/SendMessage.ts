@@ -26,9 +26,4 @@ export class SendMessage extends Task {
         return true
     }
 
-    // validate() {
-    //     // check if channel id is from the same guild.
-    //     super.validate()
-    // }
-
 }

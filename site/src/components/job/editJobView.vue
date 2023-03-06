@@ -2,7 +2,7 @@
   <chain-link-parameters-dialog ref="modal">
   </chain-link-parameters-dialog>
   <div class="flex flex-row w-full h-full gap">
-    <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT" :expanded="true"></guild-job>
+    <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT" :expanded="true" :on-link-click-dialog="true"></guild-job>
     <div class="w-job"></div>
     <div class="fixed top-0 right-0 h-full w-job job-bg z-20 overflow-y-auto overflow-x-hidden">
       <div class="flex flex-col rounded gap py">

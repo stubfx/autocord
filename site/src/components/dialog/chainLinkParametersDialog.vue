@@ -1,31 +1,32 @@
 <template>
   <simple-dialog ref="modal" :close-on-click-outside="false">
-<!--    <div class="grid grid-cols-4 max-w-[600px] gap">-->
-<!--      <div class="flex flex-col">-->
-<!--        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>-->
-<!--      </div>-->
-      <div class="flex flex-col gap col-span-3 max-w-[400px]">
-        <chain-link-element :link="chainLink" :expanded="true"></chain-link-element>
-        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>
-        <div ref="form" class="flex flex-col w-[400px]">
-          <template v-for="param in chainLink.params">
-            <label class="my-2">{{ param.name }}</label>
-            <div class="flex flex-row w-full gap">
-              <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
-              <input class="bg-secondary rounded p-2 w-full" type="text" v-model="param.value"
-                     v-if="isStringOrForcedAs(param)" @click="setFocusedParam(param)"/>
-              <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-secondary rounded p-2 w-full">
-                <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-dark">{{
-                    paramOption.name
-                  }}
-                </option>
-              </select>
-            </div>
-          </template>
-          <save-button class="self-center mt-5" @onClick="save()"></save-button>
-        </div>
+    <!--    <div class="grid grid-cols-4 max-w-[600px] gap">-->
+    <!--      <div class="flex flex-col">-->
+    <!--        <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>-->
+    <!--      </div>-->
+    <div class="flex flex-col gap col-span-3 max-w-[400px]">
+      <chain-link-element :link="chainLink" :expanded="true"></chain-link-element>
+      <exposed-argument-string @on-argument-click="onArgClick" :arguments="exposedArguments"></exposed-argument-string>
+      <div ref="form" class="flex flex-col w-[400px]">
+        <template v-for="param in chainLink.params">
+          <label class="my-2">{{ param.name }}</label>
+          <div class="flex flex-row w-full gap">
+            <input type="checkbox" v-model="param.forceString" v-if="!isString(param)">
+            <list-input-type :list="param.value" v-if="isList(param)"></list-input-type>
+            <input class="bg-secondary rounded p-2 w-full" type="text" v-model="param.value"
+                   v-else-if="isStringOrForcedAs(param)" @click="setFocusedParam(param)"/>
+            <select v-else-if="hasOptions(param)" v-model="param.value" class="bg-secondary rounded p-2 w-full">
+              <option v-for="paramOption in getParamOptions(param)" :value="paramOption.value" class="bg-dark">{{
+                  paramOption.name
+                }}
+              </option>
+            </select>
+          </div>
+        </template>
+        <save-button class="self-center mt-5" @onClick="save()"></save-button>
       </div>
-<!--    </div>-->
+    </div>
+    <!--    </div>-->
   </simple-dialog>
 </template>
 
@@ -39,17 +40,20 @@ import Close_rounded from "../../assets/close_rounded.vue";
 import SaveButton from "../buttons/saveButton.vue";
 import {getExposedArgumentsInJob} from "../../../utils.js";
 import ExposedArgumentString from "../chainLinkElement/exposedArgumentString.vue";
+import ListInputType from "./inputTypes/listInputType.vue";
 
 export default {
   name: "chainLinkParametersDialog",
-  components: {ExposedArgumentString, SaveButton, Close_rounded, Save_rounded, ChainLinkElement, SimpleDialog},
+  components: {
+    ListInputType,
+    ExposedArgumentString, SaveButton, Close_rounded, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
       exposedArguments: [],
       chainLink: {},
       textChannels: [],
       roles: [],
-      focusedParam : null,
+      focusedParam: null,
       onSaveCB: null
     }
   },
@@ -66,19 +70,23 @@ export default {
         channelId = channelId || this.isChannelOrCategoryID(value.type)
         roles = roles || this.isRoleID(value.type)
         if (!found) {
-          // if there are options, make sure they are all strings.
-          if (value.options) {
-            value.options = value.options.map(el => {
-              el.value = el.value.toString()
-              return el
-            })
-          }
+          console.log(value.name)
+          console.log(value.value)
+          console.log(value.type)
+          // not sure why i did this tbh
+          // // if there are options, make sure they are all strings.
+          // if (value.options) {
+          //   value.options = value.options.map(el => {
+          //     el.value = el.value.toString()
+          //     return el
+          //   })
+          // }
           // param is not in the list, add it!
           chainLink.params.push({
             name: value.name,
             type: value.type,
             options: value.options,
-            value: null
+            value: value.type === ChainLinkParam.LIST ? [] : null
           })
         }
       })
@@ -110,6 +118,9 @@ export default {
     isString(param) {
       return !this.hasOptions(param)
     },
+    isList(param) {
+      return param.type === ChainLinkParam.LIST
+    },
     isStringOrForcedAs(param) {
       let values = [
         // 'STRING',
@@ -118,6 +129,7 @@ export default {
         'CHANNEL_TYPE',
         'CATEGORY_ID',
         'REGEX',
+        // 'LIST'
         // 'NUMBER'
       ]
       // not forcestring nor one of the params above.
@@ -139,10 +151,10 @@ export default {
       this.$refs.modal.close()
       this.$emit("onClose")
     },
-    setFocusedParam(param){
+    setFocusedParam(param) {
       this.focusedParam = param
     },
-    onArgClick(arg){
+    onArgClick(arg) {
       let argStr = `{{${arg}}}`
       if (this.focusedParam) {
         if (!this.focusedParam.value) {

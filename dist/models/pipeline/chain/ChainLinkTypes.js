@@ -27,6 +27,7 @@ export var ChainLinkTypes;
         Task["DeleteChannel"] = "DeleteChannel";
         Task["SetStorageValue"] = "SetStorageValue";
         Task["UpdateChannel"] = "UpdateChannel";
+        Task["RandomListElement"] = "RandomListElement";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {
@@ -43,6 +44,7 @@ export var ChainLinkTypes;
         Param["CATEGORY_ID"] = "CATEGORY_ID";
         Param["REGEX"] = "REGEX";
         Param["NUMBER"] = "NUMBER";
+        Param["LIST"] = "LIST";
     })(Param = ChainLinkTypes.Param || (ChainLinkTypes.Param = {}));
 })(ChainLinkTypes || (ChainLinkTypes = {}));
 //# sourceMappingURL=ChainLinkTypes.js.map

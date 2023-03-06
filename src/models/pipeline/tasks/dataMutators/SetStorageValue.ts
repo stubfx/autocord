@@ -17,7 +17,7 @@ export class SetStorageValue extends Task {
     async behavior(...args) : Promise<Boolean> {
         let valueName = this.getResolvedParam("variableName");
         let value = this.getResolvedParam("value");
-        await this.setStorageValue(valueName, value)
+        await this.setSharedStorageValue(valueName, value)
         return true
     }
 

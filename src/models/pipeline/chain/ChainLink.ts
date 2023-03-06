@@ -25,6 +25,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         name: string,
         type: ChainLinkTypes.Param,
         description?: string,
+        // value?: any,
         options?: Array<{
             name: string,
             value: any
@@ -68,11 +69,11 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         // this may be an empty string.
         if (this.storage[paramName] !== undefined) {
             this.storage[paramName] = +this.storage[paramName] + amount
-            await this.setStorageValue(paramName, this.storage[paramName])
+            await this.setSharedStorageValue(paramName, this.storage[paramName])
         }
     }
 
-    async setStorageValue(paramName: string, value) {
+    async setSharedStorageValue(paramName: string, value) {
         // if (!paramName || !(paramName in this.storage) || !value) {
         // compare with undefined is 16% faster than using "in"
         if (!paramName || this.storage[paramName] === undefined || !value) {
@@ -143,6 +144,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
                     // this can be really demanding if the regex is long or too complex
                     this.checkParameterRegexLength(paramToCheck);
                     break
+                case ChainLinkTypes.Param.LIST:
+                    // this.checkParameterRegexLength(paramToCheck);
+                    this.checkParameterList(paramToCheck);
+                    break
                 // case ChainLinkTypes.Param.STRING:
                 // case ChainLinkTypes.Param.CHANNEL_ID:
                 // case ChainLinkTypes.Param.ROLE_ID:
@@ -159,8 +164,11 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
     }
 
     private checkParameterStringLength(paramToCheck: ChainLinkParam) {
-        let length = paramToCheck.value.length;
-        if (length > 150) {
+        this.checkStringLength(paramToCheck.value);
+    }
+
+    private checkStringLength(string: string) {
+        if (string.length > 150) {
             throw new Error(`Param value cannot be longer than 150 chars.`)
         }
     }
@@ -178,6 +186,18 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         let length = paramToCheck.value.length;
         if (length > 10) {
             throw new Error(`Regex value cannot be longer than 10 chars.`)
+        }
+    }
+
+    private checkParameterList(paramToCheck: ChainLinkParam) {
+        if (!paramToCheck.value || paramToCheck.value.length < 1) {
+            throw new Error(`List cannot be empty.`)
+        }
+        if (paramToCheck.value.length > 20) {
+            throw new Error(`List cannot contain more than 20 items.`)
+        }
+        for (let string of paramToCheck.value) {
+            this.checkStringLength(string);
         }
     }
 }

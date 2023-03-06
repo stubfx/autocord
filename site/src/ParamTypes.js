@@ -6,4 +6,5 @@ export class ChainLinkParam {
     static REGEX = 'REGEX'
     static CHANNEL_TYPE = 'CHANNEL_TYPE';
     static NUMBER = 'NUMBER';
+    static LIST = 'LIST';
 }

@@ -9,6 +9,7 @@ import {CreateChannel} from "../tasks/CreateChannel.js";
 import {DeleteChannel} from "../tasks/DeleteChannel.js";
 import {SetStorageValue} from "../tasks/dataMutators/SetStorageValue.js";
 import {UpdateChannel} from "../tasks/UpdateChannel.js";
+import {RandomListElement} from "../tasks/RandomListElement.js";
 
 export class TaskDict {
 
@@ -30,6 +31,8 @@ export class TaskDict {
                 return new UpdateChannel(params)
             case ChainLinkTypes.Task.DeleteChannel:
                 return new DeleteChannel(params)
+            case ChainLinkTypes.Task.RandomListElement:
+                return new RandomListElement(params)
             default:
                 throw new Error(`Unknown task name: ${chainLinkTaskName}`)
         }

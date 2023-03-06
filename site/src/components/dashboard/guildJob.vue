@@ -1,28 +1,31 @@
 <template>
-  <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
-  </chain-link-parameters-dialog>
-  <div class="flex flex-col p-6 rounded gap h-fit w-job" :class="!removeBg ? 'job-bg shadow-default' : ''">
-    <div class="flex flex-row gap">
-      <div class="flex flex-row flex-grow overflow-hidden">
-        <!--        prevents text overflow-->
-        <h1 v-if="!showSave" class="text-3xl text-accent">{{ job.name }}</h1>
-        <input v-else class="text-3xl bg-secondary text-accent rounded" v-model="job.name">
+  <div>
+    <chain-link-parameters-dialog ref="modal" @onClose="onParameterChanged()">
+    </chain-link-parameters-dialog>
+    <div class="flex flex-col p-6 rounded gap h-fit w-job" :class="!removeBg ? 'job-bg shadow-default' : ''">
+      <div class="flex flex-row gap">
+        <div class="flex flex-row flex-grow overflow-hidden">
+          <!--        prevents text overflow-->
+          <h1 v-if="!showSave" class="text-3xl text-accent">{{ job.name }}</h1>
+          <input v-else class="text-3xl bg-secondary text-accent rounded" v-model="job.name">
+        </div>
+        <div class="flex flex-ro gap">
+          <expand_rounded class="fill-success rounded w-token cursor-pointer"
+                          v-if="showExpandButton" @click="onJobExpand"></expand_rounded>
+          <edit_rounded class="fill-success rounded w-token cursor-pointer"
+                        v-if="showEditButton" @click="onAddLink()"></edit_rounded>
+          <delete_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="deleteJob"
+                          v-if="deletable"></delete_rounded>
+          <save_rounded class="fill-success rounded rounded w-token cursor-pointer" @click="onSaveJob"
+                        v-if="showSave"></save_rounded>
+        </div>
       </div>
-      <div class="flex flex-ro gap">
-        <expand_rounded class="fill-success rounded w-token cursor-pointer"
-                      v-if="showExpandButton" @click="onJobExpand"></expand_rounded>
-        <edit_rounded class="fill-success rounded w-token cursor-pointer"
-                      v-if="showEditButton" @click="onAddLink()"></edit_rounded>
-        <delete_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="deleteJob"
-                       v-if="deletable"></delete_rounded>
-        <save_rounded class="fill-success rounded rounded w-token cursor-pointer" @click="onSaveJob"
-                      v-if="showSave"></save_rounded>
+      <div class="flex flex-col gap overflow-x-auto">
+        <chain-link-element :showDelete="isLinkDeletable(link)" :link="link"
+                            v-for="(link, index) in job.chain.chainLinks"
+                            @click="editLink(link)" @on-delete="onLinkDelete(index)" :expanded="expanded"
+                            :show-expand-button="showLinksExpandButton"></chain-link-element>
       </div>
-    </div>
-    <div class="flex flex-col gap overflow-x-auto">
-      <chain-link-element :showDelete="isLinkDeletable(link)" :link="link" v-for="(link, index) in job.chain.chainLinks"
-                          @click="editLink(link)" @on-delete="onLinkDelete(index)" :expanded="expanded"
-                          :show-expand-button="showLinksExpandButton"></chain-link-element>
     </div>
   </div>
 </template>

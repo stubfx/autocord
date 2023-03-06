@@ -45,10 +45,10 @@ export class ChainLink {
         // this may be an empty string.
         if (this.storage[paramName] !== undefined) {
             this.storage[paramName] = +this.storage[paramName] + amount;
-            await this.setStorageValue(paramName, this.storage[paramName]);
+            await this.setSharedStorageValue(paramName, this.storage[paramName]);
         }
     }
-    async setStorageValue(paramName, value) {
+    async setSharedStorageValue(paramName, value) {
         // if (!paramName || !(paramName in this.storage) || !value) {
         // compare with undefined is 16% faster than using "in"
         if (!paramName || this.storage[paramName] === undefined || !value) {
@@ -114,6 +114,10 @@ export class ChainLink {
                     // this can be really demanding if the regex is long or too complex
                     this.checkParameterRegexLength(paramToCheck);
                     break;
+                case ChainLinkTypes.Param.LIST:
+                    // this.checkParameterRegexLength(paramToCheck);
+                    this.checkParameterList(paramToCheck);
+                    break;
                 // case ChainLinkTypes.Param.STRING:
                 // case ChainLinkTypes.Param.CHANNEL_ID:
                 // case ChainLinkTypes.Param.ROLE_ID:
@@ -129,8 +133,10 @@ export class ChainLink {
         // congratulations!
     }
     checkParameterStringLength(paramToCheck) {
-        let length = paramToCheck.value.length;
-        if (length > 150) {
+        this.checkStringLength(paramToCheck.value);
+    }
+    checkStringLength(string) {
+        if (string.length > 150) {
             throw new Error(`Param value cannot be longer than 150 chars.`);
         }
     }
@@ -144,6 +150,17 @@ export class ChainLink {
         let length = paramToCheck.value.length;
         if (length > 10) {
             throw new Error(`Regex value cannot be longer than 10 chars.`);
+        }
+    }
+    checkParameterList(paramToCheck) {
+        if (!paramToCheck.value || paramToCheck.value.length < 1) {
+            throw new Error(`List cannot be empty.`);
+        }
+        if (paramToCheck.value.length > 20) {
+            throw new Error(`List cannot contain more than 20 items.`);
+        }
+        for (let string of paramToCheck.value) {
+            this.checkStringLength(string);
         }
     }
 }
