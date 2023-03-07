@@ -6,8 +6,12 @@ import * as DiscordEventHandler from "./eventLifecycle/DiscordEventHandler.js";
 import updateCommands from "./commandHandler.js";
 import {LoggerHelper} from "./loggerHelper.js";
 import {ClockEmitter} from "./eventLifecycle/customEmitters/ClockEmitter.js";
+import {injectPrototypes} from './prototypeManipulation.js'
+
+
 
 discordBot.init(async (client) => {
+    injectPrototypes()
     LoggerHelper.init(client)
     await dbAdapter.init()
     DiscordAdapter.init(client)

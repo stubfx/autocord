@@ -5,6 +5,8 @@ import * as storageDBAdapter from "../db/storageDBAdapter.js"
 import {JobFactory} from "../models/JobFactory.js";
 import {LoggerHelper} from "../loggerHelper.js";
 import {STORAGE} from "../schemas/schemas.js";
+import Discord from "discord.js";
+import {discordClient} from "../discordbot.js";
 
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
@@ -90,16 +92,51 @@ export default function (api, opts, done) {
         return await storageDBAdapter.deleteStorageData(guildId, dataName)
     })
 
+    api.post("/checkBotPermissionForGuildJobs", async (request) => {
+        let guildId = request.body["guildId"];
+        let guild = await dbAdapter.getGuild(guildId)
+        let permissions = []
+        if (guild) {
+            for (let job of guild.jobs) {
+                // @ts-ignore
+                permissions.push(JobFactory.createJob(job).getRequiredPermissionBitFields())
+            }
+        }
+        // get bot permissions in guild:
+        let fetchedGuild = await discordClient.guilds.fetch(guildId)
+        let check = new Discord.PermissionsBitField(fetchedGuild.members.me.permissions).has(permissions, true)
+        console.log(check)
+        return {hasPermissions: check}
+    })
+
+    api.post("/getRefreshBotUrlPermissions", async (request) => {
+        let guildId = request.body["guildId"];
+        let guild = await dbAdapter.getGuild(guildId)
+        let permissions = []
+        if (guild) {
+            for (let job of guild.jobs) {
+                // @ts-ignore
+                permissions.push(JobFactory.createJob(job).getRequiredPermissionBitFields())
+            }
+        }
+        console.log(new Discord.PermissionsBitField(permissions).bitfield);
+        return {url: getBotAddPopupUrl(guildId)}
+    })
+
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}`}
     })
 
-    api.post("/getAddBotToGuildPopupInvite", async (request) => {
-        let guildId = request.body["guildId"];
+    function getBotAddPopupUrl(guildId) {
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}`}
+    }
+
+    api.post("/getAddBotToGuildPopupInvite", async (request) => {
+        let guildId = request.body["guildId"];
+        return getBotAddPopupUrl(guildId);
     })
 
 

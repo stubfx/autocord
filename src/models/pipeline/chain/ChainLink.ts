@@ -19,6 +19,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     private fetchedGuild : Guild = null
 
+    readonly requiredPermissions: Array<BigInt> = []
+
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams: Array<{

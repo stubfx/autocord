@@ -1,8 +1,10 @@
 import { Task } from "../Task.js";
 import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
+import { PermissionsBitField } from "discord.js";
 export class DeleteChannel extends Task {
     name = ChainLinkTypes.Task.DeleteChannel;
     description = 'Deletes a channel by the given id.';
+    requiredPermissions = [PermissionsBitField.Flags.ManageChannels];
     acceptParams = [{
             name: "channelId",
             type: ChainLinkTypes.Param.CHANNEL_ID

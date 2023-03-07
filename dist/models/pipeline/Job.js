@@ -13,6 +13,13 @@ export class Job {
         this.chain = new Chain(this.storage);
         this.guild = guild;
     }
+    getRequiredPermissionBitFields() {
+        let permissions = [];
+        for (let chainLink of this.chain.chainLinks) {
+            permissions.push(...chainLink.requiredPermissions);
+        }
+        return permissions;
+    }
     addChainLink(chainLink) {
         this.chain.addLink(chainLink);
         this.cost += 1;

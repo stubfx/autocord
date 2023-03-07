@@ -9,6 +9,7 @@ export class ChainLink {
     guild;
     storage = {};
     fetchedGuild = null;
+    requiredPermissions = [];
     // used to help the user know which params the link accepts
     // this won't be saved into the db
     acceptParams = [];

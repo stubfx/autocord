@@ -1,10 +1,11 @@
 import { Task } from "../Task.js";
 import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
-import Discord from "discord.js";
+import Discord, { PermissionsBitField } from "discord.js";
 export class CreateChannel extends Task {
     name = ChainLinkTypes.Task.CreateChannel;
     description = 'Creates a new channel.';
     exposesArguments = ['newChannelId'];
+    requiredPermissions = [PermissionsBitField.Flags.ManageChannels];
     acceptParams = [{
             name: "category",
             type: ChainLinkTypes.Param.CATEGORY_ID

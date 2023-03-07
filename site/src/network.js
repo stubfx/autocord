@@ -82,6 +82,14 @@ export class NetworkAdapter {
         return (await this._post(`/api/auth/deleteJob`, {guildId: guildId, job: job}))
     }
 
+    static async getRefreshBotUrlPermissions(guildId) {
+        return (await this._post(`/api/auth/getRefreshBotUrlPermissions`, {guildId: guildId}))['url']
+    }
+
+    static async checkBotPermissionForGuildJobs(guildId) {
+        return (await this._post(`/api/auth/checkBotPermissionForGuildJobs`, {guildId: guildId}))['hasPermissions']
+    }
+
     static async addStorageData(guildId, dataName) {
         return (await this._post(`/api/auth/addStorageData`, {guildId: guildId, dataName: dataName}))
     }

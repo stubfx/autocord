@@ -63,6 +63,7 @@ export default {
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId
+      // wait, does the bot have the required permissions?
       await NetworkAdapter.saveJob(guildId, job)
       this.page = DASHBOARDPAGES.JOB_LISTING
     }

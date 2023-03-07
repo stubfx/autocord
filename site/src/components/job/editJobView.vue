@@ -30,6 +30,7 @@ import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
+import {openPopup} from "../../../popup.js";
 
 export default {
   name: "editJobView",
@@ -97,6 +98,13 @@ export default {
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId
+      if (!await NetworkAdapter.checkBotPermissionForGuildJobs(this.$store.guildId)) {
+        // no?
+        // ask them.
+        // todo add a dialog to prompt the user.
+        await openPopup(await NetworkAdapter.getRefreshBotUrlPermissions(this.$store.guildId))
+      }
+      // aight! save it.
       if (await NetworkAdapter.saveJob(guildId, job)) {
         // this.page = DASHBOARDPAGES.JOB_LISTING
         this.$router.push({name: 'jobs'})

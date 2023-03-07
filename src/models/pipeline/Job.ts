@@ -23,6 +23,14 @@ export class Job {
         this.guild = guild
     }
 
+    public getRequiredPermissionBitFields() {
+        let permissions = []
+        for (let chainLink of this.chain.chainLinks) {
+            permissions.push(...chainLink.requiredPermissions)
+        }
+        return permissions
+    }
+
     addChainLink(chainLink: ChainLink<any>) {
         this.chain.addLink(chainLink)
         this.cost += 1

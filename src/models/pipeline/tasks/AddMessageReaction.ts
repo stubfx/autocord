@@ -1,12 +1,14 @@
 import {Task} from "../Task.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {discordClient} from "../../../discordbot.js";
-import {TextChannel} from "discord.js";
+import {PermissionsBitField, TextChannel} from "discord.js";
 
 export class AddMessageReaction extends Task {
     name = ChainLinkTypes.Task.AddMessageReaction;
 
     description = 'Adds a reaction to the given message'
+
+    requiredPermissions = [PermissionsBitField.Flags.AddReactions]
 
     acceptParams = [{
         name: "channelId",
