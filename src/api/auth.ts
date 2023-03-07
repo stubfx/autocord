@@ -102,9 +102,11 @@ export default function (api, opts, done) {
                 permissions.push(JobFactory.createJob(job).getRequiredPermissionBitFields())
             }
         }
+        console.log(permissions)
         // get bot permissions in guild:
         let fetchedGuild = await discordClient.guilds.fetch(guildId)
         let check = new Discord.PermissionsBitField(fetchedGuild.members.me.permissions).has(permissions, true)
+        console.log(fetchedGuild.members.me.permissions.serialize());
         console.log(check)
         return {hasPermissions: check}
     })
@@ -120,7 +122,7 @@ export default function (api, opts, done) {
             }
         }
         console.log(new Discord.PermissionsBitField(permissions).bitfield);
-        return {url: getBotAddPopupUrl(guildId)}
+        return getBotAddPopupUrl(guildId, new Discord.PermissionsBitField(permissions).bitfield.toString())
     })
 
     api.post("/getAddBotToGuildInvite", async (request) => {
@@ -129,8 +131,8 @@ export default function (api, opts, done) {
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}`}
     })
 
-    function getBotAddPopupUrl(guildId) {
-        let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
+    function getBotAddPopupUrl(guildId, permissions: string = '0') {
+        let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${permissions}&scope=bot%20applications.commands`;
         return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}`}
     }
 

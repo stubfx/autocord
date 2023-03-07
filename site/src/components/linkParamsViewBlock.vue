@@ -29,10 +29,12 @@ export default {
       return rtrn
     },
     replaceString(value){
-      if (!value) {
+      // watch out, channel_type === 0 will result in false when using !value
+      if (value === null || value === undefined) {
         return `<span class="text-error">ERROR</span>`
       }
-      const str = value;
+      // make sure is a string (could be a number for CHANNEL_TYPE).
+      const str = `${value}`;
       const regex = /\{\{(\w+)}}/g;
 
       return str.replace(regex, (match, variable) => {
