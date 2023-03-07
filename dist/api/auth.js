@@ -117,7 +117,9 @@ export default function (api, opts, done) {
     //     let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${process.env.discord_bot_permission_int}&scope=bot%20applications.commands`;
     //     return {url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl)}`}
     // })
-    function getBotAddPopupUrl(guildId, permissions = '0') {
+    // SEND BASIC ROLE IF NONE IS NEEDED
+    // OTHERWISE THE BOT WON'T HAVE ITS OWN DEDICATED ROLE AND WE CANNOT CHECK IT IN THE FUTURE.
+    function getBotAddPopupUrl(guildId, permissions = '2048') {
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${permissions}&scope=bot%20applications.commands`;
         return `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}`;
     }
