@@ -12,11 +12,12 @@ export class DeleteChannel extends Task {
     }]
 
     async behavior(...args): Promise<Boolean> {
-        let category = this.getResolvedParam("category");
-        let type = this.getResolvedParam("type");
-        let name = this.getResolvedParam("name");
+        let channel = this.getResolvedParam("channelId");
         let guild = await this.getFetchedGuild()
-        await guild.channels.create({name: name, type: +type, parent: category})
+        let fetchedChannel = guild.channels.cache.get(channel);
+        if (fetchedChannel) {
+            await fetchedChannel.delete("")
+        }
         return true
     }
 

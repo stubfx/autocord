@@ -186,7 +186,7 @@ export default {
       if (this.isChannelOrCategoryID(param.type)) {
         switch (param.type) {
           case ChainLinkParam.CHANNEL_ID:
-            return this.textChannels.filter(ch => ch.type === 0)
+            return this.textChannels.filter(ch => ch.type === 0 || 2)
           case ChainLinkParam.CATEGORY_ID:
             return this.textChannels.filter(ch => ch.type === 4)
           default:
