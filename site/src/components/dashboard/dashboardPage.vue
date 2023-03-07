@@ -60,12 +60,6 @@ export default {
       // window.location.reload()
       // this.$emit('onLogout')
       this.$router.push('/')
-    },
-    async onSaveJob(job) {
-      let guildId = this.$store.guildId
-      // wait, does the bot have the required permissions?
-      await NetworkAdapter.saveJob(guildId, job)
-      this.page = DASHBOARDPAGES.JOB_LISTING
     }
   }
 }

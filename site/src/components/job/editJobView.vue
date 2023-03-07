@@ -98,17 +98,15 @@ export default {
     },
     async onSaveJob(job) {
       let guildId = this.$store.guildId
-      if (!await NetworkAdapter.checkBotPermissionForGuildJobs(this.$store.guildId)) {
-        // no?
-        // ask them.
-        // todo add a dialog to prompt the user.
-        await openPopup(await NetworkAdapter.getRefreshBotUrlPermissions(this.$store.guildId))
+      let saveJob = await NetworkAdapter.saveJob(guildId, job)
+      if (!saveJob.hasPermissions) {
+        // no permissions, ask!
+        // todo prompt the user for the required permissions.
+        await openPopup(saveJob.url)
+        // then try again.
       }
-      // aight! save it.
-      if (await NetworkAdapter.saveJob(guildId, job)) {
-        // this.page = DASHBOARDPAGES.JOB_LISTING
-        this.$router.push({name: 'jobs'})
-      }
+      await NetworkAdapter.saveJob(guildId, job)
+      this.$router.push({name: 'jobs'})
     },
     changeTab(listName) {
       this.tab = listName

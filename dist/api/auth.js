@@ -6,7 +6,7 @@ import { JobFactory } from "../models/JobFactory.js";
 import { LoggerHelper } from "../loggerHelper.js";
 import { STORAGE } from "../schemas/schemas.js";
 import Discord from "discord.js";
-import { discordClient } from "../discordbot.js";
+import { bitFieldsToString, doesBotHavePermissions } from "../utils.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
         if (!request.session[sessionV.AUTHENTICATED]) {
@@ -82,8 +82,7 @@ export default function (api, opts, done) {
         let dataName = request.body["dataName"];
         return await storageDBAdapter.deleteStorageData(guildId, dataName);
     });
-    api.post("/checkBotPermissionForGuildJobs", async (request) => {
-        let guildId = request.body["guildId"];
+    async function getPermissionsForAllGuildJobs(guildId) {
         let guild = await dbAdapter.getGuild(guildId);
         let permissions = [];
         if (guild) {
@@ -92,13 +91,13 @@ export default function (api, opts, done) {
                 permissions.push(JobFactory.createJob(job).getRequiredPermissionBitFields());
             }
         }
-        console.log(permissions);
-        // get bot permissions in guild:
-        let fetchedGuild = await discordClient.guilds.fetch(guildId);
-        let check = new Discord.PermissionsBitField(fetchedGuild.members.me.permissions).has(permissions, true);
-        console.log(fetchedGuild.members.me.permissions.serialize());
-        console.log(check);
-        return { hasPermissions: check };
+        return permissions;
+    }
+    api.post("/checkBotPermissionForGuildJobs", async (request) => {
+        let guildId = request.body["guildId"];
+        let permissions = await getPermissionsForAllGuildJobs(guildId);
+        let result = await doesBotHavePermissions(guildId, permissions);
+        return { hasPermissions: result };
     });
     api.post("/getRefreshBotUrlPermissions", async (request) => {
         let guildId = request.body["guildId"];
@@ -111,7 +110,7 @@ export default function (api, opts, done) {
             }
         }
         console.log(new Discord.PermissionsBitField(permissions).bitfield);
-        return getBotAddPopupUrl(guildId, new Discord.PermissionsBitField(permissions).bitfield.toString());
+        return { url: getBotAddPopupUrl(guildId, new Discord.PermissionsBitField(permissions).bitfield.toString()) };
     });
     api.post("/getAddBotToGuildInvite", async (request) => {
         let guildId = request.body["guildId"];
@@ -120,11 +119,11 @@ export default function (api, opts, done) {
     });
     function getBotAddPopupUrl(guildId, permissions = '0') {
         let url = `https://discord.com/oauth2/authorize?client_id=${process.env.discord_application_id}&permissions=${permissions}&scope=bot%20applications.commands`;
-        return { url: `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}` };
+        return `${url}&guild_id=${guildId}&disable_guild_select=true&response_type=code&redirect_uri=${encodeURIComponent(process.env.discord_oauth_redirectUrl + '/popup')}`;
     }
     api.post("/getAddBotToGuildPopupInvite", async (request) => {
         let guildId = request.body["guildId"];
-        return getBotAddPopupUrl(guildId);
+        return { url: getBotAddPopupUrl(guildId) };
     });
     api.post("/getGuildJobs", async (request) => {
         let guildId = request.body["guildId"];
@@ -153,9 +152,27 @@ export default function (api, opts, done) {
         let guildId = request.body["guildId"];
         let rawJob = request.body["job"];
         let jobInstance = JobFactory.createJob(rawJob);
-        await dbAdapter.saveJob(guildId, jobInstance);
-        LoggerHelper.success(`saved job for guild ${guildId}`);
-        return {};
+        // WAIT! check permissions before saving the job!
+        let jobPermissions = jobInstance.getRequiredPermissionBitFields();
+        if (await doesBotHavePermissions(guildId, jobPermissions)) {
+            // aight! we are safe.
+            await dbAdapter.saveJob(guildId, jobInstance);
+            LoggerHelper.success(`saved job for guild ${guildId}`);
+            return { result: true, hasPermissions: true, url: '' };
+        }
+        else {
+            // uh, we may not have the required permissions then!
+            // gather all of them!
+            let permissions = await getPermissionsForAllGuildJobs(guildId);
+            permissions.push(...jobPermissions);
+            return {
+                result: false,
+                hasPermissions: false,
+                url: getBotAddPopupUrl(guildId, bitFieldsToString(permissions))
+            };
+        }
+        // something else has gone wrong.
+        // return {result: false, hasPermissions: false, url: ''}
     });
     // only for authenticated users with role.
     // api.register(async role => {

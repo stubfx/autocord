@@ -1,7 +1,18 @@
 import fetch from "node-fetch";
-import { PermissionFlagsBits } from "discord.js";
+import Discord, { PermissionFlagsBits } from "discord.js";
+import { discordClient } from "./discordbot.js";
 export function rndArrayItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
+}
+export async function doesBotHavePermissions(guildId, permissions) {
+    if (!guildId) {
+        throw new Error('Missing guildId');
+    }
+    let fetchedGuild = await discordClient.guilds.fetch(guildId);
+    return new Discord.PermissionsBitField(fetchedGuild.members.me.permissions).has(permissions, true);
+}
+export function bitFieldsToString(permissionBitFields) {
+    return new Discord.PermissionsBitField(permissionBitFields).bitfield.toString();
 }
 export function getSessionExpirationDate() {
     let date = new Date();

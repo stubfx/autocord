@@ -51,6 +51,7 @@ export class NetworkAdapter {
     }
 
     static async getDiscordBotInviteUrl(guildId) {
+        // todo may be valuable in the future
         return (await this._post(`/api/auth/getAddBotToGuildPopupInvite`, {guildId: guildId}))['url']
     }
 

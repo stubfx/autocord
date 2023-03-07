@@ -31,6 +31,7 @@ import GuildJob from "./guildJob.vue";
 import GuildJobAddCard from "./guildJobAddCard.vue";
 import StorageView from "../storageView.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
+import {openPopup} from "../../../popup.js";
 
 export default {
   name: "guildDashboardView",
@@ -85,7 +86,14 @@ export default {
     },
     async onUpdateJob() {
       let guildId = this.$store.guildId
-      await NetworkAdapter.saveJob(guildId, this.sideViewJob)
+      let saveJob = await NetworkAdapter.saveJob(guildId, this.sideViewJob)
+      if (!saveJob.hasPermissions) {
+        // no permissions, ask!
+        // todo prompt the user for the required permissions.
+        await openPopup(saveJob.url)
+        // then try again.
+        await NetworkAdapter.saveJob(guildId, this.sideViewJob)
+      }
     },
     async onJobDelete() {
       this.$refs.deleteModal.open(async () => {

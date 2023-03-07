@@ -101,7 +101,7 @@ export class ChainLink {
             if (!paramToCheck.name) {
                 throw new Error(`Param name be null.`);
             }
-            if (!paramToCheck.value) {
+            if (paramToCheck.value === null || paramToCheck.value === undefined) {
                 throw new Error(`Param value cannot be null.`);
             }
             let acceptedParam = this.acceptParams[i];

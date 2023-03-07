@@ -19,7 +19,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
 
     private fetchedGuild : Guild = null
 
-    readonly requiredPermissions: Array<BigInt> = []
+    readonly requiredPermissions: Array<bigint> = []
 
     // used to help the user know which params the link accepts
     // this won't be saved into the db
@@ -132,7 +132,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
             if (!paramToCheck.name) {
                 throw new Error(`Param name be null.`)
             }
-            if (!paramToCheck.value) {
+            if (paramToCheck.value === null || paramToCheck.value === undefined) {
                 throw new Error(`Param value cannot be null.`)
             }
             let acceptedParam = this.acceptParams[i]
