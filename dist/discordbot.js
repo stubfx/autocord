@@ -4,7 +4,7 @@ export let discordClient;
 let isPlayingHelp = true;
 export function init(onReady) {
     discordClient = new Discord.Client({ intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages, GatewayIntentBits.MessageContent,
-            IntentsBitField.Flags.GuildVoiceStates, IntentsBitField.Flags.GuildMessageReactions], partials: [Partials.Message, Partials.Reaction, Partials.Channel] });
+            IntentsBitField.Flags.GuildVoiceStates, IntentsBitField.Flags.GuildMessageReactions, IntentsBitField.Flags.GuildPresences, IntentsBitField.Flags.GuildMembers], partials: [Partials.Message, Partials.Reaction, Partials.Channel] });
     discordClient.on(Events.ClientReady, async () => {
         LoggerHelper.dev(`Logged in as ${discordClient.user.tag}!`);
         changeActivityTask();

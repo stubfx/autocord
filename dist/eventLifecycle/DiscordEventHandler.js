@@ -37,13 +37,15 @@ export function init(discordClient) {
             return;
         await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
             userId: user.id,
-            username: user.username,
-            emojiName: data.emoji.name
+            username: user.username
         });
     });
     // user joins a guild
     client.on(Discord.Events.GuildMemberAdd, async (data) => {
-        await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.GuildMemberAdd);
+        await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.GuildMemberAdd, {
+            username: data.nickname,
+            userId: data.id
+        });
     });
     // random user joins voice channel, (we cannot check the user unfortunately.)
     client.on(Discord.Events.VoiceStateUpdate, async (oldState, newState) => {

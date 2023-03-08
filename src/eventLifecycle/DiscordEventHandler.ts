@@ -1,4 +1,4 @@
-import Discord, {VoiceState} from "discord.js";
+import Discord, {GuildMember, VoiceState} from "discord.js";
 import {LoggerHelper} from "../loggerHelper.js";
 import * as EventHandler from "./EventHandler.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
@@ -43,14 +43,16 @@ export function init(discordClient: Discord.Client) {
         if (isMe_id(user.id)) return
         await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
             userId: user.id,
-            username: user.username,
-            emojiName: data.emoji.name
+            username: user.username
         })
     })
 
     // user joins a guild
-    client.on(Discord.Events.GuildMemberAdd, async data => {
-        await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.GuildMemberAdd)
+    client.on(Discord.Events.GuildMemberAdd, async (data: GuildMember) => {
+        await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.GuildMemberAdd, {
+            username: data.nickname,
+            userId: data.id
+        })
     })
 
     // random user joins voice channel, (we cannot check the user unfortunately.)

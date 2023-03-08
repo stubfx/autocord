@@ -104,8 +104,8 @@ export default {
         // todo prompt the user for the required permissions.
         await openPopup(saveJob.url)
         // then try again.
+        await NetworkAdapter.saveJob(guildId, job)
       }
-      await NetworkAdapter.saveJob(guildId, job)
       this.$router.push({name: 'jobs'})
     },
     changeTab(listName) {

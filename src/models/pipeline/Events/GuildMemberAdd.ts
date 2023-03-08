@@ -6,13 +6,15 @@ export class GuildMemberAdd extends EventLink {
 
     description = "Fired when a user joins a guild"
 
+    exposesArguments = [
+        "userId",
+        "username"
+    ]
+
+
     async behavior(...args) : Promise<Boolean> {
         console.log(this.name)
         return true
     }
-
-    // toJson(): any {
-    //
-    // }
 
 }
