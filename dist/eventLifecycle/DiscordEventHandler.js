@@ -42,9 +42,10 @@ export function init(discordClient) {
     });
     // user joins a guild
     client.on(Discord.Events.GuildMemberAdd, async (data) => {
+        console.log(data);
         await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.GuildMemberAdd, {
-            username: data.nickname,
-            userId: data.id
+            username: data.user.username,
+            userId: data.user.id
         });
     });
     // random user joins voice channel, (we cannot check the user unfortunately.)
