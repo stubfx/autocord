@@ -1,14 +1,19 @@
 <template>
   <div class="flex flex-row">
     <add-storage-value-dialog ref="modal" @onClose="onStorageDataAdded"></add-storage-value-dialog>
+    <storage-value-detail-dialog ref="detailDialog"
+                                 @on-delete-storage-data="onDeleteStorageData"></storage-value-detail-dialog>
     <confirm-deletion-dialog  ref="deleteModal"></confirm-deletion-dialog>
     <div class="flex flex-row p bg-dark rounded w-full items-center gap-2 job-bg">
-      <div class="flex flex-row bg-secondary p-2 rounded hover:bg-error text-accent cursor-pointer"
-           v-for="item in getStorageData()" @click="onDeleteStorageData(item)">
-        <p>{{ item.name }} : {{ item.value.toString() || 'N/A' }}</p>
+      <div class="flex flex-row bg-secondary p-2 pr-4 rounded hover:bg-primary text-accent cursor-pointer"
+           v-for="item in getStorageData()" @click="onItemClick(item)">
+        <div class="flex flex-row items-center gap">
+          <list_rounded v-if="item.type === StorageParamType.LIST" class="w-token h-token fill-success mr-2"></list_rounded>
+          <p>{{ item.name }}</p>
+        </div>
       </div>
       <add_rounded class="w-10 h-10 bg-secondary rounded fill-accent hover:bg-success
-    hover:fill-black cursor-pointer transition-colors" @click="onAddStorageData"></add_rounded>
+    hover:fill-black cursor-pointer transition-colors h-full" @click="onAddStorageData"></add_rounded>
     </div>
   </div>
 </template>
@@ -19,10 +24,20 @@ import SimpleDialog from "./dialog/simpleDialog.vue";
 import AddStorageValueDialog from "./dialog/addStorageValueDialog.vue";
 import ConfirmDeletionDialog from "./dialog/confirmDeletionDialog.vue";
 import {NetworkAdapter} from "../network.js";
+import StorageValueDetailDialog from "./dialog/storageValueDetailDialog.vue";
+import List_rounded from "../assets/list_rounded.vue";
+import {StorageParamType} from "../ParamTypes.js";
 
 export default {
   name: "storageView",
-  components: {ConfirmDeletionDialog, AddStorageValueDialog, SimpleDialog, Add_rounded},
+  computed: {
+    StorageParamType() {
+      return StorageParamType
+    }
+  },
+  components: {
+    List_rounded,
+    StorageValueDetailDialog, ConfirmDeletionDialog, AddStorageValueDialog, SimpleDialog, Add_rounded},
   emits: ['onStorageDataAdded', 'onStorageDataDeleted'],
   props: {
     storage: Object
@@ -35,7 +50,8 @@ export default {
       for (let storageKey in data) {
         storageData.push({
           name: storageKey,
-          value: data[storageKey]
+          type: data[storageKey].type,
+          value: data[storageKey].value
         })
       }
       return storageData
@@ -45,6 +61,10 @@ export default {
     },
     onStorageDataAdded() {
       this.$emit('onStorageDataAdded')
+    },
+    onItemClick(item) {
+      // show item details!
+      this.$refs.detailDialog.open(item)
     },
     onDeleteStorageData(item) {
       this.$refs.deleteModal.open(async () => {

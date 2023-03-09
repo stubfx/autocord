@@ -3,15 +3,15 @@ import {GuildStorage} from "../schemas/guildStorageSchema.js";
 
 export async function setStorageValue(storageId: string, storageDataName: string, value: string) {
     await GuildStorage.findOneAndUpdate({_id: storageId}, {
-        $set: {[`data.${storageDataName}`]: value}
+        $set: {[`data.${storageDataName}.value`]: value}
     })
 }
 
-export async function addStorageData(guildId: string, storageDataName: string) {
+export async function addStorageData(guildId: string, storageDataName: string, type: string) {
     let guild = await getGuild(guildId)
     let storage = guild.storage
     await GuildStorage.findOneAndUpdate({_id: storage._id}, {
-        [`data.${storageDataName}`]: ""
+        [`data.${storageDataName}`]: {type: type, value: ""}
     })
     return true
 }

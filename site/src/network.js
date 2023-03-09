@@ -91,8 +91,8 @@ export class NetworkAdapter {
         return (await this._post(`/api/auth/checkBotPermissionForGuildJobs`, {guildId: guildId}))['hasPermissions']
     }
 
-    static async addStorageData(guildId, dataName) {
-        return (await this._post(`/api/auth/addStorageData`, {guildId: guildId, dataName: dataName}))
+    static async addStorageData(guildId, dataName, type) {
+        return (await this._post(`/api/auth/addStorageData`, {guildId: guildId, dataName: dataName, type}))
     }
 
     static async deleteStorageData(guildId, dataName) {

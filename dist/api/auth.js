@@ -75,7 +75,8 @@ export default function (api, opts, done) {
     api.post("/addStorageData", async (request) => {
         let guildId = request.body["guildId"];
         let dataName = request.body["dataName"];
-        return await storageDBAdapter.addStorageData(guildId, dataName);
+        let type = request.body["type"];
+        return await storageDBAdapter.addStorageData(guildId, dataName, type);
     });
     api.post("/deleteStorageData", async (request) => {
         let guildId = request.body["guildId"];

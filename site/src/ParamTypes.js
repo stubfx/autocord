@@ -8,3 +8,8 @@ export class ChainLinkParam {
     static NUMBER = 'NUMBER';
     static LIST = 'LIST';
 }
+
+export class StorageParamType {
+    static STRING = 'STRING'
+    static LIST = 'LIST';
+}
