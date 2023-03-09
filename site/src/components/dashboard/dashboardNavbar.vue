@@ -1,7 +1,7 @@
 <template>
   <!--      <simple-select></simple-select>-->
   <div class="flex flex-col h-full fill-accent items-center pt-5 shadow-default">
-    <div class="flex flex-col dashboard-navbar">
+    <div class="flex flex-col dashboard-navbar h-full">
       <back_rounded @click="backToListing"
                     v-if="$route.name === 'editjob'"
                     class="hover:bg-accent hover:fill-dark"></back_rounded>
@@ -9,7 +9,8 @@
       <list_alt_rounded @click="onGuildSelection" class="hover:bg-accent hover:fill-dark"></list_alt_rounded>
       <!--      <refresh-button @click="onRefresh"></refresh-button>-->
       <icon_clyde @click="supportServer" class="hover:bg-primary hover:fill-accent"></icon_clyde>
-      <logout_rounded @click="onLogout" class="hover:bg-error hover:fill-accent"></logout_rounded>
+      <div class="flex-grow"></div>
+      <logout_rounded @click="onLogout" class="block hover:bg-error hover:fill-accent"></logout_rounded>
     </div>
   </div>
 </template>
