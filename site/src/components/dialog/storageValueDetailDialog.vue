@@ -3,7 +3,10 @@
     <div class="flex flex-col w-[400px] gap items-center my-6">
       <h1>Name {{storageItem.name}}</h1>
       <h1 v-if="storageItem.type !== StorageParamType.LIST">value {{storageItem.value}}</h1>
-      <delete_rounded class="fill-accent bg-error rounded w-token cursor-pointer" @click="onDeleteStorageData"></delete_rounded>
+      <div class="flex flex-col" v-if="storageItem.type !== StorageParamType.LIST">
+        <chip :text="value" v-for="value in storageItem.value"></chip>
+      </div>
+      <delete_rounded class="fill-accent bg-error rounded w-token cursor-pointer mt-2" @click="onDeleteStorageData"></delete_rounded>
 <!--      no save in this dialog.-->
 <!--      <save-button @onClick="close()" class="self-center"></save-button>-->
     </div>
@@ -14,6 +17,7 @@
 import SimpleDialog from "./simpleDialog.vue";
 import {StorageParamType} from "../../ParamTypes.js";
 import Delete_rounded from "../../assets/delete_rounded.vue";
+import Chip from "../chips/chip.vue";
 
 export default {
   name: "storageValueDetailDialog",
@@ -23,7 +27,7 @@ export default {
     }
   },
   emits: ['onDeleteStorageData'],
-  components: {Delete_rounded, SimpleDialog},
+  components: {Chip, Delete_rounded, SimpleDialog},
   data() {
     return {
       storageItem: null

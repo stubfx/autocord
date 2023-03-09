@@ -5,7 +5,7 @@
       <input class="bg-secondary rounded p-2 w-full" type="text" v-model="variableName"/>
       <h1>Type</h1>
       <select v-model="type" class="bg-secondary rounded p-2 w-full">
-        <option :value="listType" v-for="listType in types" class="bg-dark">{{listType}}</option>
+        <option :value="listType" v-for="listType in types" class="bg-dark">{{ listType }}</option>
       </select>
       <save-button @onClick="close()" class="self-center"></save-button>
     </div>
@@ -25,11 +25,12 @@ export default {
   components: {SaveButton, Save_rounded, ChainLinkElement, SimpleDialog},
   data() {
     return {
-      variableName : '',
+      variableName: '',
       type: StorageParamType.STRING,
       types: [
-          StorageParamType.STRING,
-          StorageParamType.LIST
+        StorageParamType.STRING,
+        StorageParamType.NUMBER,
+        StorageParamType.LIST
       ]
     }
   },

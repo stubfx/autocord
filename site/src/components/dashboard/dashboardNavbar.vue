@@ -2,12 +2,14 @@
   <!--      <simple-select></simple-select>-->
   <div class="flex flex-col h-full fill-accent items-center pt-5 shadow-default">
     <div class="flex flex-col dashboard-navbar">
-      <logout_rounded @click="onLogout" class="hover:bg-error hover:fill-accent"></logout_rounded>
-<!--      <refresh_rounded @click="onRefresh"></refresh_rounded>-->
+      <back_rounded @click="backToListing"
+                    v-if="$route.name === 'editjob'"
+                    class="hover:bg-accent hover:fill-dark"></back_rounded>
+      <!--      <refresh_rounded @click="onRefresh"></refresh_rounded>-->
       <list_alt_rounded @click="onGuildSelection" class="hover:bg-accent hover:fill-dark"></list_alt_rounded>
-      <!--      <back-button @click="onPageChange(DASHBOARDPAGES.JOB_LISTING)"></back-button>-->
       <!--      <refresh-button @click="onRefresh"></refresh-button>-->
       <icon_clyde @click="supportServer" class="hover:bg-primary hover:fill-accent"></icon_clyde>
+      <logout_rounded @click="onLogout" class="hover:bg-error hover:fill-accent"></logout_rounded>
     </div>
   </div>
 </template>
@@ -24,10 +26,12 @@ import BackButton from "../buttons/backButton.vue";
 import List_alt_rounded from "../../assets/list_alt_rounded.vue";
 import Icon_clyde from "../../assets/icon_clyde.vue";
 import Refresh_rounded from "../../assets/refresh_rounded.vue";
+import Back_rounded from "../../assets/back_rounded.vue";
 
 export default {
   name: "dashboardNavbar",
   components: {
+    Back_rounded,
     Refresh_rounded,
     Icon_clyde,
     List_alt_rounded,
@@ -56,6 +60,9 @@ export default {
     },
     supportServer() {
       window.open('https://discord.gg/zG7RMmZj6U', "_blank")
+    },
+    backToListing() {
+      this.$router.push({name: 'jobs'})
     }
   }
 }

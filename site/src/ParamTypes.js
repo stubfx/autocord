@@ -10,6 +10,7 @@ export class ChainLinkParam {
 }
 
 export class StorageParamType {
+    static NUMBER = 'NUMBER'
     static STRING = 'STRING'
     static LIST = 'LIST';
 }

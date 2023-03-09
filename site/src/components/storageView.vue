@@ -5,9 +5,10 @@
                                  @on-delete-storage-data="onDeleteStorageData"></storage-value-detail-dialog>
     <confirm-deletion-dialog  ref="deleteModal"></confirm-deletion-dialog>
     <div class="flex flex-row p bg-dark rounded w-full items-center gap-2 job-bg">
-      <div class="flex flex-row bg-secondary p-2 pr-4 rounded hover:bg-primary text-accent cursor-pointer"
+      <div class="flex flex-row bg-secondary p-2 pr-4 rounded hover:bg-primary text-accent cursor-pointer h-full"
            v-for="item in getStorageData()" @click="onItemClick(item)">
-        <div class="flex flex-row items-center gap">
+        <div class="flex flex-row items-center gap h-full">
+          <text_fields_rounded v-if="item.type === StorageParamType.STRING" class="w-token h-token fill-success mr-2"></text_fields_rounded>
           <list_rounded v-if="item.type === StorageParamType.LIST" class="w-token h-token fill-success mr-2"></list_rounded>
           <p>{{ item.name }}</p>
         </div>
@@ -27,6 +28,7 @@ import {NetworkAdapter} from "../network.js";
 import StorageValueDetailDialog from "./dialog/storageValueDetailDialog.vue";
 import List_rounded from "../assets/list_rounded.vue";
 import {StorageParamType} from "../ParamTypes.js";
+import Text_fields_rounded from "../assets/text_fields_rounded.vue";
 
 export default {
   name: "storageView",
@@ -36,6 +38,7 @@ export default {
     }
   },
   components: {
+    Text_fields_rounded,
     List_rounded,
     StorageValueDetailDialog, ConfirmDeletionDialog, AddStorageValueDialog, SimpleDialog, Add_rounded},
   emits: ['onStorageDataAdded', 'onStorageDataDeleted'],
