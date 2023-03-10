@@ -67,6 +67,10 @@ export class NetworkAdapter {
         return (await this._post(`/api/getAvailableJobConditions`))['links']
     }
 
+    static async getAvailableJobSuperTasks() {
+        return (await this._post(`/api/getAvailableJobSuperTasks`))['links']
+    }
+
     static async getAvailableEventNames() {
         return (await this._post(`/api/getAvailableEventNames`))['links']
     }

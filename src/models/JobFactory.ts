@@ -10,15 +10,18 @@ import {AggregatedGuildInterface} from "./GuildInterface.js";
 import {ConditionDict} from "./pipeline/dictionaries/conditionDict.js";
 import {TaskDict} from "./pipeline/dictionaries/taskDict.js";
 import {EventDict} from "./pipeline/dictionaries/eventDict.js";
+import {SuperTasksDict} from "./pipeline/dictionaries/superTasksDict.js";
+import {SuperTask} from "./pipeline/SuperTask.js";
 
 const conditionDict = new ConditionDict()
 const taskDict = new TaskDict()
 const eventDict = new EventDict()
+const superTasksDict = new SuperTasksDict()
 
 export class JobFactory {
 
-    static createJob(jobInterface: JobInterface, storageData: any = {}, guild: AggregatedGuildInterface = null) : Job{
-        let job = new Job(jobInterface.id, jobInterface.name, storageData, guild)
+    static createJob(jobInterface: JobInterface, storageData: any = {}, vault: any = {}, guild: AggregatedGuildInterface = null) : Job{
+        let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild)
         JobFactory.validateJobInterface(jobInterface)
         let jobCost = 0
         for (let chainElement of jobInterface.chain.chainLinks) {
@@ -66,6 +69,8 @@ export class JobFactory {
                 return this.getConditionByName(name, params)
             case ChainLinkTypes.LinkType.TASK:
                 return this.getTaskByName(name, params)
+            case ChainLinkTypes.LinkType.SUPERTASK:
+                return this.getSuperTasksByName(name, params)
             default:
                 throw new Error(`Unknown chain type: ${type}`)
         }
@@ -82,6 +87,11 @@ export class JobFactory {
 
     static getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : Condition {
         return conditionDict.getConditionByName(chainLinkConditionName, params)
+    }
+
+    static getSuperTasksByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : SuperTask {
+        return superTasksDict.getTaskByName(chainLinkEventName, params)
+
     }
 
 }

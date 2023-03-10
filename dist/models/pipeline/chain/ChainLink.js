@@ -8,6 +8,7 @@ export class ChainLink {
     cost = 1;
     guild;
     storage = {};
+    vault = {};
     fetchedGuild = null;
     requiredPermissions = [];
     // used to help the user know which params the link accepts
@@ -80,9 +81,10 @@ export class ChainLink {
             return match;
         });
     }
-    run(guildInterface, storage) {
+    run(guildInterface, storage, vault) {
         this.guild = guildInterface;
         this.storage = storage || {};
+        this.vault = vault || {};
         return this.behavior();
     }
     validate() {

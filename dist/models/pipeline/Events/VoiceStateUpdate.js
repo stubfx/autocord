@@ -9,7 +9,8 @@ export class VoiceStateUpdate extends EventLink {
         'userId',
         'username',
         'memberCount',
-        'action'
+        'action',
+        'oldChannelMemberCount'
     ];
     async behavior(...args) {
         console.log(this.name);

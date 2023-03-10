@@ -5,19 +5,23 @@ import {discordClient} from "../../../discordbot.js";
 import {setStorageValue} from "../../../db/storageDBAdapter.js";
 import {Guild} from "discord.js";
 
-export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event> implements ChainLinkInterface {
+export abstract class ChainLink<T extends ChainLinkTypes.Task
+    | ChainLinkTypes.Condition
+    | ChainLinkTypes.Event
+    | ChainLinkTypes.SuperTask> implements ChainLinkInterface {
 
     readonly name: T;
     readonly type: ChainLinkTypes.LinkType
     description: string = "Missing description :P"
 
-    readonly cost : number = 1
+    readonly cost: number = 1
 
     guild: AggregatedGuildInterface
 
     private storage = {}
+    protected vault = {}
 
-    private fetchedGuild : Guild = null
+    private fetchedGuild: Guild = null
 
     readonly requiredPermissions: Array<bigint> = []
 
@@ -49,7 +53,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         this.params = params
     }
 
-    getResolvedParam(paramName: string) : string {
+    getResolvedParam(paramName: string): string {
         return this.resolveStringEmbeds(this.getParam(paramName))
     }
 
@@ -90,7 +94,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         // don't save this in the db for storage reasons.
     }
 
-    private getStoreValue(paramName: string) {
+    protected getStoreValue(paramName: string) {
         return this.storage[paramName]
     }
 
@@ -110,9 +114,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task | ChainLinkTypes.C
         });
     }
 
-    run(guildInterface: AggregatedGuildInterface, storage: any): Promise<Boolean> {
+    run(guildInterface: AggregatedGuildInterface, storage: any, vault: any): Promise<Boolean> {
         this.guild = guildInterface
         this.storage = storage || {}
+        this.vault = vault || {}
         return this.behavior()
     }
 

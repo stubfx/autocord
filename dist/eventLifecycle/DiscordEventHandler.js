@@ -56,8 +56,9 @@ export function init(discordClient) {
             userId: newState.member ? newState.member.id : newState.member.id,
             username: newState.member ? newState.member.user.username : newState.member.user.username,
             memberCount: newState.channel ? newState.channel.members.size : oldState.channel.members.size,
+            oldChannelMemberCount: oldState.channel ? oldState.channel.members.size : 0,
             action: newState.channelId ? 'JOIN' : 'LEFT'
-        });
+        }, { oldVoiceState: oldState, newVoiceState: newState });
     });
     client.on(Discord.Events.ChannelCreate, async (data) => {
         await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.ChannelCreate);

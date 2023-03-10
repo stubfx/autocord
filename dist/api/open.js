@@ -13,6 +13,11 @@ export default function (api, opts, done) {
             links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
         };
     });
+    api.post("/getAvailableJobSuperTasks", async () => {
+        return {
+            links: Object.keys(ChainLinkTypes.SuperTask).map(el => JobFactory.getSuperTasksByName(el))
+        };
+    });
     api.post("/getAvailableJobConditions", async () => {
         return {
             links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))

@@ -6,7 +6,7 @@
     <div class="h-full job-bg z-20 overflow-y-auto overflow-x-hidden">
       <div class="flex flex-col rounded gap py">
         <div class="flex flex-row gap p w-full justify-around">
-          <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)"
+          <div v-for="listName in ['Events', 'Conditions', 'Tasks', 'SuperTasks']" @click="changeTab(listName)"
                class="flex flex-row flex-grow justify-center bg-dark rounded text-accent hover:bg-primary font-bold transition-colors">
             <div class="cursor-pointer p">{{listName}}</div>
           </div>
@@ -14,6 +14,7 @@
         <event-list-selection name="Events" :items="events" @onItemSelected="addLink" v-if="tab === 'Events'"></event-list-selection>
         <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink" v-if="tab === 'Conditions'"></event-list-selection>
         <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink" v-if="tab === 'Tasks'"></event-list-selection>
+        <event-list-selection name="SuperTasks" :items="superTasks" @onItemSelected="addLink" v-if="tab === 'SuperTasks'"></event-list-selection>
       </div>
     </div>
   </div>
@@ -51,7 +52,8 @@ export default {
       tab: 'Events',
       events: [],
       tasks: [],
-      conditions: []
+      conditions: [],
+      superTasks: []
     }
   },
   async mounted() {
@@ -66,6 +68,7 @@ export default {
     this.events = await NetworkAdapter.getAvailableEventNames()
     this.tasks = await NetworkAdapter.getAvailableJobTasks()
     this.conditions = await NetworkAdapter.getAvailableJobConditions()
+    this.superTasks = await NetworkAdapter.getAvailableJobSuperTasks()
   },
   methods: {
     addLink(rawItem) {
@@ -75,8 +78,7 @@ export default {
         // then add the new one :P
         this.job.chain.chainLinks.unshift(item)
         this.onAddLink(item)
-      } else if (item.type === "TASK" || item.type === "CONDITION") {
-        // count events in chain (max 4)
+      } else if (item.type === "TASK" || item.type === "CONDITION" || item.type === "SUPERTASK") {
         let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
           if (currentValue.type !== 'EVENT') {
             return ++accumulator

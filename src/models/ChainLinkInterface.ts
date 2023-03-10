@@ -9,5 +9,8 @@ export interface ChainLinkParam {
 export interface ChainLinkInterface {
     type: ChainLinkTypes.LinkType
     params: Array<ChainLinkParam>
-    name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event
+    name: ChainLinkTypes.Task
+        | ChainLinkTypes.Condition
+        | ChainLinkTypes.Event
+        | ChainLinkTypes.SuperTask
 }

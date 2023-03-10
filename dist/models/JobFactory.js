@@ -3,12 +3,14 @@ import { ChainLinkTypes } from "./pipeline/chain/ChainLinkTypes.js";
 import { ConditionDict } from "./pipeline/dictionaries/conditionDict.js";
 import { TaskDict } from "./pipeline/dictionaries/taskDict.js";
 import { EventDict } from "./pipeline/dictionaries/eventDict.js";
+import { SuperTasksDict } from "./pipeline/dictionaries/superTasksDict.js";
 const conditionDict = new ConditionDict();
 const taskDict = new TaskDict();
 const eventDict = new EventDict();
+const superTasksDict = new SuperTasksDict();
 export class JobFactory {
-    static createJob(jobInterface, storageData = {}, guild = null) {
-        let job = new Job(jobInterface.id, jobInterface.name, storageData, guild);
+    static createJob(jobInterface, storageData = {}, vault = {}, guild = null) {
+        let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild);
         JobFactory.validateJobInterface(jobInterface);
         let jobCost = 0;
         for (let chainElement of jobInterface.chain.chainLinks) {
@@ -52,6 +54,8 @@ export class JobFactory {
                 return this.getConditionByName(name, params);
             case ChainLinkTypes.LinkType.TASK:
                 return this.getTaskByName(name, params);
+            case ChainLinkTypes.LinkType.SUPERTASK:
+                return this.getSuperTasksByName(name, params);
             default:
                 throw new Error(`Unknown chain type: ${type}`);
         }
@@ -64,6 +68,9 @@ export class JobFactory {
     }
     static getConditionByName(chainLinkConditionName, params = []) {
         return conditionDict.getConditionByName(chainLinkConditionName, params);
+    }
+    static getSuperTasksByName(chainLinkEventName, params = []) {
+        return superTasksDict.getTaskByName(chainLinkEventName, params);
     }
 }
 //# sourceMappingURL=JobFactory.js.map

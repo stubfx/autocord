@@ -16,6 +16,7 @@ export var ChainLinkTypes;
         LinkType["EVENT"] = "EVENT";
         LinkType["CONDITION"] = "CONDITION";
         LinkType["TASK"] = "TASK";
+        LinkType["SUPERTASK"] = "SUPERTASK";
     })(LinkType = ChainLinkTypes.LinkType || (ChainLinkTypes.LinkType = {}));
     let Task;
     (function (Task) {
@@ -30,6 +31,11 @@ export var ChainLinkTypes;
         Task["RandomListElement"] = "RandomListElement";
         Task["MoveUserInChannel"] = "MoveUserInChannel";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
+    let SuperTask;
+    (function (SuperTask) {
+        SuperTask["CreateChannelAndMoveUser"] = "CreateChannelAndMoveUser";
+        SuperTask["DeleteChannelOnUserLeave"] = "DeleteChannelOnUserLeave";
+    })(SuperTask = ChainLinkTypes.SuperTask || (ChainLinkTypes.SuperTask = {}));
     let Condition;
     (function (Condition) {
         Condition["Equals"] = "Equals";

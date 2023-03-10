@@ -14,12 +14,14 @@ export class Job {
     private readonly guild: AggregatedGuildInterface
 
     private readonly storage: any
+    private readonly vault: any // this is MUST NOT BE accessible by users.
 
-    constructor(id: string, name: string, storageData: any = {}, guild: AggregatedGuildInterface = null) {
+    constructor(id: string, name: string, storageData: any = {}, vault: any = {}, guild: AggregatedGuildInterface = null) {
         this.id = id
         this.name = name
         this.storage = storageData || {}
-        this.chain = new Chain(this.storage)
+        this.vault = vault || {}
+        this.chain = new Chain(this.storage, this.vault)
         this.guild = guild
     }
 

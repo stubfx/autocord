@@ -6,11 +6,13 @@ export class Job {
     cost = 0;
     guild;
     storage;
-    constructor(id, name, storageData = {}, guild = null) {
+    vault; // this is MUST NOT BE accessible by users.
+    constructor(id, name, storageData = {}, vault = {}, guild = null) {
         this.id = id;
         this.name = name;
         this.storage = storageData || {};
-        this.chain = new Chain(this.storage);
+        this.vault = vault || {};
+        this.chain = new Chain(this.storage, this.vault);
         this.guild = guild;
     }
     getRequiredPermissionBitFields() {

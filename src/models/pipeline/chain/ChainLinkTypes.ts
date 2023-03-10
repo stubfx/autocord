@@ -15,6 +15,7 @@ export namespace ChainLinkTypes {
         EVENT = "EVENT",
         CONDITION = "CONDITION",
         TASK = "TASK",
+        SUPERTASK = "SUPERTASK",
 
     }
 
@@ -29,6 +30,12 @@ export namespace ChainLinkTypes {
         UpdateChannel = 'UpdateChannel',
         RandomListElement = 'RandomListElement',
         MoveUserInChannel = 'MoveUserInChannel',
+
+    }
+
+    export enum SuperTask {
+        CreateChannelAndMoveUser = 'CreateChannelAndMoveUser',
+        DeleteChannelOnUserLeave = 'DeleteChannelOnUserLeave',
 
     }
 
