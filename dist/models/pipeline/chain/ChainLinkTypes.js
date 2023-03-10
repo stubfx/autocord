@@ -35,6 +35,7 @@ export var ChainLinkTypes;
         Condition["Equals"] = "Equals";
         Condition["MatchesRegex"] = "MatchesRegex";
         Condition["Random"] = "Random";
+        Condition["Contains"] = "Contains";
     })(Condition = ChainLinkTypes.Condition || (ChainLinkTypes.Condition = {}));
     let Param;
     (function (Param) {

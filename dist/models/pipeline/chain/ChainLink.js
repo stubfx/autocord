@@ -73,7 +73,11 @@ export class ChainLink {
         const str = toResolve;
         const regex = /\{\{(\w+)}}/g;
         return str.replace(regex, (match, variable) => {
-            return this.getStoreValue(variable) || match;
+            let value = this.getStoreValue(variable);
+            if (typeof value !== "undefined") {
+                return value;
+            }
+            return match;
         });
     }
     run(guildInterface, storage) {

@@ -128,7 +128,7 @@ export default {
         'ROLE_ID',
         'CHANNEL_TYPE',
         'CATEGORY_ID',
-        'REGEX',
+        // 'REGEX',
         // 'LIST'
         // 'NUMBER'
       ]

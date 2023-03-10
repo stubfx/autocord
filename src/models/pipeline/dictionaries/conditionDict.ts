@@ -4,6 +4,7 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {Equals} from "../conditions/Equals.js";
 import {MatchesRegex} from "../conditions/MatchesRegex.js";
 import {Random} from "../conditions/Random.js";
+import {Contains} from "../conditions/Contains.js";
 
 export class ConditionDict {
 
@@ -15,6 +16,8 @@ export class ConditionDict {
                 return new MatchesRegex(params)
             case ChainLinkTypes.Condition.Random:
                 return new Random(params)
+            case ChainLinkTypes.Condition.Contains:
+                return new Contains(params)
             default:
                 throw new Error(`Unknown condition name: ${chainLinkConditionName}`)
         }

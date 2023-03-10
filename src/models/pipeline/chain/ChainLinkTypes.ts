@@ -36,6 +36,7 @@ export namespace ChainLinkTypes {
         Equals = "Equals",
         MatchesRegex = "MatchesRegex",
         Random = 'Random',
+        Contains = 'Contains',
     }
 
     export enum Param {
