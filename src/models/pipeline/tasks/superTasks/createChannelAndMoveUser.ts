@@ -9,7 +9,7 @@ export class CreateChannelAndMoveUser extends SuperTask {
 
     cost = 5
 
-    requiredPermissions = [PermissionsBitField.Flags.ManageChannels]
+    requiredPermissions = [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.MoveMembers]
 
     acceptParams = [{
         name: "channelToJoin",

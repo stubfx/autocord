@@ -5,7 +5,7 @@ export class CreateChannelAndMoveUser extends SuperTask {
     name = ChainLinkTypes.SuperTask.CreateChannelAndMoveUser;
     description = 'Works with VoiceStateUpdate';
     cost = 5;
-    requiredPermissions = [PermissionsBitField.Flags.ManageChannels];
+    requiredPermissions = [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.MoveMembers];
     acceptParams = [{
             name: "channelToJoin",
             type: ChainLinkTypes.Param.CHANNEL_ID
