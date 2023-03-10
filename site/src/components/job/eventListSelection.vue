@@ -3,8 +3,8 @@
     <h1 class="text-accent text-5xl">{{name}}</h1>
 <!--    <div class="grid lg:grid-cols-1 xl:grid-cols-2 auto-cols-fr mt-5 items-center gap grid-flow-row-dense-->
 <!--                auto-rows-fr">-->
-<!--    <div class="flex flex-col gap">-->
-    <div class="grid auto-rows-fr grid-flow-col gap">
+    <div class="flex flex-col gap">
+<!--    <div class="grid auto-rows-fr grid-flow-col gap">-->
         <chain-link-element :link="item" @click="onItemSelected(item)" v-for="item in items" :expanded="true"></chain-link-element>
     </div>
   </div>

@@ -28,6 +28,7 @@ export namespace ChainLinkTypes {
         SetStorageValue = 'SetStorageValue',
         UpdateChannel = 'UpdateChannel',
         RandomListElement = 'RandomListElement',
+        MoveUserInChannel = 'MoveUserInChannel',
 
     }
 

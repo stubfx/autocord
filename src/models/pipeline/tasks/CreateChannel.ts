@@ -31,7 +31,7 @@ export class CreateChannel extends Task {
 
     async behavior(...args): Promise<Boolean> {
         let category = this.getResolvedParam("category");
-        let type = this.getResolvedParam("type");
+        let type = this.getParam("type");
         let name = this.getResolvedParam("name");
         let guild = await this.getFetchedGuild()
         let channel = await guild.channels.create({name: name, type: +type, parent: category})

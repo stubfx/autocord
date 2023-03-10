@@ -28,6 +28,7 @@ export var ChainLinkTypes;
         Task["SetStorageValue"] = "SetStorageValue";
         Task["UpdateChannel"] = "UpdateChannel";
         Task["RandomListElement"] = "RandomListElement";
+        Task["MoveUserInChannel"] = "MoveUserInChannel";
     })(Task = ChainLinkTypes.Task || (ChainLinkTypes.Task = {}));
     let Condition;
     (function (Condition) {
