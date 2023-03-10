@@ -9,6 +9,9 @@ export async function setStorageValue(storageId: string, storageDataName: string
     if (typeof value === "string" && value.length > 150) {
         throw Error('Value cannot be longer than 150 chars')
     }
+    if (typeof value === "string" && value.length > 150) {
+        throw Error('Value cannot be longer than 150 chars')
+    }
     return await _setStorageValue(storageId, storageDataName, value)
 }
 
