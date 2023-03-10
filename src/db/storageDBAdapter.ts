@@ -3,6 +3,12 @@ import {GuildStorage} from "../schemas/guildStorageSchema.js";
 import {StorageParamType} from "../../site/src/ParamTypes.js";
 
 export async function setStorageValue(storageId: string, storageDataName: string, value: string) {
+    if (typeof value === "undefined") {
+        new Error('value cannot be undefined')
+    }
+    if (typeof value === "string" && value.length > 150) {
+        throw Error('Value cannot be longer than 150 chars')
+    }
     return await _setStorageValue(storageId, storageDataName, value)
 }
 

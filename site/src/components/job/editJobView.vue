@@ -3,7 +3,7 @@
   </chain-link-parameters-dialog>
   <div class="flex flex-row w-full h-full gap">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT" :expanded="true" :on-link-click-dialog="true"></guild-job>
-    <div class="h-full w-job job-bg z-20 overflow-y-auto overflow-x-hidden">
+    <div class="h-full job-bg z-20 overflow-y-auto overflow-x-hidden">
       <div class="flex flex-col rounded gap py">
         <div class="flex flex-row gap p w-full justify-around">
           <div v-for="listName in ['Events', 'Conditions', 'Tasks']" @click="changeTab(listName)"
