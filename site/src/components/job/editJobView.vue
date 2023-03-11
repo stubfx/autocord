@@ -100,6 +100,10 @@ export default {
     async onSaveJob(job) {
       let guildId = this.$store.guildId
       let saveJob = await NetworkAdapter.saveJob(guildId, job)
+      if (!saveJob.hasPermissions && !saveJob.url) {
+        // an error has occurred :/
+        return
+      }
       if (!saveJob.hasPermissions) {
         // no permissions, ask!
         // todo prompt the user for the required permissions.

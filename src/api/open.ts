@@ -10,7 +10,7 @@ import {SuperTask} from "../models/pipeline/SuperTask.js";
 export default function (api, opts, done) {
 
     api.post("/getBotGuildCount", async () => {
-        return {guildCount: discordClient.guilds.cache.size + 18}
+        return {guildCount: discordClient.guilds.cache.size}
     })
 
     api.get("/help", async (request, reply) => {

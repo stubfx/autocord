@@ -3,6 +3,7 @@ import { LoggerHelper } from "../loggerHelper.js";
 import * as EventHandler from "./EventHandler.js";
 import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 import { discordClient } from "../discordbot.js";
+import * as dbAdapter from "../db/dbAdapter.js";
 let client = null;
 function isMe_id(id) {
     return discordClient.user.id === id;
@@ -16,7 +17,7 @@ export function init(discordClient) {
     client.on(Discord.Events.GuildDelete, async (guild) => {
         // bot left a build
         LoggerHelper.error(`just left: ${guild.id} ${guild.name}`);
-        // await dbAdapter.removeGuild(guild)
+        await dbAdapter.removeGuild(guild.id);
     });
     // client.on(Discord.Events.ChannelDelete, async channel => {
     //     // await dbAdapter.removeNewsChannel(channel)

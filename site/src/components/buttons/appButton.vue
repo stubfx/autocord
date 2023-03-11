@@ -21,6 +21,7 @@ import Task_rounded from "../../assets/task_rounded.vue";
 import Close_rounded from "../../assets/close_rounded.vue";
 import Save_rounded from "../../assets/save_rounded.vue";
 import Icon_clyde from "../../assets/icon_clyde.vue";
+import {track} from "../../../trackingUtils.js";
 
 export default {
   name: "appButton",
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     onClick() {
+      track('appButton', {name: this.$props.text})
       this.$emit("onClick")
     }
   }

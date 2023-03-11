@@ -3,7 +3,7 @@ import { JobFactory } from "../models/JobFactory.js";
 import { discordClient } from "../discordbot.js";
 export default function (api, opts, done) {
     api.post("/getBotGuildCount", async () => {
-        return { guildCount: discordClient.guilds.cache.size + 18 };
+        return { guildCount: discordClient.guilds.cache.size };
     });
     api.get("/help", async (request, reply) => {
         reply.redirect("/help.html");

@@ -5,6 +5,16 @@ import { JobModel } from "../schemas/jobSchema.js";
 import { GuildStorage } from "../schemas/guildStorageSchema.js";
 import { JOBS, STORAGE } from "../schemas/schemas.js";
 import { skipEventsCache } from "../eventLifecycle/EventHandler.js";
+export async function removeGuild(guildId) {
+    let guild = await getGuild(guildId);
+    if (guild.jobs) {
+        // delete all the linked jobs.
+        for (let job of guild.jobs) {
+            JobModel.deleteOne({ _id: job._id });
+        }
+    }
+    await GuildModel.deleteOne({ _id: guildId });
+}
 export let mongooseConnection = null;
 export async function init() {
     mongoose.set('strictQuery', false);
