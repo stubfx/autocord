@@ -38,16 +38,13 @@ export async function deleteJob(guildId, job) {
         return false;
     }
 }
-export async function createGuildWithStorage(guildId, mongoJobId = null) {
+export async function createGuildWithStorage(guildId) {
     // first make sure to create the storage for this guild!
     let storage = await new GuildStorage({
         data: {}
     }).save();
     let jobs = [];
-    if (mongoJobId) {
-        jobs.push(jobs);
-    }
-    await new GuildModel({
+    return await new GuildModel({
         guildId: guildId,
         jobs: jobs,
         storage: storage._id
@@ -71,27 +68,27 @@ export async function saveJob(guildId, job) {
     else {
         // then this must be a new job, awesome!
         // do we already have the guild?
-        if (guild) {
-            // ok let's check if there are already MAX_JOB_PER_GUILD jobs inside then!
-            if (guild.jobs.length > +process.env.MAX_JOB_PER_GUILD) {
-                // guild has already 3 jobs
-                // unlucky :/
-                return false;
-            }
-            // less than 3 jobs here, add it!
-            let saved = await saveJobToDB(job);
-            guild.jobs.push(new mongoose.Types.ObjectId(saved._id));
-            // ok, just update it then.
-            guild.save();
-            skipEventsCache.clearGuildCache(guildId);
-            return true;
+        // if (guild) {}
+        // ok let's check if there are already MAX_JOB_PER_GUILD jobs inside then!
+        if (guild.jobs.length > +process.env.MAX_JOB_PER_GUILD) {
+            // guild has already 3 jobs
+            // unlucky :/
+            return false;
         }
-        // no guild, no job, must be a new user, welcome!
+        // less than 3 jobs here, add it!
         let saved = await saveJobToDB(job);
-        // in this case the guild does not exist!
-        await createGuildWithStorage(guildId, saved._id);
+        guild.jobs.push(new mongoose.Types.ObjectId(saved._id));
+        // ok, just update it then.
+        await guild.save();
         skipEventsCache.clearGuildCache(guildId);
         return true;
+        // }
+        // // no guild, no job, must be a new user, welcome!
+        // let saved = await saveJobToDB(job)
+        // // in this case the guild does not exist!
+        // await createGuildWithStorage(guildId, saved._id)
+        // skipEventsCache.clearGuildCache(guildId)
+        // return true
     }
 }
 // export async function withGuild(guildId: string, func: (guildInterface: GuildInterface) => Promise<void>) {

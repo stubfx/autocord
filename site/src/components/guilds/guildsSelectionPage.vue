@@ -12,7 +12,7 @@
 
 import GuildCard from "./guildCard.vue";
 import {NetworkAdapter} from "../../network.js";
-import {openPopup} from "../../../popup.js";
+import {discordPopup} from "../../../popup.js";
 
 export default {
   name: "guildsSelector",
@@ -38,7 +38,7 @@ export default {
       } else {
         // if not, make it join!
         let url = await NetworkAdapter.getDiscordBotInviteUrl(guild.id)
-        await openPopup(url)
+        await discordPopup(url)
         if (await NetworkAdapter.isBotInGuild(guild.id)) {
           this.goToListingPage(guild)
         }

@@ -30,7 +30,7 @@ import Save_rounded from "../../assets/save_rounded.vue";
 import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
-import {openPopup} from "../../../popup.js";
+import {discordPopup} from "../../../popup.js";
 
 export default {
   name: "editJobView",
@@ -107,7 +107,7 @@ export default {
       if (!saveJob.hasPermissions) {
         // no permissions, ask!
         // todo prompt the user for the required permissions.
-        await openPopup(saveJob.url)
+        await discordPopup(saveJob.url)
         // then try again.
         await NetworkAdapter.saveJob(guildId, job)
       }

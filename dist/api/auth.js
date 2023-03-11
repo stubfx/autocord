@@ -132,11 +132,6 @@ export default function (api, opts, done) {
         // we need to add the metadata!
         let jobs = [];
         let storage;
-        if (!guild) {
-            // we must add it then!
-            await dbAdapter.createGuildWithStorage(guildId);
-            guild = await dbAdapter.getGuild(guildId);
-        }
         storage = guild[STORAGE];
         for (let job of guild.jobs) {
             // map does not work?

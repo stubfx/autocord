@@ -11,7 +11,7 @@
 import LoginButton from "../buttons/loginButton.vue";
 import SupportServerButton from "../buttons/supportServerButton.vue";
 import {NetworkAdapter} from "../../network.js";
-import {openPopup} from "../../../popup.js";
+import {discordPopup} from "../../../popup.js";
 
 export default {
   name: "navbar",
@@ -20,7 +20,7 @@ export default {
     async login() {
       let url = await NetworkAdapter.getDiscordLoginUrl()
       if (url) {
-        await openPopup(url)
+        await discordPopup(url)
         if (await NetworkAdapter.loginCheck()) {
           // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
           this.$router.push('/dashboard')

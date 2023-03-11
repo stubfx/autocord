@@ -64,7 +64,7 @@
 
 <script>
 import {NetworkAdapter} from "../../network.js";
-import {openPopup} from "../../../popup.js";
+import {discordPopup} from "../../../popup.js";
 import GuildJob from "../dashboard/guildJob.vue";
 import {getSampleJob, getSampleJob2} from "../../sampleJob.js";
 import SupportServerButton from "../buttons/supportServerButton.vue";
@@ -97,7 +97,7 @@ export default {
     async login() {
       let url = await NetworkAdapter.getDiscordLoginUrl()
       if (url) {
-        await openPopup(url)
+        await discordPopup(url)
         if (await NetworkAdapter.loginCheck()) {
           // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
           this.$router.push('/dashboard')
