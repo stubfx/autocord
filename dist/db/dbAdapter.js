@@ -13,7 +13,7 @@ export async function removeGuild(guildId) {
             JobModel.deleteOne({ _id: job._id });
         }
     }
-    await GuildModel.deleteOne({ _id: guildId });
+    await GuildModel.deleteOne({ guildId: guildId });
 }
 export let mongooseConnection = null;
 export async function init() {

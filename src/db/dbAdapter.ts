@@ -16,7 +16,7 @@ export async function removeGuild(guildId: string) {
             JobModel.deleteOne({_id: job._id})
         }
     }
-    await GuildModel.deleteOne({_id: guildId})
+    await GuildModel.deleteOne({guildId: guildId})
 }
 
 
