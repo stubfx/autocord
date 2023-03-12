@@ -4,7 +4,7 @@ import {discordClient} from "../../../discordbot.js";
 import {PermissionsBitField} from "discord.js";
 
 export class AssignRole extends Task {
-    readonly id: ChainLinkTypes.IDs.Task.AssignRole;
+    id = ChainLinkTypes.IDs.Task.AssignRole;
     name = ChainLinkTypes.IDs.Task.AssignRole;
 
     description = 'Assigns the given role to the user.'

@@ -1,5 +1,6 @@
 import {ChainLink} from "./ChainLink.js";
 import {ChainLinkTypes} from "./ChainLinkTypes.js";
+import {LoggerHelper} from "../../../loggerHelper.js";
 
 export class UnknownChainLink extends ChainLink<ChainLinkTypes.IDs.UNKNOWN> {
 
@@ -13,7 +14,7 @@ export class UnknownChainLink extends ChainLink<ChainLinkTypes.IDs.UNKNOWN> {
     }
 
     validate() {
-        // this is always valid.
-        return true
+        LoggerHelper.warn('TRYING TO VALIDATE UNKNOWN CHAINLINK.')
+        return false
     }
 }

@@ -22,7 +22,7 @@ export class ClockEmitter {
             localDB.data.clock.everyHour = new Date();
             await localDB.write();
             try {
-                await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.EveryHour, {});
+                await EventHandler.runEventForAllGuilds(ChainLinkTypes.IDs.Event.EveryHour, {});
             }
             catch (e) {
                 LoggerHelper.error(e);
@@ -37,7 +37,7 @@ export class ClockEmitter {
             localDB.data.clock.everyDay = new Date();
             await localDB.write();
             try {
-                await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.Randomly, {});
+                await EventHandler.runEventForAllGuilds(ChainLinkTypes.IDs.Event.Randomly, {});
             }
             catch (e) {
                 LoggerHelper.error(e);
@@ -49,7 +49,7 @@ export class ClockEmitter {
         // so make this if quite rare.
         if (Math.random() < 0.003) {
             try {
-                await EventHandler.runEventForAllGuilds(ChainLinkTypes.Event.Randomly, {});
+                await EventHandler.runEventForAllGuilds(ChainLinkTypes.IDs.Event.Randomly, {});
             }
             catch (e) {
                 LoggerHelper.error(e);

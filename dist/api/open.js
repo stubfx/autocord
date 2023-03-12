@@ -10,22 +10,22 @@ export default function (api, opts, done) {
     });
     api.post("/getAvailableEventNames", async () => {
         return {
-            links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Event).map(el => JobFactory.getEventById(el))
         };
     });
     api.post("/getAvailableJobSuperTasks", async () => {
         return {
-            links: Object.keys(ChainLinkTypes.SuperTask).map(el => JobFactory.getSuperTasksByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.SuperTask).map(el => JobFactory.getSuperTasksById(el))
         };
     });
     api.post("/getAvailableJobConditions", async () => {
         return {
-            links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Condition).map(el => JobFactory.getConditionById(el))
         };
     });
     api.post("/getAvailableJobTasks", async () => {
         return {
-            links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Task).map(el => JobFactory.getTaskById(el))
         };
     });
     done();

@@ -5,11 +5,13 @@ import {ChainLinkInterface} from "../ChainLinkInterface";
 import {AggregatedGuildInterface} from "../GuildInterface";
 
 export class Job {
-    readonly id: string
+    id: string
     readonly name: string
     private chain: Chain
 
     private cost: number = 0
+
+    private ERROR = false
 
     private readonly guild: AggregatedGuildInterface
 
@@ -49,6 +51,7 @@ export class Job {
     isValid(){
         for (let chainLink of this.getChainLinks()) {
             if (!chainLink.validate()) {
+                this.ERROR = true
                 return false
             }
         }

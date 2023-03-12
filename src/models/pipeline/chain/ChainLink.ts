@@ -12,7 +12,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
     | ChainLinkTypes.IDs.SuperTask
     | ChainLinkTypes.IDs.UNKNOWN> implements ChainLinkInterface {
 
-    abstract readonly id: T;
+    abstract id: T;
 
     readonly name: string;
     /**
@@ -150,8 +150,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
                 return false
             }
             if (!paramToCheck.name) {
-                //throw new Error(`Param name be null.`)
-                LoggerHelper.warn("throw new Error(`Param name be null.`)")
+                //throw new Error(`Param name cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param name cannot be null.`)")
                 return false
             }
             if (paramToCheck.value === null || paramToCheck.value === undefined) {
@@ -170,11 +170,15 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
             switch (type) {
                 case ChainLinkTypes.Param.REGEX:
                     // this can be really demanding if the regex is long or too complex
-                    this.checkParameterRegexLength(paramToCheck);
+                    if (this.checkParameterRegexLength(paramToCheck)) {
+                        return false
+                    }
                     break
                 case ChainLinkTypes.Param.LIST:
                     // this.checkParameterRegexLength(paramToCheck);
-                    this.checkParameterList(paramToCheck);
+                    if (this.checkParameterList(paramToCheck)) {
+                        return false
+                    }
                     break
                 // case ChainLinkTypes.Param.STRING:
                 // case ChainLinkTypes.Param.CHANNEL_ID:
@@ -185,7 +189,9 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
                 //     break
                 default:
                     // LoggerHelper.warn(`Missing validation for ${type}. Using default.`)
-                    this.checkParameterStringLength(paramToCheck);
+                    if (!this.checkParameterStringLength(paramToCheck)) {
+                        return false
+                    }
             }
         }
         // congratulations!
@@ -193,7 +199,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
     }
 
     private checkParameterStringLength(paramToCheck: ChainLinkParam) {
-        this.checkStringLength(paramToCheck.value);
+        return this.checkStringLength(paramToCheck.value);
     }
 
     private checkStringLength(string: string): boolean {

@@ -17,31 +17,31 @@ const superTasksDict = new SuperTasksDict()
 
 export class JobFactory {
 
-    // /**
-    //  * this method allows for error as it's supposed to return the job flagged as "ERROR" in case is not compliant.
-    //  * Doing this, we are able to create new events and remove old one notifying the users that the actual job is broken
-    //  * and it won't be run anymore.
-    //  * @param jobInterface
-    //  */
-    // static createJobForInterface(jobInterface: JobInterface) {
-    //
-    // }
-
-    static createJob(jobInterface: JobInterface, storageData: any = {}, vault: any = {}, guild: AggregatedGuildInterface = null) : Job{
-        let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild)
-        JobFactory.validateJobInterface(jobInterface)
-        let jobCost = 0
+    /**
+     * this method allows for error as it's supposed to return the job flagged as "ERROR" in case is not compliant.
+     * Doing this, we are able to create new events and remove old one notifying the users that the actual job is broken
+     * as it won't be run anymore.
+     * @param jobInterface
+     */
+    static createJobForInterface(jobInterface: JobInterface) {
+        let job = new Job(jobInterface.id, jobInterface.name)
         for (let chainElement of jobInterface.chain.chainLinks) {
             let chainLink = JobFactory.getChainLink(
                 ChainLinkTypes.LinkType[chainElement.type],
                 chainElement.id, chainElement.params);
-            // REMEMBER TO VALIDATE <3
-            // * battlefield theme in background *
-            chainLink.validate()
-            jobCost += chainLink.cost
-            if (jobCost > +process.env.MAX_JOB_COST) {
-                throw new Error(`Job is too expensive: ${jobCost}`)
-            }
+            job.addChainLink(chainLink)
+        }
+        return job
+    }
+
+    static createJob(jobInterface: JobInterface, storageData: any = {}, vault: any = {}, guild: AggregatedGuildInterface = null) : Job{
+        let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild)
+        JobFactory.validateJobInterface(jobInterface)
+        // here the job is guaranteed to be ok. (should have exploded otherwise.)
+        for (let chainElement of jobInterface.chain.chainLinks) {
+            let chainLink = JobFactory.getChainLink(
+                ChainLinkTypes.LinkType[chainElement.type],
+                chainElement.id, chainElement.params);
             job.addChainLink(chainLink)
         }
         return job
@@ -61,43 +61,60 @@ export class JobFactory {
             return previousValue
         }, 0)
         if (eventCount !== 1) {
-            throw new Error("This job has more/less than 1 item in the chain")
+            throw new Error("This job has more/less than 1 event in the chain")
         }
         if (jobInterface.chain.chainLinks.length > +process.env.MAX_JOB_LINKS) {
             throw new Error("Exceeded maximum chain length for this job.")
         }
+        let jobCost = 0
+        for (let chainElement of jobInterface.chain.chainLinks) {
+            // for each chainLink in the interface
+            // we should create the chainLink instance, then check if it is actually valid.
+            let chainLink = JobFactory.getChainLink(
+                ChainLinkTypes.LinkType[chainElement.type],
+                chainElement.id, chainElement.params);
+            // chainLink is created, but is it valid?
+            if (!chainLink.validate()) {
+                throw Error('ChainLink is not valid.')
+            }
+            // remember to add the cost as well, we need to check even that at the end of the day.
+            jobCost += chainLink.cost
+            if (jobCost > +process.env.MAX_JOB_COST) {
+                throw new Error(`Job is too expensive: ${jobCost}`)
+            }
+        }
     }
 
-    static getChainLink(type: ChainLinkTypes.LinkType, name: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+    static getChainLink(type: ChainLinkTypes.LinkType, id: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         switch (type) {
             case ChainLinkTypes.LinkType.EVENT:
-                return this.getEventByName(name, params)
+                return this.getEventById(id, params)
             case ChainLinkTypes.LinkType.CONDITION:
-                return this.getConditionByName(name, params)
+                return this.getConditionById(id, params)
             case ChainLinkTypes.LinkType.TASK:
-                return this.getTaskByName(name, params)
+                return this.getTaskById(id, params)
             case ChainLinkTypes.LinkType.SUPERTASK:
-                return this.getSuperTasksByName(name, params)
+                return this.getSuperTasksById(id, params)
             default:
                 return new UnknownChainLink()
         }
     }
 
-    static getEventByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        return eventDict.getEventByName(chainLinkEventName, params)
+    static getEventById(chainLinkId: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        return eventDict.getById(chainLinkId, params)
 
     }
 
-    static getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        return taskDict.getTaskByName(chainLinkTaskName, params)
+    static getTaskById(chainLinkId: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        return taskDict.getById(chainLinkId, params)
     }
 
-    static getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        return conditionDict.getConditionByName(chainLinkConditionName, params)
+    static getConditionById(chainLinkId: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        return conditionDict.getById(chainLinkId, params)
     }
 
-    static getSuperTasksByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        return superTasksDict.getTaskByName(chainLinkEventName, params)
+    static getSuperTasksById(chainLinkId: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        return superTasksDict.getById(chainLinkId, params)
 
     }
 

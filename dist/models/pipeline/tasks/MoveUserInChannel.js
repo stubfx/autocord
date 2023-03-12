@@ -2,7 +2,8 @@ import { Task } from "../Task.js";
 import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { PermissionsBitField } from "discord.js";
 export class MoveUserInChannel extends Task {
-    name = ChainLinkTypes.Task.MoveUserInChannel;
+    id = ChainLinkTypes.IDs.Task.MoveUserInChannel;
+    name = ChainLinkTypes.IDs.Task.MoveUserInChannel;
     description = 'Move the given user in the given channel.';
     requiredPermissions = [PermissionsBitField.Flags.MoveMembers];
     acceptParams = [{

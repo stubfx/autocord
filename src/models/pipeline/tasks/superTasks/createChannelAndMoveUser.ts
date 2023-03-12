@@ -3,7 +3,7 @@ import Discord, {CategoryChannel, GuildVoiceChannelResolvable, PermissionsBitFie
 import {SuperTask} from "../../SuperTask.js";
 
 export class CreateChannelAndMoveUser extends SuperTask {
-    readonly id: ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser;
+    id = ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser;
     name = ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser;
 
     description = 'Works with VoiceStateUpdate'

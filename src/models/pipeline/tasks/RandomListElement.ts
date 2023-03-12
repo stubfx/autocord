@@ -3,7 +3,7 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {rndArrayItem} from "../../../utils.js";
 
 export class RandomListElement extends Task {
-    readonly id: ChainLinkTypes.IDs.Task.RandomListElement;
+    id = ChainLinkTypes.IDs.Task.RandomListElement;
     name = ChainLinkTypes.IDs.Task.RandomListElement;
 
     description = 'Returns a random value from a list of given items.'

@@ -56,8 +56,7 @@ export default function (api, opts, done) {
             // no id, abort.
             return {};
         }
-        let jobInstance = JobFactory.createJob(rawJob);
-        await dbAdapter.deleteJob(guildId, jobInstance);
+        await dbAdapter.deleteJob(guildId, rawJob.id);
         return {};
     });
     api.post("/getGuildChannels", async (request) => {
@@ -137,7 +136,7 @@ export default function (api, opts, done) {
             // map does not work?
             // guild.jobs = guild.jobs.map(el => PipelineFactory.createJob(el))
             // @ts-ignore
-            jobs.push(JobFactory.createJob(job));
+            jobs.push(JobFactory.createJobForInterface(job));
         }
         return {
             storage,

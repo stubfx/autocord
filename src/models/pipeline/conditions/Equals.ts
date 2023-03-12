@@ -2,7 +2,7 @@ import {Condition} from "../Condition.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class Equals extends Condition {
-    readonly id: ChainLinkTypes.IDs.Condition.Equals;
+    id = ChainLinkTypes.IDs.Condition.Equals;
     name = ChainLinkTypes.IDs.Condition.Equals;
 
     description = 'Checks if op1 = op2'

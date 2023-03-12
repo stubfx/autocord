@@ -3,7 +3,8 @@ import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 import { PermissionsBitField } from "discord.js";
 export class AssignRole extends Task {
-    name = ChainLinkTypes.Task.AssignRole;
+    id = ChainLinkTypes.IDs.Task.AssignRole;
+    name = ChainLinkTypes.IDs.Task.AssignRole;
     description = 'Assigns the given role to the user.';
     requiredPermissions = [PermissionsBitField.Flags.ManageRoles];
     acceptParams = [{

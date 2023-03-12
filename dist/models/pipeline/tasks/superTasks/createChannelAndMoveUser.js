@@ -2,7 +2,8 @@ import { ChainLinkTypes } from "../../chain/ChainLinkTypes.js";
 import Discord, { PermissionsBitField } from "discord.js";
 import { SuperTask } from "../../SuperTask.js";
 export class CreateChannelAndMoveUser extends SuperTask {
-    name = ChainLinkTypes.SuperTask.CreateChannelAndMoveUser;
+    id = ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser;
+    name = ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser;
     description = 'Works with VoiceStateUpdate';
     cost = 5;
     requiredPermissions = [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.MoveMembers];

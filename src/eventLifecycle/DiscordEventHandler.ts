@@ -41,7 +41,7 @@ export function init(discordClient: Discord.Client) {
     client.on(Discord.Events.MessageCreate, async data => {
         try {
             if (isMe_id(data.author.id)) return
-            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.MessageCreate, {
+            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.MessageCreate, {
                 channelId: data.channelId,
                 userId: data.author.id,
                 username: data.author.username,
@@ -56,7 +56,7 @@ export function init(discordClient: Discord.Client) {
     client.on(Discord.Events.MessageReactionAdd, async (data, user) => {
         try {
             if (isMe_id(user.id)) return
-            await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.Event.MessageReactionAdd, {
+            await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.IDs.Event.MessageReactionAdd, {
                 userId: user.id,
                 username: user.username
             })
@@ -69,7 +69,7 @@ export function init(discordClient: Discord.Client) {
     client.on(Discord.Events.GuildMemberAdd, async (data: GuildMember) => {
         try {
             console.log(data)
-            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.GuildMemberAdd, {
+            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.GuildMemberAdd, {
                 username: data.user.username,
                 userId: data.user.id
             })
@@ -81,7 +81,7 @@ export function init(discordClient: Discord.Client) {
     // random user joins voice channel, (we cannot check the user unfortunately.)
     client.on(Discord.Events.VoiceStateUpdate, async (oldState: VoiceState, newState: VoiceState) => {
         try {
-            await EventHandler.runEventForGuild(newState.guild.id, ChainLinkTypes.Event.VoiceStateUpdate, {
+            await EventHandler.runEventForGuild(newState.guild.id, ChainLinkTypes.IDs.Event.VoiceStateUpdate, {
                 channelId: newState.channelId || oldState.channelId,
                 channelName: newState.channel ? newState.channel.name : oldState.channel.name,
                 userId: newState.member ? newState.member.id : newState.member.id,
@@ -97,7 +97,7 @@ export function init(discordClient: Discord.Client) {
 
     client.on(Discord.Events.ChannelCreate, async data => {
         try {
-            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.Event.ChannelCreate)
+            await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.ChannelCreate)
         } catch (e) {
             LoggerHelper.error(e)
         }

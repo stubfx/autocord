@@ -1,8 +1,12 @@
 import { ChainLinkTypes } from "./ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 import { setStorageValue } from "../../../db/storageDBAdapter.js";
+import { LoggerHelper } from "../../../loggerHelper.js";
 export class ChainLink {
     name;
+    /**
+     * can be Event Task, Condition or SuperTask
+     */
     type;
     description = "Missing description :P";
     cost = 1;
@@ -95,35 +99,49 @@ export class ChainLink {
         // check length, they must match
         let paramsLength = this.params ? this.params.length : 0;
         if (this.acceptParams.length !== paramsLength) {
-            throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`);
+            //throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`)
+            LoggerHelper.warn("throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`)");
+            return false;
         }
         for (let i = 0; i < this.params.length; i++) {
             // for each param, match the same in the acceptParams
             // however, by design and performance reason, we must match by index
             let paramToCheck = this.params[i];
             if (!paramToCheck) {
-                throw new Error(`Param cannot be null.`);
+                //throw new Error(`Param cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param cannot be null.`)");
+                return false;
             }
             if (!paramToCheck.name) {
-                throw new Error(`Param name be null.`);
+                //throw new Error(`Param name cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param name cannot be null.`)");
+                return false;
             }
             if (paramToCheck.value === null || paramToCheck.value === undefined) {
-                throw new Error(`Param value cannot be null.`);
+                //throw new Error(`Param value cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param value cannot be null.`)");
+                return false;
             }
             let acceptedParam = this.acceptParams[i];
             if (acceptedParam.name !== paramToCheck.name) {
-                throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`);
+                //throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`)
+                LoggerHelper.warn("throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`)");
+                return false;
             }
             // ok same name
             let type = acceptedParam.type;
             switch (type) {
                 case ChainLinkTypes.Param.REGEX:
                     // this can be really demanding if the regex is long or too complex
-                    this.checkParameterRegexLength(paramToCheck);
+                    if (this.checkParameterRegexLength(paramToCheck)) {
+                        return false;
+                    }
                     break;
                 case ChainLinkTypes.Param.LIST:
                     // this.checkParameterRegexLength(paramToCheck);
-                    this.checkParameterList(paramToCheck);
+                    if (this.checkParameterList(paramToCheck)) {
+                        return false;
+                    }
                     break;
                 // case ChainLinkTypes.Param.STRING:
                 // case ChainLinkTypes.Param.CHANNEL_ID:
@@ -134,18 +152,19 @@ export class ChainLink {
                 //     break
                 default:
                     // LoggerHelper.warn(`Missing validation for ${type}. Using default.`)
-                    this.checkParameterStringLength(paramToCheck);
+                    if (!this.checkParameterStringLength(paramToCheck)) {
+                        return false;
+                    }
             }
         }
         // congratulations!
+        return true;
     }
     checkParameterStringLength(paramToCheck) {
-        this.checkStringLength(paramToCheck.value);
+        return this.checkStringLength(paramToCheck.value);
     }
     checkStringLength(string) {
-        if (string.length > 150) {
-            throw new Error(`Param value cannot be longer than 150 chars.`);
-        }
+        return string.length <= 150;
     }
     async getFetchedGuild() {
         if (!this.fetchedGuild) {
@@ -154,21 +173,25 @@ export class ChainLink {
         return this.fetchedGuild;
     }
     checkParameterRegexLength(paramToCheck) {
-        let length = paramToCheck.value.length;
-        if (length > 10) {
-            throw new Error(`Regex value cannot be longer than 10 chars.`);
-        }
+        return paramToCheck.value.length <= 10;
     }
     checkParameterList(paramToCheck) {
         if (!paramToCheck.value || paramToCheck.value.length < 1) {
-            throw new Error(`List cannot be empty.`);
+            // throw new Error(`List cannot be empty.`)
+            LoggerHelper.warn("throw new Error(`List cannot be empty.`)");
+            return false;
         }
         if (paramToCheck.value.length > 20) {
-            throw new Error(`List cannot contain more than 20 items.`);
+            // throw new Error(`List cannot contain more than 20 items.`)
+            LoggerHelper.warn("throw new Error(`List cannot contain more than 20 items.`)");
+            return false;
         }
         for (let string of paramToCheck.value) {
-            this.checkStringLength(string);
+            if (!this.checkStringLength(string)) {
+                return false;
+            }
         }
+        return true;
     }
 }
 //# sourceMappingURL=ChainLink.js.map

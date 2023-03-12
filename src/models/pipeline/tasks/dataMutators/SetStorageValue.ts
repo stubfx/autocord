@@ -2,7 +2,7 @@ import {Task} from "../../Task.js";
 import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 
 export class SetStorageValue extends Task {
-    readonly id: ChainLinkTypes.IDs.Task.SetStorageValue;
+    id = ChainLinkTypes.IDs.Task.SetStorageValue;
     name = ChainLinkTypes.IDs.Task.SetStorageValue;
 
     description = 'Increase the counter passed as param'

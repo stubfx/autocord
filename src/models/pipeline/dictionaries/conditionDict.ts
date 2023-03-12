@@ -9,8 +9,8 @@ import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 
 export class ConditionDict {
 
-    getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        switch (chainLinkConditionName) {
+    getById(id: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        switch (id) {
             case ChainLinkTypes.IDs.Condition.Equals:
                 return new Equals(params)
             case ChainLinkTypes.IDs.Condition.MatchesRegex:

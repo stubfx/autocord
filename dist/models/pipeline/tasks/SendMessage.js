@@ -3,7 +3,8 @@ import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 import { PermissionsBitField } from "discord.js";
 export class SendMessage extends Task {
-    name = ChainLinkTypes.Task.SendMessage;
+    id = ChainLinkTypes.IDs.Task.SendMessage;
+    name = ChainLinkTypes.IDs.Task.SendMessage;
     description = 'Sends a message to the given channel.';
     requiredPermissions = [PermissionsBitField.Flags.SendMessages];
     acceptParams = [{

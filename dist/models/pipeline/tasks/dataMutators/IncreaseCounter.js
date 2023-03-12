@@ -1,7 +1,8 @@
 import { Task } from "../../Task.js";
 import { ChainLinkTypes } from "../../chain/ChainLinkTypes.js";
 export class IncreaseCounter extends Task {
-    name = ChainLinkTypes.Task.IncreaseStorageCounter;
+    id = ChainLinkTypes.IDs.Task.IncreaseStorageCounter;
+    name = ChainLinkTypes.IDs.Task.IncreaseStorageCounter;
     description = 'Increase the counter passed as param';
     acceptParams = [{
             name: "counterName",

@@ -4,6 +4,7 @@ export class Job {
     name;
     chain;
     cost = 0;
+    ERROR = false;
     guild;
     storage;
     vault; // this is MUST NOT BE accessible by users.
@@ -32,11 +33,20 @@ export class Job {
     async run() {
         await this.chain.run(this.guild);
     }
+    isValid() {
+        for (let chainLink of this.getChainLinks()) {
+            if (!chainLink.validate()) {
+                this.ERROR = true;
+                return false;
+            }
+        }
+        return true;
+    }
     toJobInterface() {
         let chainLinks = [];
         for (let chainLink of this.chain.chainLinks) {
             chainLinks.push({
-                name: chainLink.name,
+                id: chainLink.id,
                 params: chainLink.params,
                 type: chainLink.type
             });

@@ -2,7 +2,7 @@ import {EventLink} from "../../EventLink.js";
 import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 
 export class EveryDay extends EventLink {
-    readonly id: ChainLinkTypes.Event;
+    id = ChainLinkTypes.IDs.Event.EveryDay;
     name = ChainLinkTypes.IDs.Event.EveryDay;
 
     description = "Fired once every day."

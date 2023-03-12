@@ -4,24 +4,32 @@ import { ConditionDict } from "./pipeline/dictionaries/conditionDict.js";
 import { TaskDict } from "./pipeline/dictionaries/taskDict.js";
 import { EventDict } from "./pipeline/dictionaries/eventDict.js";
 import { SuperTasksDict } from "./pipeline/dictionaries/superTasksDict.js";
+import { UnknownChainLink } from "./pipeline/chain/UnknownChainLink.js";
 const conditionDict = new ConditionDict();
 const taskDict = new TaskDict();
 const eventDict = new EventDict();
 const superTasksDict = new SuperTasksDict();
 export class JobFactory {
+    /**
+     * this method allows for error as it's supposed to return the job flagged as "ERROR" in case is not compliant.
+     * Doing this, we are able to create new events and remove old one notifying the users that the actual job is broken
+     * as it won't be run anymore.
+     * @param jobInterface
+     */
+    static createJobForInterface(jobInterface) {
+        let job = new Job(jobInterface.id, jobInterface.name);
+        for (let chainElement of jobInterface.chain.chainLinks) {
+            let chainLink = JobFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.id, chainElement.params);
+            job.addChainLink(chainLink);
+        }
+        return job;
+    }
     static createJob(jobInterface, storageData = {}, vault = {}, guild = null) {
         let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild);
         JobFactory.validateJobInterface(jobInterface);
-        let jobCost = 0;
+        // here the job is guaranteed to be ok. (should have exploded otherwise.)
         for (let chainElement of jobInterface.chain.chainLinks) {
-            let chainLink = JobFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.name, chainElement.params);
-            // REMEMBER TO VALIDATE <3
-            // * battlefield theme in background *
-            chainLink.validate();
-            jobCost += chainLink.cost;
-            if (jobCost > +process.env.MAX_JOB_COST) {
-                throw new Error(`Job is too expensive: ${jobCost}`);
-            }
+            let chainLink = JobFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.id, chainElement.params);
             job.addChainLink(chainLink);
         }
         return job;
@@ -40,37 +48,53 @@ export class JobFactory {
             return previousValue;
         }, 0);
         if (eventCount !== 1) {
-            throw new Error("This job has more/less than 1 item in the chain");
+            throw new Error("This job has more/less than 1 event in the chain");
         }
         if (jobInterface.chain.chainLinks.length > +process.env.MAX_JOB_LINKS) {
             throw new Error("Exceeded maximum chain length for this job.");
         }
-    }
-    static getChainLink(type, name, params = []) {
-        switch (type) {
-            case ChainLinkTypes.LinkType.EVENT:
-                return this.getEventByName(name, params);
-            case ChainLinkTypes.LinkType.CONDITION:
-                return this.getConditionByName(name, params);
-            case ChainLinkTypes.LinkType.TASK:
-                return this.getTaskByName(name, params);
-            case ChainLinkTypes.LinkType.SUPERTASK:
-                return this.getSuperTasksByName(name, params);
-            default:
-                throw new Error(`Unknown chain type: ${type}`);
+        // todo check with actual classes calling validate on each of them as it returns true/false.
+        let jobCost = 0;
+        for (let chainElement of jobInterface.chain.chainLinks) {
+            // for each chainLink in the interface
+            // we should create the chainLink instance, then check if it is actually valid.
+            let chainLink = JobFactory.getChainLink(ChainLinkTypes.LinkType[chainElement.type], chainElement.id, chainElement.params);
+            // chainLink is created, but is it valid?
+            if (!chainLink.validate()) {
+                throw Error('ChainLink is not valid.');
+            }
+            // remember to add the cost as well, we need to check even that at the end of the day.
+            jobCost += chainLink.cost;
+            if (jobCost > +process.env.MAX_JOB_COST) {
+                throw new Error(`Job is too expensive: ${jobCost}`);
+            }
         }
     }
-    static getEventByName(chainLinkEventName, params = []) {
-        return eventDict.getEventByName(chainLinkEventName, params);
+    static getChainLink(type, id, params = []) {
+        switch (type) {
+            case ChainLinkTypes.LinkType.EVENT:
+                return this.getEventById(id, params);
+            case ChainLinkTypes.LinkType.CONDITION:
+                return this.getConditionById(id, params);
+            case ChainLinkTypes.LinkType.TASK:
+                return this.getTaskById(id, params);
+            case ChainLinkTypes.LinkType.SUPERTASK:
+                return this.getSuperTasksById(id, params);
+            default:
+                return new UnknownChainLink();
+        }
     }
-    static getTaskByName(chainLinkTaskName, params = []) {
-        return taskDict.getTaskByName(chainLinkTaskName, params);
+    static getEventById(chainLinkId, params = []) {
+        return eventDict.getById(chainLinkId, params);
     }
-    static getConditionByName(chainLinkConditionName, params = []) {
-        return conditionDict.getConditionByName(chainLinkConditionName, params);
+    static getTaskById(chainLinkId, params = []) {
+        return taskDict.getById(chainLinkId, params);
     }
-    static getSuperTasksByName(chainLinkEventName, params = []) {
-        return superTasksDict.getTaskByName(chainLinkEventName, params);
+    static getConditionById(chainLinkId, params = []) {
+        return conditionDict.getById(chainLinkId, params);
+    }
+    static getSuperTasksById(chainLinkId, params = []) {
+        return superTasksDict.getById(chainLinkId, params);
     }
 }
 //# sourceMappingURL=JobFactory.js.map

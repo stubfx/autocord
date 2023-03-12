@@ -2,7 +2,8 @@ import { ChainLinkTypes } from "../../chain/ChainLinkTypes.js";
 import { PermissionsBitField } from "discord.js";
 import { SuperTask } from "../../SuperTask.js";
 export class DeleteChannelOnUserLeave extends SuperTask {
-    name = ChainLinkTypes.SuperTask.DeleteChannelOnUserLeave;
+    id = ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave;
+    name = ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave;
     description = 'Works with VoiceStateUpdate';
     cost = 5;
     requiredPermissions = [PermissionsBitField.Flags.ManageChannels];

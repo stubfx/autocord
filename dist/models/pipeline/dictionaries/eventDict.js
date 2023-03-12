@@ -7,27 +7,28 @@ import { MessageReactionAdd } from "../Events/MessageReactionAdd.js";
 import { EveryHour } from "../Events/customEvents/EveryHour.js";
 import { EveryDay } from "../Events/customEvents/EveryDay.js";
 import { Randomly } from "../Events/customEvents/Randomly.js";
+import { UnknownChainLink } from "../chain/UnknownChainLink.js";
 export class EventDict {
-    getEventByName(chainLinkEventName, params = []) {
-        switch (chainLinkEventName) {
-            case ChainLinkTypes.Event.MessageCreate:
+    getById(id, params = []) {
+        switch (id) {
+            case ChainLinkTypes.IDs.Event.MessageCreate:
                 return new MessageCreate(params);
-            case ChainLinkTypes.Event.VoiceStateUpdate:
+            case ChainLinkTypes.IDs.Event.VoiceStateUpdate:
                 return new VoiceStateUpdate(params);
-            case ChainLinkTypes.Event.ChannelCreate:
+            case ChainLinkTypes.IDs.Event.ChannelCreate:
                 return new ChannelCreate(params);
-            case ChainLinkTypes.Event.GuildMemberAdd:
+            case ChainLinkTypes.IDs.Event.GuildMemberAdd:
                 return new GuildMemberAdd(params);
-            case ChainLinkTypes.Event.MessageReactionAdd:
+            case ChainLinkTypes.IDs.Event.MessageReactionAdd:
                 return new MessageReactionAdd(params);
-            case ChainLinkTypes.Event.EveryHour:
+            case ChainLinkTypes.IDs.Event.EveryHour:
                 return new EveryHour(params);
-            case ChainLinkTypes.Event.EveryDay:
+            case ChainLinkTypes.IDs.Event.EveryDay:
                 return new EveryDay(params);
-            case ChainLinkTypes.Event.Randomly:
+            case ChainLinkTypes.IDs.Event.Randomly:
                 return new Randomly(params);
             default:
-                throw new Error(`Unknown event name: ${chainLinkEventName}`);
+                return new UnknownChainLink();
         }
     }
 }

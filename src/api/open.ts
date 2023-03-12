@@ -1,10 +1,7 @@
-import {EventLink} from "../models/pipeline/EventLink.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {JobFactory} from "../models/JobFactory.js";
-import {Condition} from "../models/pipeline/Condition.js";
-import {Task} from "../models/pipeline/Task.js";
 import {discordClient} from "../discordbot.js";
-import {SuperTask} from "../models/pipeline/SuperTask.js";
+import {ChainLink} from "../models/pipeline/chain/ChainLink.js";
 
 
 export default function (api, opts, done) {
@@ -17,27 +14,27 @@ export default function (api, opts, done) {
         reply.redirect("/help.html")
     })
 
-    api.post("/getAvailableEventNames", async (): Promise<{ links: Array<EventLink> }> => {
+    api.post("/getAvailableEventNames", async (): Promise<{ links: Array<ChainLink<any>> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Event).map(el => JobFactory.getEventByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Event).map(el => JobFactory.getEventById(el))
         }
     })
 
-    api.post("/getAvailableJobSuperTasks", async (): Promise<{ links: Array<SuperTask> }> => {
+    api.post("/getAvailableJobSuperTasks", async (): Promise<{ links: Array<ChainLink<any>> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.SuperTask).map(el => JobFactory.getSuperTasksByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.SuperTask).map(el => JobFactory.getSuperTasksById(el))
         }
     })
 
-    api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<Condition> }> => {
+    api.post("/getAvailableJobConditions", async (): Promise<{ links: Array<ChainLink<any>> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Condition).map(el => JobFactory.getConditionByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Condition).map(el => JobFactory.getConditionById(el))
         }
     })
 
-    api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<Task> }> => {
+    api.post("/getAvailableJobTasks", async (): Promise<{ links: Array<ChainLink<any>> }> => {
         return {
-            links: Object.keys(ChainLinkTypes.Task).map(el => JobFactory.getTaskByName(el))
+            links: Object.keys(ChainLinkTypes.IDs.Task).map(el => JobFactory.getTaskById(el))
         }
     })
 

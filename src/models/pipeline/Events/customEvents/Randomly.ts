@@ -2,7 +2,7 @@ import {EventLink} from "../../EventLink.js";
 import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 
 export class Randomly extends EventLink {
-    readonly id: ChainLinkTypes.Event;
+    id = ChainLinkTypes.IDs.Event.Randomly;
     name = ChainLinkTypes.IDs.Event.Randomly;
 
     description = "Fired randomly i guess?"

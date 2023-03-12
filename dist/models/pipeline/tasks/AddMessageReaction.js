@@ -3,7 +3,8 @@ import { ChainLinkTypes } from "../chain/ChainLinkTypes.js";
 import { discordClient } from "../../../discordbot.js";
 import { PermissionsBitField } from "discord.js";
 export class AddMessageReaction extends Task {
-    name = ChainLinkTypes.Task.AddMessageReaction;
+    id = ChainLinkTypes.IDs.Task.AddMessageReaction;
+    name = ChainLinkTypes.IDs.Task.AddMessageReaction;
     description = 'Adds a reaction to the given message';
     requiredPermissions = [PermissionsBitField.Flags.AddReactions];
     acceptParams = [{

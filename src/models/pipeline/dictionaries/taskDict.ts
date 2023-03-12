@@ -15,8 +15,8 @@ import {ChainLink} from "../chain/ChainLink.js";
 
 export class TaskDict {
 
-    getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        switch (chainLinkTaskName) {
+    getById(id: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        switch (id) {
             case ChainLinkTypes.IDs.Task.SendMessage:
                 return new SendMessage(params)
             case ChainLinkTypes.IDs.Task.IncreaseStorageCounter:

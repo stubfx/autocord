@@ -3,7 +3,7 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {PermissionsBitField} from "discord.js";
 
 export class DeleteChannel extends Task {
-    readonly id: ChainLinkTypes.IDs.Task.DeleteChannel;
+    id = ChainLinkTypes.IDs.Task.DeleteChannel;
     name = ChainLinkTypes.IDs.Task.DeleteChannel;
 
     description = 'Deletes a channel by the given id.'

@@ -7,8 +7,8 @@ import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 
 export class SuperTasksDict {
 
-    getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        switch (chainLinkTaskName) {
+    getById(id: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        switch (id) {
             case ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser:
                 return new CreateChannelAndMoveUser(params)
             case ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave:

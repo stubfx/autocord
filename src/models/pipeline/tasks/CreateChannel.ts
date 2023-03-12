@@ -3,7 +3,7 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import Discord, {PermissionsBitField} from "discord.js";
 
 export class CreateChannel extends Task {
-    readonly id: ChainLinkTypes.IDs.Task.CreateChannel;
+    id = ChainLinkTypes.IDs.Task.CreateChannel;
     name = ChainLinkTypes.IDs.Task.CreateChannel;
 
     description = 'Creates a new channel.'

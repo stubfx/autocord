@@ -13,8 +13,8 @@ import {ChainLink} from "../chain/ChainLink.js";
 
 export class EventDict {
 
-    getEventByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
-        switch (chainLinkEventName) {
+    getById(id: string, params: ChainLinkParam[] = []) : ChainLink<any> {
+        switch (id) {
             case ChainLinkTypes.IDs.Event.MessageCreate:
                 return new MessageCreate(params)
             case ChainLinkTypes.IDs.Event.VoiceStateUpdate:
