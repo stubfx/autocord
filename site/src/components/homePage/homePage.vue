@@ -117,7 +117,6 @@ export default {
       if (url) {
         await discordPopup(url)
         if (await NetworkAdapter.loginCheck()) {
-          // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
           this.$router.push('/dashboard')
         }
       }
