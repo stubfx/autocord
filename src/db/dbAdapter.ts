@@ -31,14 +31,14 @@ async function saveJobToDB(job: Job) {
     return await new JobModel(job.toJobInterface()).save()
 }
 
-export async function deleteJob(guildId, job: Job): Promise<Boolean> {
+export async function deleteJob(guildId, jobId: string): Promise<Boolean> {
     let guild = await getGuild(guildId)
-    let hasId = !!job.id
+    let hasId = !!jobId
     if (hasId) {
         // only if the guild exists
         // and has the job inside.
-        if (guild && !!guild.jobs.find(el => el._id.toString() === job.id)) {
-            await JobModel.deleteOne({_id: job.id})
+        if (guild && !!guild.jobs.find(el => el._id.toString() === jobId)) {
+            await JobModel.deleteOne({_id: jobId})
             return true
         }
         // mmmm, sketchy stuff here.

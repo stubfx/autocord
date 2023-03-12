@@ -2,7 +2,8 @@ import {Condition} from "../Condition.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class Contains extends Condition {
-    name = ChainLinkTypes.Condition.Contains;
+    readonly id: ChainLinkTypes.IDs.Condition.Contains;
+    name = ChainLinkTypes.IDs.Condition.Contains;
 
     acceptParams = [{
         name: "text",

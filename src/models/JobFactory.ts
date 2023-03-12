@@ -1,17 +1,14 @@
 import {JobInterface} from "./JobInterface.js";
 import {Job} from "./pipeline/Job.js";
 import {ChainLink} from "./pipeline/chain/ChainLink.js";
-import {Condition} from "./pipeline/Condition.js";
-import {Task} from "./pipeline/Task.js";
 import {ChainLinkTypes} from "./pipeline/chain/ChainLinkTypes.js";
-import {EventLink} from "./pipeline/EventLink.js";
 import {ChainLinkParam} from "./ChainLinkInterface.js";
 import {AggregatedGuildInterface} from "./GuildInterface.js";
 import {ConditionDict} from "./pipeline/dictionaries/conditionDict.js";
 import {TaskDict} from "./pipeline/dictionaries/taskDict.js";
 import {EventDict} from "./pipeline/dictionaries/eventDict.js";
 import {SuperTasksDict} from "./pipeline/dictionaries/superTasksDict.js";
-import {SuperTask} from "./pipeline/SuperTask.js";
+import {UnknownChainLink} from "./pipeline/chain/UnknownChainLink.js";
 
 const conditionDict = new ConditionDict()
 const taskDict = new TaskDict()
@@ -20,6 +17,16 @@ const superTasksDict = new SuperTasksDict()
 
 export class JobFactory {
 
+    // /**
+    //  * this method allows for error as it's supposed to return the job flagged as "ERROR" in case is not compliant.
+    //  * Doing this, we are able to create new events and remove old one notifying the users that the actual job is broken
+    //  * and it won't be run anymore.
+    //  * @param jobInterface
+    //  */
+    // static createJobForInterface(jobInterface: JobInterface) {
+    //
+    // }
+
     static createJob(jobInterface: JobInterface, storageData: any = {}, vault: any = {}, guild: AggregatedGuildInterface = null) : Job{
         let job = new Job(jobInterface.id, jobInterface.name, storageData, vault, guild)
         JobFactory.validateJobInterface(jobInterface)
@@ -27,7 +34,7 @@ export class JobFactory {
         for (let chainElement of jobInterface.chain.chainLinks) {
             let chainLink = JobFactory.getChainLink(
                 ChainLinkTypes.LinkType[chainElement.type],
-                chainElement.name, chainElement.params);
+                chainElement.id, chainElement.params);
             // REMEMBER TO VALIDATE <3
             // * battlefield theme in background *
             chainLink.validate()
@@ -72,24 +79,24 @@ export class JobFactory {
             case ChainLinkTypes.LinkType.SUPERTASK:
                 return this.getSuperTasksByName(name, params)
             default:
-                throw new Error(`Unknown chain type: ${type}`)
+                return new UnknownChainLink()
         }
     }
 
-    static getEventByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : EventLink {
+    static getEventByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         return eventDict.getEventByName(chainLinkEventName, params)
 
     }
 
-    static getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : Task {
+    static getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         return taskDict.getTaskByName(chainLinkTaskName, params)
     }
 
-    static getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : Condition {
+    static getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         return conditionDict.getConditionByName(chainLinkConditionName, params)
     }
 
-    static getSuperTasksByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : SuperTask {
+    static getSuperTasksByName(chainLinkEventName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         return superTasksDict.getTaskByName(chainLinkEventName, params)
 
     }

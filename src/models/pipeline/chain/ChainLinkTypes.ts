@@ -1,14 +1,47 @@
 export namespace ChainLinkTypes {
 
-    export enum Event {
-        MessageCreate = "MessageCreate",
-        MessageReactionAdd = "MessageReactionAdd",
-        ChannelCreate = "ChannelCreate",
-        VoiceStateUpdate = "VoiceStateUpdate",
-        GuildMemberAdd = "GuildMemberAdd",
-        EveryHour = 'EveryHour',
-        EveryDay = 'EveryDay',
-        Randomly = 'Randomly',
+    export namespace IDs {
+        export enum Event {
+            MessageCreate = "MessageCreate",
+            MessageReactionAdd = "MessageReactionAdd",
+            ChannelCreate = "ChannelCreate",
+            VoiceStateUpdate = "VoiceStateUpdate",
+            GuildMemberAdd = "GuildMemberAdd",
+            EveryHour = 'EveryHour',
+            EveryDay = 'EveryDay',
+            Randomly = 'Randomly',
+        }
+
+        export enum UNKNOWN {
+            UNKNOWN = 'UNKNOWN'
+        }
+
+        export enum Task {
+            SendMessage = "SendMessage",
+            IncreaseStorageCounter = "IncreaseStorageCounter",
+            AssignRole = 'AssignRole',
+            AddMessageReaction = 'AddMessageReaction',
+            CreateChannel = 'CreateChannel',
+            DeleteChannel = 'DeleteChannel',
+            SetStorageValue = 'SetStorageValue',
+            UpdateChannel = 'UpdateChannel',
+            RandomListElement = 'RandomListElement',
+            MoveUserInChannel = 'MoveUserInChannel',
+
+        }
+
+        export enum SuperTask {
+            CreateChannelAndMoveUser = 'CreateChannelAndMoveUser',
+            DeleteChannelOnUserLeave = 'DeleteChannelOnUserLeave',
+
+        }
+
+        export enum Condition {
+            Equals = "Equals",
+            MatchesRegex = "MatchesRegex",
+            Random = 'Random',
+            Contains = 'Contains',
+        }
     }
 
     export enum LinkType {
@@ -16,34 +49,7 @@ export namespace ChainLinkTypes {
         CONDITION = "CONDITION",
         TASK = "TASK",
         SUPERTASK = "SUPERTASK",
-
-    }
-
-    export enum Task {
-        SendMessage = "SendMessage",
-        IncreaseStorageCounter = "IncreaseStorageCounter",
-        AssignRole = 'AssignRole',
-        AddMessageReaction = 'AddMessageReaction',
-        CreateChannel = 'CreateChannel',
-        DeleteChannel = 'DeleteChannel',
-        SetStorageValue = 'SetStorageValue',
-        UpdateChannel = 'UpdateChannel',
-        RandomListElement = 'RandomListElement',
-        MoveUserInChannel = 'MoveUserInChannel',
-
-    }
-
-    export enum SuperTask {
-        CreateChannelAndMoveUser = 'CreateChannelAndMoveUser',
-        DeleteChannelOnUserLeave = 'DeleteChannelOnUserLeave',
-
-    }
-
-    export enum Condition {
-        Equals = "Equals",
-        MatchesRegex = "MatchesRegex",
-        Random = 'Random',
-        Contains = 'Contains',
+        UNKNOWN = 'UNKNOWN'
     }
 
     export enum Param {

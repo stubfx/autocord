@@ -1,5 +1,4 @@
 import {ChainLinkInterface} from "./ChainLinkInterface";
-import mongoose from "mongoose";
 
 export interface JobInterface {
     id: string

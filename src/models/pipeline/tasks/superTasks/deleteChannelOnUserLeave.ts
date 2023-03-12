@@ -3,7 +3,8 @@ import {PermissionsBitField, VoiceState} from "discord.js";
 import {SuperTask} from "../../SuperTask.js";
 
 export class DeleteChannelOnUserLeave extends SuperTask {
-    name = ChainLinkTypes.SuperTask.DeleteChannelOnUserLeave;
+    readonly id: ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave;
+    name = ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave;
 
     description = 'Works with VoiceStateUpdate'
 

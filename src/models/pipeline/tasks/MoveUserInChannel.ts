@@ -3,7 +3,8 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {GuildVoiceChannelResolvable, PermissionsBitField} from "discord.js";
 
 export class MoveUserInChannel extends Task {
-    name = ChainLinkTypes.Task.MoveUserInChannel;
+    readonly id: ChainLinkTypes.IDs.Task.MoveUserInChannel;
+    name = ChainLinkTypes.IDs.Task.MoveUserInChannel;
 
     description = 'Move the given user in the given channel.'
 

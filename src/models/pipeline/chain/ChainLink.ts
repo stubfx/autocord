@@ -4,13 +4,20 @@ import {AggregatedGuildInterface} from "../../GuildInterface";
 import {discordClient} from "../../../discordbot.js";
 import {setStorageValue} from "../../../db/storageDBAdapter.js";
 import {Guild} from "discord.js";
+import {LoggerHelper} from "../../../loggerHelper.js";
 
-export abstract class ChainLink<T extends ChainLinkTypes.Task
-    | ChainLinkTypes.Condition
-    | ChainLinkTypes.Event
-    | ChainLinkTypes.SuperTask> implements ChainLinkInterface {
+export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
+    | ChainLinkTypes.IDs.Condition
+    | ChainLinkTypes.IDs.Event
+    | ChainLinkTypes.IDs.SuperTask
+    | ChainLinkTypes.IDs.UNKNOWN> implements ChainLinkInterface {
 
-    readonly name: T;
+    abstract readonly id: T;
+
+    readonly name: string;
+    /**
+     * can be Event Task, Condition or SuperTask
+     */
     readonly type: ChainLinkTypes.LinkType
     description: string = "Missing description :P"
 
@@ -121,7 +128,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task
         return this.behavior()
     }
 
-    validate() {
+    validate(): boolean {
         // make all the checks here!
         // remember that acceptParams are the actual params accepted by the link
         // but params are actually sent by the users.
@@ -129,24 +136,34 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task
         // check length, they must match
         let paramsLength = this.params ? this.params.length : 0;
         if (this.acceptParams.length !== paramsLength) {
-            throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`)
+            //throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`)
+            LoggerHelper.warn("throw new Error(`Params length doesn't match acceptedParams length for ${this.name}`)")
+            return false
         }
         for (let i = 0; i < this.params.length; i++) {
             // for each param, match the same in the acceptParams
             // however, by design and performance reason, we must match by index
             let paramToCheck = this.params[i]
             if (!paramToCheck) {
-                throw new Error(`Param cannot be null.`)
+                //throw new Error(`Param cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param cannot be null.`)")
+                return false
             }
             if (!paramToCheck.name) {
-                throw new Error(`Param name be null.`)
+                //throw new Error(`Param name be null.`)
+                LoggerHelper.warn("throw new Error(`Param name be null.`)")
+                return false
             }
             if (paramToCheck.value === null || paramToCheck.value === undefined) {
-                throw new Error(`Param value cannot be null.`)
+                //throw new Error(`Param value cannot be null.`)
+                LoggerHelper.warn("throw new Error(`Param value cannot be null.`)")
+                return false
             }
             let acceptedParam = this.acceptParams[i]
             if (acceptedParam.name !== paramToCheck.name) {
-                throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`)
+                //throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`)
+                LoggerHelper.warn("throw new Error(`Cannot match param names:  ${paramToCheck.name} with ${acceptedParam.name}`)")
+                return false
             }
             // ok same name
             let type = acceptedParam.type
@@ -172,16 +189,16 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task
             }
         }
         // congratulations!
+        return true
     }
 
     private checkParameterStringLength(paramToCheck: ChainLinkParam) {
         this.checkStringLength(paramToCheck.value);
     }
 
-    private checkStringLength(string: string) {
-        if (string.length > 150) {
-            throw new Error(`Param value cannot be longer than 150 chars.`)
-        }
+    private checkStringLength(string: string): boolean {
+        return string.length <= 150;
+
     }
 
     protected async getFetchedGuild() {
@@ -193,22 +210,27 @@ export abstract class ChainLink<T extends ChainLinkTypes.Task
 
     protected abstract behavior(): Promise<Boolean>
 
-    private checkParameterRegexLength(paramToCheck: ChainLinkParam) {
-        let length = paramToCheck.value.length;
-        if (length > 10) {
-            throw new Error(`Regex value cannot be longer than 10 chars.`)
-        }
+    private checkParameterRegexLength(paramToCheck: ChainLinkParam): boolean {
+        return paramToCheck.value.length <= 10;
+
     }
 
-    private checkParameterList(paramToCheck: ChainLinkParam) {
+    private checkParameterList(paramToCheck: ChainLinkParam): boolean {
         if (!paramToCheck.value || paramToCheck.value.length < 1) {
-            throw new Error(`List cannot be empty.`)
+            // throw new Error(`List cannot be empty.`)
+            LoggerHelper.warn("throw new Error(`List cannot be empty.`)")
+            return false
         }
         if (paramToCheck.value.length > 20) {
-            throw new Error(`List cannot contain more than 20 items.`)
+            // throw new Error(`List cannot contain more than 20 items.`)
+            LoggerHelper.warn("throw new Error(`List cannot contain more than 20 items.`)")
+            return false
         }
         for (let string of paramToCheck.value) {
-            this.checkStringLength(string);
+            if (!this.checkStringLength(string)) {
+                return false
+            }
         }
+        return true
     }
 }

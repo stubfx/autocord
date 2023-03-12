@@ -46,11 +46,20 @@ export class Job {
         await this.chain.run(this.guild)
     }
 
+    isValid(){
+        for (let chainLink of this.getChainLinks()) {
+            if (!chainLink.validate()) {
+                return false
+            }
+        }
+        return true
+    }
+
     toJobInterface(): JobInterface {
         let chainLinks: Array<ChainLinkInterface> = []
         for (let chainLink of this.chain.chainLinks) {
             chainLinks.push({
-                name: chainLink.name,
+                id: chainLink.id,
                 params: chainLink.params,
                 type: chainLink.type
             })

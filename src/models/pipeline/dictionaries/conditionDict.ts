@@ -1,25 +1,26 @@
 import {ChainLinkParam} from "../../ChainLinkInterface.js";
-import {Condition} from "../Condition.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {Equals} from "../conditions/Equals.js";
 import {MatchesRegex} from "../conditions/MatchesRegex.js";
 import {Random} from "../conditions/Random.js";
 import {Contains} from "../conditions/Contains.js";
+import {ChainLink} from "../chain/ChainLink.js";
+import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 
 export class ConditionDict {
 
-    getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : Condition {
+    getConditionByName(chainLinkConditionName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         switch (chainLinkConditionName) {
-            case ChainLinkTypes.Condition.Equals:
+            case ChainLinkTypes.IDs.Condition.Equals:
                 return new Equals(params)
-            case ChainLinkTypes.Condition.MatchesRegex:
+            case ChainLinkTypes.IDs.Condition.MatchesRegex:
                 return new MatchesRegex(params)
-            case ChainLinkTypes.Condition.Random:
+            case ChainLinkTypes.IDs.Condition.Random:
                 return new Random(params)
-            case ChainLinkTypes.Condition.Contains:
+            case ChainLinkTypes.IDs.Condition.Contains:
                 return new Contains(params)
             default:
-                throw new Error(`Unknown condition name: ${chainLinkConditionName}`)
+                return new UnknownChainLink()
         }
     }
 

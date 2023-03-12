@@ -4,7 +4,8 @@ import {discordClient} from "../../../discordbot.js";
 import {PermissionsBitField, TextChannel} from "discord.js";
 
 export class AddMessageReaction extends Task {
-    name = ChainLinkTypes.Task.AddMessageReaction;
+    readonly id: ChainLinkTypes.IDs.Task.AddMessageReaction;
+    name = ChainLinkTypes.IDs.Task.AddMessageReaction;
 
     description = 'Adds a reaction to the given message'
 

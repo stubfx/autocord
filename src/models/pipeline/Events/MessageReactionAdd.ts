@@ -2,7 +2,8 @@ import {EventLink} from "../EventLink.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class MessageReactionAdd extends EventLink {
-    name = ChainLinkTypes.Event.MessageReactionAdd;
+    readonly id: ChainLinkTypes.IDs.Event.MessageReactionAdd;
+    name = ChainLinkTypes.IDs.Event.MessageReactionAdd;
 
     // {
     //     userId : user.id,

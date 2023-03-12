@@ -2,7 +2,8 @@ import {Condition} from "../Condition.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class Random extends Condition {
-    name = ChainLinkTypes.Condition.Random;
+    readonly id: ChainLinkTypes.IDs.Condition.Random;
+    name = ChainLinkTypes.IDs.Condition.Random;
 
     description = 'Has a certain percentage of probabilities to pass the test.'
 

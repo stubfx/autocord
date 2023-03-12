@@ -1,19 +1,20 @@
 import {ChainLinkParam} from "../../ChainLinkInterface.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
-import {SuperTask} from "../SuperTask.js";
 import {CreateChannelAndMoveUser} from "../tasks/superTasks/createChannelAndMoveUser.js";
 import {DeleteChannelOnUserLeave} from "../tasks/superTasks/deleteChannelOnUserLeave.js";
+import {ChainLink} from "../chain/ChainLink.js";
+import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 
 export class SuperTasksDict {
 
-    getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : SuperTask {
+    getTaskByName(chainLinkTaskName: string, params: ChainLinkParam[] = []) : ChainLink<any> {
         switch (chainLinkTaskName) {
-            case ChainLinkTypes.SuperTask.CreateChannelAndMoveUser:
+            case ChainLinkTypes.IDs.SuperTask.CreateChannelAndMoveUser:
                 return new CreateChannelAndMoveUser(params)
-            case ChainLinkTypes.SuperTask.DeleteChannelOnUserLeave:
+            case ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave:
                 return new DeleteChannelOnUserLeave(params)
             default:
-                throw new Error(`Unknown superTask name: ${chainLinkTaskName}`)
+                return new UnknownChainLink()
         }
     }
 

@@ -2,7 +2,8 @@ import {EventLink} from "../../EventLink.js";
 import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 
 export class EveryHour extends EventLink {
-    name = ChainLinkTypes.Event.EveryHour;
+    readonly id: ChainLinkTypes.Event;
+    name = ChainLinkTypes.IDs.Event.EveryHour;
 
     description = "Fired once every hour."
 

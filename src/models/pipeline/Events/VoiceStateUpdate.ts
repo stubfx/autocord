@@ -2,7 +2,8 @@ import {EventLink} from "../EventLink.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class VoiceStateUpdate extends EventLink {
-    name = ChainLinkTypes.Event.VoiceStateUpdate;
+    readonly id: ChainLinkTypes.IDs.Event.VoiceStateUpdate;
+    name = ChainLinkTypes.IDs.Event.VoiceStateUpdate;
 
     description = "Fired when voice channel updates."
 

@@ -60,8 +60,7 @@ export default function (api, opts, done) {
             // no id, abort.
             return {}
         }
-        let jobInstance = JobFactory.createJob(rawJob)
-        await dbAdapter.deleteJob(guildId, jobInstance)
+        await dbAdapter.deleteJob(guildId, rawJob.id)
         return {}
     })
 

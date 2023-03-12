@@ -2,7 +2,8 @@ import {Condition} from "../Condition.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 
 export class MatchesRegex extends Condition {
-    name = ChainLinkTypes.Condition.MatchesRegex;
+    readonly id: ChainLinkTypes.IDs.Condition.MatchesRegex;
+    name = ChainLinkTypes.IDs.Condition.MatchesRegex;
 
     acceptParams = [{
         name: "text",

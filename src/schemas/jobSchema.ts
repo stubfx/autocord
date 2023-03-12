@@ -11,7 +11,7 @@ const Schema = new mongoose.Schema<JobInterface>({
             type: ChainLinkTypes.LinkType,
             // description: String, // do not save in db.
             params: Array<ChainLinkParam>,
-            name: ChainLinkTypes.Task | ChainLinkTypes.Condition | ChainLinkTypes.Event
+            id: String
         }>
     }
 });

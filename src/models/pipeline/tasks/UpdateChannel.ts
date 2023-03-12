@@ -4,7 +4,8 @@ import {OperationName, OperationsCache} from "../../../cacheSystem/OperationsCac
 import {PermissionsBitField} from "discord.js";
 
 export class UpdateChannel extends Task {
-    name = ChainLinkTypes.Task.UpdateChannel;
+    readonly id: ChainLinkTypes.IDs.Task.UpdateChannel;
+    name = ChainLinkTypes.IDs.Task.UpdateChannel;
 
     description = 'Updates channel name. By Discord design (after api v11) ' +
         'this can be edited only twice every 10 mins.'
