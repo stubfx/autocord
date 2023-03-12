@@ -81,8 +81,8 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
     async increaseStorageCounter(paramName: string, amount = 1) {
         // this may be an empty string.
         if (this.storage[paramName] !== undefined) {
-            this.storage[paramName] = +this.storage[paramName] + amount
-            await this.setSharedStorageValue(paramName, this.storage[paramName])
+            this.storage[paramName].value = +this.storage[paramName].value + amount
+            await this.setSharedStorageValue(paramName, this.storage[paramName].value)
         }
     }
 
@@ -94,11 +94,10 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
             // save db queries whenever possible
             return
         }
-        this.storage[paramName] = `${value}`
-        if (this.storage[paramName] < 150) {
-            await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName])
+        this.storage[paramName].value = `${value}`
+        if (this.storage[paramName].value < 150) {
+            await setStorageValue(this.guild.storage.id, paramName, this.storage[paramName].value)
         }
-        // don't save this in the db for storage reasons.
     }
 
     protected getStoreValue(paramName: string) {
@@ -115,7 +114,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
         return str.replace(regex, (match, variable) => {
             let value = this.getStoreValue(variable);
             if (typeof value !== "undefined") {
-                return value
+                return value.value
             }
             return match;
         });
