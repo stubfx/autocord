@@ -1,5 +1,5 @@
 // Remember to set type: module in package.json or use .mjs extension
-import {join, dirname} from 'node:path'
+import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
 import * as lowdb from "lowdb";

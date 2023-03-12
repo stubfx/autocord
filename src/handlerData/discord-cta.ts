@@ -1,4 +1,4 @@
-import {BaseInteraction, Client, ButtonInteraction} from "discord.js";
+import {BaseInteraction, ButtonInteraction, Client} from "discord.js";
 
 /**
  *

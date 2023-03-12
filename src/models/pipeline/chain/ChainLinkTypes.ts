@@ -33,6 +33,7 @@ export namespace ChainLinkTypes {
         export enum SuperTask {
             CreateChannelAndMoveUser = 'CreateChannelAndMoveUser',
             DeleteChannelOnUserLeave = 'DeleteChannelOnUserLeave',
+            TemporaryVoiceChannels = 'TemporaryVoiceChannels',
 
         }
 

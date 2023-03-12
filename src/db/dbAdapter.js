@@ -2,7 +2,8 @@ import topicsData from "./datamodels/topicsData.js";
 import * as Utils from "./utils.js";
 import {LoggerHelper} from "./loggerHelper.js";
 import mongoose from "mongoose";
-import { NewsGuild } from "./schemas.js";
+import {NewsGuild} from "./schemas.js";
+
 export async function deleteChannelBrokenChannelProcess(channel) {
     if (process.env.dev)
         return;

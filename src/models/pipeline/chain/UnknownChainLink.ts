@@ -6,6 +6,7 @@ export class UnknownChainLink extends ChainLink<ChainLinkTypes.IDs.UNKNOWN> {
 
     id = ChainLinkTypes.IDs.UNKNOWN.UNKNOWN
     name = ChainLinkTypes.IDs.UNKNOWN.UNKNOWN
+    description = "This element is unknown :/"
     readonly type = ChainLinkTypes.LinkType.UNKNOWN
 
     async behavior(...args) : Promise<Boolean> {

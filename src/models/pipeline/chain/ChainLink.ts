@@ -25,7 +25,7 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
 
     guild: AggregatedGuildInterface
 
-    private storage = {}
+    protected storage = {}
     protected vault = {}
 
     private fetchedGuild: Guild = null

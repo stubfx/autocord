@@ -34,6 +34,7 @@ export var ChainLinkTypes;
         (function (SuperTask) {
             SuperTask["CreateChannelAndMoveUser"] = "CreateChannelAndMoveUser";
             SuperTask["DeleteChannelOnUserLeave"] = "DeleteChannelOnUserLeave";
+            SuperTask["TemporaryVoiceChannels"] = "TemporaryVoiceChannels";
         })(SuperTask = IDs.SuperTask || (IDs.SuperTask = {}));
         let Condition;
         (function (Condition) {

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { JOB, GUILD, STORAGE } from "./schemas.js";
+import { GUILD, JOB, STORAGE } from "./schemas.js";
 const Schema = new mongoose.Schema({
     guildId: String,
     jobs: [{ type: mongoose.Types.ObjectId, ref: JOB }],

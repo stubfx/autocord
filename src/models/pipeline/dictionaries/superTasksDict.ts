@@ -4,6 +4,7 @@ import {CreateChannelAndMoveUser} from "../tasks/superTasks/createChannelAndMove
 import {DeleteChannelOnUserLeave} from "../tasks/superTasks/deleteChannelOnUserLeave.js";
 import {ChainLink} from "../chain/ChainLink.js";
 import {UnknownChainLink} from "../chain/UnknownChainLink.js";
+import {TemporaryVoiceChannels} from "../tasks/superTasks/TemporaryVoiceChannels.js";
 
 export class SuperTasksDict {
 
@@ -13,6 +14,8 @@ export class SuperTasksDict {
                 return new CreateChannelAndMoveUser(params)
             case ChainLinkTypes.IDs.SuperTask.DeleteChannelOnUserLeave:
                 return new DeleteChannelOnUserLeave(params)
+            case ChainLinkTypes.IDs.SuperTask.TemporaryVoiceChannels:
+                return new TemporaryVoiceChannels(params)
             default:
                 return new UnknownChainLink()
         }

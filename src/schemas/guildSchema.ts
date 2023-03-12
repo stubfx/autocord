@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {JOB, GUILD, STORAGE} from "./schemas.js";
+import {GUILD, JOB, STORAGE} from "./schemas.js";
 import {GuildInterface} from "../models/GuildInterface.js";
 
 const Schema = new mongoose.Schema<GuildInterface>({

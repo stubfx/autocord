@@ -9,7 +9,6 @@ import {ClockEmitter} from "./eventLifecycle/customEmitters/ClockEmitter.js";
 import {injectPrototypes} from './prototypeManipulation.js'
 
 
-
 discordBot.init(async (client) => {
     injectPrototypes()
     LoggerHelper.init(client)

@@ -119,7 +119,7 @@ export async function forGuildListeningForEvent(guildId: string, eventName, func
         // .populate(JOBS)
         .populate({
             path: JOBS,
-            match: {'chain.chainLinks.0.name': eventName}
+            match: {'chain.chainLinks.0.id': eventName}
         })
     // @ts-ignore
     await func(guild as AggregatedGuildInterface)
@@ -130,7 +130,7 @@ export async function forAllGuildsListeningForEvent(eventName, func: (guildInter
         .populate(STORAGE)
         .populate({
             path: JOBS,
-            match: {'chain.chainLinks.0.name': eventName}
+            match: {'chain.chainLinks.0.id': eventName}
         }).cursor()
     for (let guild = await cursor.next(); guild != null; guild = await cursor.next()) {
         // @ts-ignore

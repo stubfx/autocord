@@ -53,7 +53,6 @@ export class JobFactory {
         if (jobInterface.chain.chainLinks.length > +process.env.MAX_JOB_LINKS) {
             throw new Error("Exceeded maximum chain length for this job.");
         }
-        // todo check with actual classes calling validate on each of them as it returns true/false.
         let jobCost = 0;
         for (let chainElement of jobInterface.chain.chainLinks) {
             // for each chainLink in the interface
