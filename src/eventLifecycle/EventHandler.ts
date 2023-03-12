@@ -2,6 +2,7 @@ import * as dbAdapter from "../db/dbAdapter.js";
 import {JobFactory} from "../models/JobFactory.js";
 import {LoggerHelper} from "../loggerHelper.js";
 import {GuildEventsCache} from "../cacheSystem/guildEventsCache.js";
+import localDB from "../db/local/localDB.js";
 
 export const skipEventsCache = new GuildEventsCache()
 
@@ -21,6 +22,7 @@ export async function runEventForAllGuilds(eventName: string, eventArgs = {}, in
 
 function runJobEventForGuild(eventName: string, eventArgs: {}, internalArgs) {
     return async guildInterface => {
+        localDB.data.eventCount++
         if (!guildInterface) {
             return
         }
@@ -50,6 +52,6 @@ function runJobEventForGuild(eventName: string, eventArgs: {}, internalArgs) {
         } catch (e) {
             LoggerHelper.error(e)
         }
-
+        await localDB.write()
     };
 }

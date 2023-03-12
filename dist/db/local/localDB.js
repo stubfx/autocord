@@ -12,6 +12,7 @@ const localDB = new lowdb.Low(new JSONFile(guildsFile));
 await localDB.read();
 if (!localDB.data) {
     localDB.data = {
+        eventCount: 0,
         clock: {
             everyHour: new Date(),
             everyDay: new Date(),

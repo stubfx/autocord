@@ -76,7 +76,7 @@ export class NetworkAdapter {
     }
 
     static async getBotGuildCount() {
-        return (await this._post(`/api/getBotGuildCount`))['guildCount']
+        return (await this._post(`/api/getBotGuildCount`))
     }
 
     static async saveJob(guildId, job) {

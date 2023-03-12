@@ -4,12 +4,25 @@
     <div class="flex flex-col gap mt-52 w-full">
       <h1 class="text-accent self-center text-4xl sm:text-5xl lg:text-9xl font-discord-medium">AUTOCORD</h1>
       <h1 class="text-accent text-2xl self-center mt-3">Discord automation made simple.</h1>
-      <h1 class="text-accent text-2xl self-center mt-3">Currenly in {{ guildCount }} servers!</h1>
+      <div class="flex flex-col items-center gap mt-7">
+        <h1 class="text-accent text-3xl">Currently handling</h1>
+        <div class="flex flex-row justify-center gap select-none">
+          <h1 class="text-accent text-2xl self-center mt-3 bg-tertiary text-accent rounded p border-2 border-primary">
+            {{ guildCount }} Servers
+          </h1>
+          <h1 class="text-accent text-2xl self-center mt-3 bg-tertiary text-accent rounded p border-2 border-primary">
+            {{ userCount }} Users
+          </h1>
+          <h1 class="text-accent text-2xl self-center mt-3 bg-tertiary text-accent rounded p border-2 border-primary">
+            {{ eventCount }} Events
+          </h1>
+        </div>
+      </div>
       <div class="flex w-full h-full flex-col items-center justify-center text-accent gap-4 mt-10">
         <h1 class="text-6xl">This app is in <span class="text-success">early access</span></h1>
         <h1 @on-click="supportServer" class="text-1xl">If you have any question or need some help, please join our
           Support server!</h1>
-        <login-with-discord-button  @click="login"></login-with-discord-button>
+        <login-with-discord-button @click="login"></login-with-discord-button>
         <h1 class="text-4xl">❤️</h1>
         <support-server-button @on-click="supportServer" class="p-2 border-2"></support-server-button>
         <div class="flex flex-col w-8/12 gap-16">
@@ -83,12 +96,17 @@ export default {
       // this.$emit('onPageChange', PAGES.DASHBOARD_PAGE)
       this.$router.push('/dashboard')
     } else {
-      this.guildCount = await NetworkAdapter.getBotGuildCount()
+      let {guildCount, userCount, eventCount} = await NetworkAdapter.getBotGuildCount()
+      this.guildCount = guildCount
+      this.userCount = userCount
+      this.eventCount = eventCount
     }
   },
   data() {
     return {
-      guildCount: 0
+      guildCount: 0,
+      userCount: 0,
+      eventCount: 0
     }
   },
   methods: {

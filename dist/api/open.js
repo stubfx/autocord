@@ -1,9 +1,14 @@
 import { ChainLinkTypes } from "../models/pipeline/chain/ChainLinkTypes.js";
 import { JobFactory } from "../models/JobFactory.js";
 import { discordClient } from "../discordbot.js";
+import localDB from "../db/local/localDB.js";
 export default function (api, opts, done) {
     api.post("/getBotGuildCount", async () => {
-        return { guildCount: discordClient.guilds.cache.size };
+        return {
+            guildCount: discordClient.guilds.cache.size,
+            userCount: discordClient.guilds.cache.reduce((a, g) => a + g.memberCount, 0),
+            eventCount: localDB.data.eventCount
+        };
     });
     api.get("/help", async (request, reply) => {
         reply.redirect("/help.html");
