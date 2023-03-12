@@ -3,6 +3,7 @@ import {Routes} from "discord-api-types/v10";
 import discordCommands from "./handlerData/discord-commands.js";
 import discordCTAs from "./handlerData/discord-cta.js";
 import {LoggerHelper} from "./loggerHelper.js";
+import {discordClient} from "./discordbot.js";
 
 const commands = new Collection()
 const restCommands = []
@@ -26,14 +27,15 @@ for (const rawCommand of discordCommands) {
     }
 }
 
-export default async function updateCommands(client) {
+export async function init() {
     const rest = new REST({version: '10'}).setToken(process.env.discord_token);
 
     try {
         LoggerHelper.dev(`Started refreshing application (/) commands.`);
 
         // The put method is used to fully refresh all commands in the guild with the current set
-        /*const data = */await rest.put(
+        /*const data = */
+        await rest.put(
             // Routes.applicationGuildCommands(process.env.discord_application_id, guild.id),
             // for all guilds.
             // Routes.applicationCommands(process.env.discord_application_id, {body}),
@@ -56,13 +58,11 @@ export default async function updateCommands(client) {
         // And of course, make sure you catch and log any errors!
         LoggerHelper.error(error);
     }
-
-
-    client.on(Events.InteractionCreate, async interaction => {
+    discordClient.on(Events.InteractionCreate, async interaction => {
         if (interaction instanceof ButtonInteraction) {
             // check in the ctas!
             let cta = discordCTAs.find(value => value.name === interaction.customId);
-            await cta.execute(client, interaction)
+            await cta.execute(discordClient, interaction)
         } else if (interaction instanceof ChatInputCommandInteraction) {
             const command = commands.get(interaction.commandName);
             if (!command) {
@@ -74,8 +74,9 @@ export default async function updateCommands(client) {
                 await command.execute(client, interaction);
             } catch (error) {
                 LoggerHelper.error(error);
-                await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                await interaction.reply({content: 'There was an error while executing this command!', ephemeral: true});
             }
         }
     });
 }
+

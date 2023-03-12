@@ -73,22 +73,22 @@ export default {
   methods: {
     addLink(rawItem) {
       let item = JSON.parse(JSON.stringify(rawItem));
-      if (item.type === "EVENT") {
-        this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
-        // then add the new one :P
-        this.job.chain.chainLinks.unshift(item)
-        this.onAddLink(item)
-      } else if (item.type === "TASK" || item.type === "CONDITION" || item.type === "SUPERTASK") {
+      // if (item.type === "EVENT") {
+      //   this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
+      //   // then add the new one :P
+      //   this.job.chain.chainLinks.unshift(item)
+      //   this.onAddLink(item)
+      // } else if (item.type === "TASK" || item.type === "CONDITION" || item.type === "SUPERTASK") {
         let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
           if (currentValue.type !== 'EVENT') {
             return ++accumulator
           }
           return accumulator
         }, 0)
-        if (count < 4) {
+        if (count < 6) {
           this.onAddLink(item)
         }
-      }
+      // }
     },
     onAddLink(item) {
       if (item.acceptParams.length > 0) {

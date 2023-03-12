@@ -8,6 +8,7 @@ import { EveryHour } from "../Events/customEvents/EveryHour.js";
 import { EveryDay } from "../Events/customEvents/EveryDay.js";
 import { Randomly } from "../Events/customEvents/Randomly.js";
 import { UnknownChainLink } from "../chain/UnknownChainLink.js";
+import { SlashCommand } from "../Events/commands/SlashCommand.js";
 export class EventDict {
     getById(id, params = []) {
         switch (id) {
@@ -27,6 +28,8 @@ export class EventDict {
                 return new EveryDay(params);
             case ChainLinkTypes.IDs.Event.Randomly:
                 return new Randomly(params);
+            case ChainLinkTypes.IDs.Event.COMMAND:
+                return new SlashCommand(params);
             default:
                 return new UnknownChainLink();
         }

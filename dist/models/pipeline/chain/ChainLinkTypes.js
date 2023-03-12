@@ -12,6 +12,7 @@ export var ChainLinkTypes;
             Event["EveryHour"] = "EveryHour";
             Event["EveryDay"] = "EveryDay";
             Event["Randomly"] = "Randomly";
+            Event["COMMAND"] = "COMMAND";
         })(Event = IDs.Event || (IDs.Event = {}));
         let UNKNOWN;
         (function (UNKNOWN) {

@@ -1,4 +1,4 @@
-import Discord, {PermissionsBitField, REST, RouteLike} from "discord.js";
+import Discord, {PermissionsBitField, REST, RouteLike, SlashCommandBuilder} from "discord.js";
 import {Routes} from "discord-api-types/v10";
 import {discordClient} from "./discordbot.js";
 
@@ -53,5 +53,25 @@ export class DiscordAdapter {
             // LoggerHelper.consoleError(e)
         }
         return !!guild
+    }
+
+    updateAllGuildCommands() {
+
+    }
+
+    static async updateCommandsForGuild(guildId: string, commands: string[]) {
+        let slashCommands = []
+        for (let command of commands) {
+            slashCommands.push(new SlashCommandBuilder()
+                .setName(command)
+                .setDescription("CustomCommand")
+                .setDefaultMemberPermissions(0))
+        }
+        const rest = new REST({version: '10'}).setToken(process.env.discord_token);
+        await rest.put(
+            // Routes.applicationCommands(process.env.discord_application_id, {body}),
+            Routes.applicationGuildCommands(process.env.discord_application_id, guildId),
+            {body: slashCommands},
+        );
     }
 }

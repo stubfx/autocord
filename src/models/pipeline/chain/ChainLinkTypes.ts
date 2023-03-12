@@ -10,6 +10,7 @@ export namespace ChainLinkTypes {
             EveryHour = 'EveryHour',
             EveryDay = 'EveryDay',
             Randomly = 'Randomly',
+            COMMAND = 'COMMAND',
         }
 
         export enum UNKNOWN {

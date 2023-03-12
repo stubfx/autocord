@@ -1,6 +1,10 @@
 import fetch from "node-fetch";
 import Discord, {GuildChannelResolvable, GuildMember, PermissionFlagsBits} from "discord.js";
 import {discordClient} from "./discordbot.js";
+import {AggregatedGuildInterface} from "./models/GuildInterface.js";
+import {LoggerHelper} from "./loggerHelper.js";
+import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
+import {DiscordAdapter} from "./DiscordAdapter.js";
 
 export function rndArrayItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
@@ -23,6 +27,32 @@ export function getSessionExpirationDate() : Date{
     date.setDate(new Date().getDate() + 5)
     return date
 }
+
+export async function updateAllGuildCommands(guild: AggregatedGuildInterface) {
+    // we are safe to make assumptions here
+    // as not valid jobs should not be here anyway.
+    // they could have unknown value, but cannot contain nulls.
+    try {
+        let commandsToAdd = [] // array of strings.
+        if (guild) {
+            if (guild.jobs) {
+                for (let job of guild.jobs) {
+                    if (job.chain.chainLinks[0].id === ChainLinkTypes.IDs.Event.COMMAND) {
+                        // ok, that's a command, save it.
+                        // param name doesn't matter, we get the first one.
+                        commandsToAdd.push(job.chain.chainLinks[0].params[0].value)
+                    }
+                }
+            }
+        }
+        if (commandsToAdd.length > 0) {
+            await DiscordAdapter.updateCommandsForGuild(guild.guildId, commandsToAdd)
+        }
+    } catch (e) {
+        LoggerHelper.error(e)
+    }
+}
+
 export function getCorrectHttpsUrl(string) {
     let url;
     try {

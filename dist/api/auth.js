@@ -6,7 +6,7 @@ import { JobFactory } from "../models/JobFactory.js";
 import { LoggerHelper } from "../loggerHelper.js";
 import { STORAGE } from "../schemas/schemas.js";
 import Discord from "discord.js";
-import { bitFieldsToString, doesBotHavePermissions } from "../utils.js";
+import { bitFieldsToString, doesBotHavePermissions, updateAllGuildCommands } from "../utils.js";
 export default function (api, opts, done) {
     api.addHook('preHandler', async (request, reply) => {
         if (!request.session[sessionV.AUTHENTICATED]) {
@@ -149,13 +149,7 @@ export default function (api, opts, done) {
         let jobInstance = JobFactory.createJob(rawJob);
         // WAIT! check permissions before saving the job!
         let jobPermissions = jobInstance.getRequiredPermissionBitFields();
-        if (await doesBotHavePermissions(guildId, jobPermissions)) {
-            // aight! we are safe.
-            await dbAdapter.saveJob(guildId, jobInstance);
-            LoggerHelper.success(`saved job for guild ${guildId}`);
-            return { result: true, hasPermissions: true, url: '' };
-        }
-        else {
+        if (!await doesBotHavePermissions(guildId, jobPermissions)) {
             // uh, we may not have the required permissions then!
             // gather all of them!
             let permissions = await getPermissionsForAllGuildJobs(guildId);
@@ -166,8 +160,14 @@ export default function (api, opts, done) {
                 url: getBotAddPopupUrl(guildId, bitFieldsToString(permissions))
             };
         }
-        // something else has gone wrong.
-        // return {result: false, hasPermissions: false, url: ''}
+        else {
+            // aight! we are safe.
+            await dbAdapter.saveJob(guildId, jobInstance);
+            // @ts-ignore
+            await updateAllGuildCommands(await dbAdapter.getGuild(guildId));
+            LoggerHelper.success(`saved job for guild ${guildId}`);
+            return { result: true, hasPermissions: true, url: '' };
+        }
     });
     // only for authenticated users with role.
     // api.register(async role => {
