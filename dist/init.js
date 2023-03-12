@@ -7,9 +7,11 @@ import updateCommands from "./commandHandler.js";
 import { LoggerHelper } from "./loggerHelper.js";
 import { ClockEmitter } from "./eventLifecycle/customEmitters/ClockEmitter.js";
 import { injectPrototypes } from './prototypeManipulation.js';
+import { AppDataHandler } from "./appDataHandler.js";
 discordBot.init(async (client) => {
     injectPrototypes();
     LoggerHelper.init(client);
+    AppDataHandler.init();
     await dbAdapter.init();
     DiscordAdapter.init(client);
     await fastify.init();

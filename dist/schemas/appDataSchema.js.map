@@ -1,0 +1,1 @@
+{"version":3,"file":"appDataSchema.js","sourceRoot":"","sources":["../../src/schemas/appDataSchema.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAC;AAChC,OAAO,EAAC,OAAO,EAAC,MAAM,cAAc,CAAC;AAGrC,MAAM,MAAM,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAmB;IACjD,UAAU,EAAE,MAAM;CACrB,CAAC,CAAC;AAGH,MAAM,CAAC,MAAM,YAAY,GAAG,QAAQ,CAAC,KAAK,CAAmB,OAAO,EAAE,MAAM,CAAC,CAAA"}

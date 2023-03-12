@@ -15,7 +15,6 @@ const guildsFile = join(__dirname, 'localDB.json')
 // const adapter = new JSONFile(file)
 
 declare type LocalData = {
-    eventCount: number;
     clock: {
         everyHour: Date
         everyDay: Date
@@ -29,7 +28,6 @@ const localDB = new lowdb.Low<LocalData>(new JSONFile(guildsFile))
 await localDB.read()
 if (!localDB.data) {
     localDB.data = {
-        eventCount: 0,
         clock: {
             everyHour: new Date(),
             everyDay: new Date(),

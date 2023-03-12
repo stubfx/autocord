@@ -2,7 +2,7 @@ import * as dbAdapter from "../db/dbAdapter.js";
 import { JobFactory } from "../models/JobFactory.js";
 import { LoggerHelper } from "../loggerHelper.js";
 import { GuildEventsCache } from "../cacheSystem/guildEventsCache.js";
-import localDB from "../db/local/localDB.js";
+import { AppDataHandler } from "../appDataHandler.js";
 export const skipEventsCache = new GuildEventsCache();
 export async function runEventForGuild(guildId, eventName, eventArgs = {}, internalArgs = {}) {
     if (skipEventsCache.isEventInCache(guildId, eventName)) {
@@ -18,7 +18,7 @@ export async function runEventForAllGuilds(eventName, eventArgs = {}, internalAr
 }
 function runJobEventForGuild(eventName, eventArgs, internalArgs) {
     return async (guildInterface) => {
-        localDB.data.eventCount++;
+        AppDataHandler.increaseEventCount();
         if (!guildInterface) {
             return;
         }
@@ -49,7 +49,6 @@ function runJobEventForGuild(eventName, eventArgs, internalArgs) {
         catch (e) {
             LoggerHelper.error(e);
         }
-        await localDB.write();
     };
 }
 //# sourceMappingURL=EventHandler.js.map
