@@ -5,7 +5,6 @@ import {ChatInputCommandInteraction, Client, PermissionsBitField, SlashCommandBu
  @type {Array<{public: boolean, data: SlashCommandBuilder, execute(Client, ChatInputCommandInteraction): Promise<void>}>}
  */
 const commands = [{
-    public: true,
     data: new SlashCommandBuilder()
         .setName('dashboard')
         .setDescription("dashboard")
@@ -18,7 +17,6 @@ const commands = [{
         });
     }
 }, {
-    public: true,
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription("Need some help?")

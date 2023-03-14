@@ -8,19 +8,13 @@ import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
 
 const commands = new Collection()
 const restCommands = []
-const restCommandsForAdminGuild = []
 
 for (const rawCommand of discordCommands) {
     // const filePath = path.join(commandsPath, file);
     // const command = require(filePath);
     // Set a new item in the Collection with the key as the command name and the value as the exported module
     if ('data' in rawCommand && 'execute' in rawCommand) {
-        if (rawCommand.public) {
-            restCommands.push(rawCommand.data.toJSON())
-        } else {
-            // in this case the command is restricted only to me.
-            restCommandsForAdminGuild.push(rawCommand.data.toJSON())
-        }
+        restCommands.push(rawCommand.data.toJSON())
         commands.set(rawCommand.data.name, rawCommand);
     } else {
         // LoggerHelper.info(`[WARNING] The command at ${} is missing a required "data" or "execute" property.`);
@@ -43,18 +37,6 @@ export async function init() {
             Routes.applicationCommands(process.env.discord_application_id),
             {body: restCommands},
         );
-
-        // // The put method is used to fully refresh all commands in the guild with the current set
-        // const dataRestricted = await rest.put(
-        //     // Routes.applicationCommands(process.env.discord_application_id, {body}),
-        //     Routes.applicationGuildCommands(process.env.discord_application_id, process.env.discord_admin_guild),
-        //     {body: restCommandsForAdminGuild},
-        // );
-
-        // // @ts-ignore
-        // LoggerHelper.info(`Successfully reloaded ${data.length} application (/) commands.`);
-        // // @ts-ignore
-        // LoggerHelper.info(`Successfully reloaded ${dataRestricted.length} admin application (/) commands.`);
     } catch (error) {
         // And of course, make sure you catch and log any errors!
         LoggerHelper.error(error);
@@ -70,9 +52,13 @@ export async function init() {
         if (interaction instanceof ChatInputCommandInteraction) {
             const command = commands.get(interaction.commandName);
             if (command) {
-                // then it must be a standard command such as "/help" or "/dashboard"
-                // @ts-ignore
-                await command.execute(client, interaction);
+                try {
+                    // then it must be a standard command such as "/help" or "/dashboard"
+                    // @ts-ignore
+                    await command.execute(discordClient, interaction);
+                } catch (e) {
+                    LoggerHelper.error(e)
+                }
                 return;
             }
             // if command is not found in the list, this means that we need to check for the guilds!
