@@ -114,7 +114,9 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
         return str.replace(regex, (match, variable) => {
             let value = this.getStoreValue(variable);
             if (typeof value !== "undefined") {
-                return value.value
+                // value.value if is from the shared store.
+                // just value if is from the normal storage
+                return value.value ? value.value : value
             }
             return match;
         });
