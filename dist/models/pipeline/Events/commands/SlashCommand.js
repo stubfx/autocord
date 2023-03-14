@@ -4,6 +4,10 @@ export class SlashCommand extends EventLink {
     id = ChainLinkTypes.IDs.Event.COMMAND;
     name = "Slash command";
     description = "Fired when a new channel gets created";
+    exposesArguments = [
+        'userId',
+        'username'
+    ];
     acceptParams = [{
             name: 'commandName',
             type: ChainLinkTypes.Param.STRING

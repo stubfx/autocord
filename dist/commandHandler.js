@@ -74,7 +74,10 @@ export async function init() {
                 // // @ts-ignore
                 // await command.execute(client, interaction);
                 await interaction.deferReply();
-                await EventHandler.runEventForGuild(interaction.guild.id, ChainLinkTypes.IDs.Event.COMMAND, null, { commandName: interaction.commandName });
+                await EventHandler.runEventForGuild(interaction.guild.id, ChainLinkTypes.IDs.Event.COMMAND, {
+                    username: interaction.user.username,
+                    userId: interaction.user.id
+                }, { commandName: interaction.commandName });
                 await interaction.followUp({ content: 'Done!' });
             }
             catch (error) {
