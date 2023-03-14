@@ -3,7 +3,7 @@ import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {discordClient} from "../../../discordbot.js";
 import {PermissionsBitField, TextChannel} from "discord.js";
 
-export class SendMessage extends Task {
+export class DeleteMessage extends Task {
     id = ChainLinkTypes.IDs.Task.DeleteMessage;
     name = ChainLinkTypes.IDs.Task.DeleteMessage;
 

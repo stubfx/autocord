@@ -85,6 +85,7 @@ export default {
           }
           return accumulator
         }, 0)
+      // TODO RETRIEVE THIS VALUE FROM THE SERVER
         if (count < 6) {
           this.onAddLink(item)
         }
@@ -95,6 +96,9 @@ export default {
         this.$refs.modal.open(this.job, item, () => {
           this.job.chain.chainLinks.push(item)
         })
+      } else {
+        // no params, just add the item!
+        this.job.chain.chainLinks.push(item)
       }
     },
     async onSaveJob(job) {

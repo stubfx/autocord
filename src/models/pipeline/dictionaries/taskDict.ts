@@ -12,6 +12,7 @@ import {RandomListElement} from "../tasks/RandomListElement.js";
 import {MoveUserInChannel} from "../tasks/MoveUserInChannel.js";
 import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 import {ChainLink} from "../chain/ChainLink.js";
+import {DeleteMessage} from "../tasks/DeleteMessage.js";
 
 export class TaskDict {
 
@@ -37,6 +38,8 @@ export class TaskDict {
                 return new RandomListElement(params)
             case ChainLinkTypes.IDs.Task.MoveUserInChannel:
                 return new MoveUserInChannel(params)
+            case ChainLinkTypes.IDs.Task.DeleteMessage:
+                return new DeleteMessage(params)
             default:
                 return new UnknownChainLink()
         }
