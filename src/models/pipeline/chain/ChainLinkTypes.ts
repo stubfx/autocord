@@ -28,6 +28,7 @@ export namespace ChainLinkTypes {
             UpdateChannel = 'UpdateChannel',
             RandomListElement = 'RandomListElement',
             MoveUserInChannel = 'MoveUserInChannel',
+            DeleteMessage = 'DeleteMessage',
 
         }
 
