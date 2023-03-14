@@ -9,8 +9,8 @@ export class SlashCommand extends EventLink {
             type: ChainLinkTypes.Param.STRING
         }];
     async behavior(...args) {
-        console.log(this.name);
-        return true;
+        //should run only if command name matches ours.
+        return this.getResolvedParam('commandName') === this.vault["commandName"];
     }
 }
 //# sourceMappingURL=SlashCommand.js.map

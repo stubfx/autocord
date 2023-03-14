@@ -1,9 +1,10 @@
-import {ButtonInteraction, ChatInputCommandInteraction, Collection, Events, REST} from "discord.js";
+import {ChatInputCommandInteraction, Collection, Events, REST} from "discord.js";
 import {Routes} from "discord-api-types/v10";
 import discordCommands from "./handlerData/discord-commands.js";
-import discordCTAs from "./handlerData/discord-cta.js";
 import {LoggerHelper} from "./loggerHelper.js";
 import {discordClient} from "./discordbot.js";
+import * as EventHandler from "./eventLifecycle/EventHandler.js";
+import {ChainLinkTypes} from "./models/pipeline/chain/ChainLinkTypes.js";
 
 const commands = new Collection()
 const restCommands = []
@@ -59,19 +60,28 @@ export async function init() {
         LoggerHelper.error(error);
     }
     discordClient.on(Events.InteractionCreate, async interaction => {
-        if (interaction instanceof ButtonInteraction) {
-            // check in the ctas!
-            let cta = discordCTAs.find(value => value.name === interaction.customId);
-            await cta.execute(discordClient, interaction)
-        } else if (interaction instanceof ChatInputCommandInteraction) {
+        // here if is a button interaction,
+        // but we don't have them yet.
+        // if (interaction instanceof ButtonInteraction) {
+        //     // check in the ctas!
+        //     let cta = discordCTAs.find(value => value.name === interaction.customId);
+        //     await cta.execute(discordClient, interaction)
+        // } else
+        if (interaction instanceof ChatInputCommandInteraction) {
             const command = commands.get(interaction.commandName);
-            if (!command) {
-                LoggerHelper.error(`No command matching ${interaction.commandName} was found.`);
-                return;
-            }
-            try {
+            if (command) {
+                // then it must be a standard command such as "/help" or "/dashboard"
                 // @ts-ignore
                 await command.execute(client, interaction);
+                return;
+            }
+            // if command is not found in the list, this means that we need to check for the guilds!
+            try {
+                // // @ts-ignore
+                // await command.execute(client, interaction);
+                await interaction.deferReply()
+                await EventHandler.runEventForGuild(interaction.guild.id, ChainLinkTypes.IDs.Event.COMMAND, null, {commandName: interaction.commandName})
+                await interaction.followUp({content: 'Done!'})
             } catch (error) {
                 LoggerHelper.error(error);
                 await interaction.reply({content: 'There was an error while executing this command!', ephemeral: true});

@@ -39,9 +39,10 @@ export async function updateAllGuildCommands(guild) {
                 }
             }
         }
-        if (commandsToAdd.length > 0) {
-            await DiscordAdapter.updateCommandsForGuild(guild.guildId, commandsToAdd);
-        }
+        // do not check, will not remove all the commands if one remains otherwise.
+        // if (commandsToAdd.length > 0) {
+        await DiscordAdapter.updateCommandsForGuild(guild.guildId, commandsToAdd);
+        // }
     }
     catch (e) {
         LoggerHelper.error(e);

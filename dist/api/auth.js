@@ -57,6 +57,8 @@ export default function (api, opts, done) {
             return {};
         }
         await dbAdapter.deleteJob(guildId, rawJob.id);
+        // @ts-ignore
+        await updateAllGuildCommands(await dbAdapter.getGuild(guildId));
         return {};
     });
     api.post("/getGuildChannels", async (request) => {

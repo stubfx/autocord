@@ -12,8 +12,8 @@ export class SlashCommand extends EventLink {
     }]
 
     async behavior(...args): Promise<Boolean> {
-        console.log(this.name)
-        return true
+        //should run only if command name matches ours.
+        return this.getResolvedParam('commandName') === this.vault["commandName"]
     }
 
 }

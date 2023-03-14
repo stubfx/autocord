@@ -45,9 +45,10 @@ export async function updateAllGuildCommands(guild: AggregatedGuildInterface) {
                 }
             }
         }
-        if (commandsToAdd.length > 0) {
+        // do not check, will not remove all the commands if one remains otherwise.
+        // if (commandsToAdd.length > 0) {
             await DiscordAdapter.updateCommandsForGuild(guild.guildId, commandsToAdd)
-        }
+        // }
     } catch (e) {
         LoggerHelper.error(e)
     }
