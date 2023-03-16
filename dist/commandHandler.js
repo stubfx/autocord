@@ -7,7 +7,6 @@ import * as EventHandler from "./eventLifecycle/EventHandler.js";
 import { ChainLinkTypes } from "./models/pipeline/chain/ChainLinkTypes.js";
 const commands = new Collection();
 const restCommands = [];
-const restCommandsForAdminGuild = [];
 for (const rawCommand of discordCommands) {
     // const filePath = path.join(commandsPath, file);
     // const command = require(filePath);

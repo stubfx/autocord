@@ -122,11 +122,16 @@ export abstract class ChainLink<T extends ChainLinkTypes.IDs.Task
         });
     }
 
-    run(guildInterface: AggregatedGuildInterface, storage: any, vault: any): Promise<Boolean> {
-        this.guild = guildInterface
-        this.storage = storage || {}
-        this.vault = vault || {}
-        return this.behavior()
+    async run(guildInterface: AggregatedGuildInterface, storage: any, vault: any): Promise<Boolean> {
+        try {
+            this.guild = guildInterface
+            this.storage = storage || {}
+            this.vault = vault || {}
+            return this.behavior()
+        } catch (e) {
+            LoggerHelper.error(`Class: ${this.name}`, e)
+            return false
+        }
     }
 
     validate(): boolean {
