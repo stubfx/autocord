@@ -31,6 +31,8 @@ export var ChainLinkTypes;
             Task["RandomListElement"] = "RandomListElement";
             Task["MoveUserInChannel"] = "MoveUserInChannel";
             Task["DeleteMessage"] = "DeleteMessage";
+            Task["RandomRoleIdByName"] = "RandomRoleIdByName";
+            Task["RemoveRolesFromUserByName"] = "RemoveRolesFromUserByName";
         })(Task = IDs.Task || (IDs.Task = {}));
         let SuperTask;
         (function (SuperTask) {

@@ -61,12 +61,13 @@ export async function init() {
             try {
                 // // @ts-ignore
                 // await command.execute(client, interaction);
-                await interaction.deferReply();
+                // await interaction.deferReply()
+                await interaction.reply({ content: 'Done!', ephemeral: true });
                 await EventHandler.runEventForGuild(interaction.guild.id, ChainLinkTypes.IDs.Event.COMMAND, {
                     username: interaction.user.username,
                     userId: interaction.user.id
                 }, { commandName: interaction.commandName });
-                await interaction.followUp({ content: 'Done!' });
+                // await interaction.followUp({content: 'Done!', ephemeral: true})
             }
             catch (error) {
                 LoggerHelper.error(error);

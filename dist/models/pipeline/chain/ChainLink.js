@@ -86,11 +86,17 @@ export class ChainLink {
             return match;
         });
     }
-    run(guildInterface, storage, vault) {
-        this.guild = guildInterface;
-        this.storage = storage || {};
-        this.vault = vault || {};
-        return this.behavior();
+    async run(guildInterface, storage, vault) {
+        try {
+            this.guild = guildInterface;
+            this.storage = storage || {};
+            this.vault = vault || {};
+            return this.behavior();
+        }
+        catch (e) {
+            LoggerHelper.error(`Class: ${this.name}`, e);
+            return false;
+        }
     }
     validate() {
         // make all the checks here!

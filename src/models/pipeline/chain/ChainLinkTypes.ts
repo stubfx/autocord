@@ -29,6 +29,8 @@ export namespace ChainLinkTypes {
             RandomListElement = 'RandomListElement',
             MoveUserInChannel = 'MoveUserInChannel',
             DeleteMessage = 'DeleteMessage',
+            RandomRoleIdByName = 'RandomRoleIdByName',
+            RemoveRolesFromUserByName = 'RemoveRolesFromUserByName',
 
         }
 

@@ -1,6 +1,5 @@
-import {Task} from "../Task.js";
-import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
-import {discordClient} from "../../../discordbot.js";
+import {Task} from "../../Task.js";
+import {ChainLinkTypes} from "../../chain/ChainLinkTypes.js";
 import {PermissionsBitField} from "discord.js";
 
 export class AssignRole extends Task {
@@ -22,7 +21,7 @@ export class AssignRole extends Task {
     async behavior(...args) : Promise<Boolean> {
         let userId = this.getResolvedParam("userId");
         let roleId = this.getResolvedParam("roleId");
-        let guildObject = discordClient.guilds.cache.find(guild => guild.id === this.guild.guildId);
+        let guildObject = await this.getFetchedGuild()
         let role = guildObject.roles.cache.find(role => role.id === roleId)
         let member = await guildObject.members.fetch(userId)
         await member.roles.add(role)

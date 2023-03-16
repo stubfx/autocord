@@ -2,7 +2,7 @@ import {ChainLinkParam} from "../../ChainLinkInterface.js";
 import {ChainLinkTypes} from "../chain/ChainLinkTypes.js";
 import {SendMessage} from "../tasks/SendMessage.js";
 import {IncreaseCounter} from "../tasks/dataMutators/IncreaseCounter.js";
-import {AssignRole} from "../tasks/AssignRole.js";
+import {AssignRole} from "../tasks/roles/AssignRole.js";
 import {AddMessageReaction} from "../tasks/AddMessageReaction.js";
 import {CreateChannel} from "../tasks/CreateChannel.js";
 import {DeleteChannel} from "../tasks/DeleteChannel.js";
@@ -13,6 +13,8 @@ import {MoveUserInChannel} from "../tasks/MoveUserInChannel.js";
 import {UnknownChainLink} from "../chain/UnknownChainLink.js";
 import {ChainLink} from "../chain/ChainLink.js";
 import {DeleteMessage} from "../tasks/DeleteMessage.js";
+import {RandomRoleIdByName} from "../tasks/roles/RandomRoleIdByName.js";
+import {RemoveRolesFromUserByName} from "../tasks/roles/RemoveRolesFromUserByName.js";
 
 export class TaskDict {
 
@@ -40,6 +42,10 @@ export class TaskDict {
                 return new MoveUserInChannel(params)
             case ChainLinkTypes.IDs.Task.DeleteMessage:
                 return new DeleteMessage(params)
+            case ChainLinkTypes.IDs.Task.RandomRoleIdByName:
+                return new RandomRoleIdByName(params)
+            case ChainLinkTypes.IDs.Task.RemoveRolesFromUserByName:
+                return new RemoveRolesFromUserByName(params)
             default:
                 return new UnknownChainLink()
         }
