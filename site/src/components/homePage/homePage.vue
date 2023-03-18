@@ -38,17 +38,17 @@
             </div>
             <guild-job :job="getSampleJob()" :is-sample="true" :expanded="true"></guild-job>
           </div>
-          <div class="flex flex-row-reverse justify-around mt-10 gap-10 items-center">
-            <div class="flex flex-col gap">
-              <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>
-              <p class="text-xl" v-pre>
-                <span class="text-success">When a user sends a message&nbsp;</span>
-                send a message back saying "I'm sorry <span class="text-success">username</span>!", <br>
-                then ban the user by <span class="text-success">userId</span>!.
-              </p>
-            </div>
-            <guild-job :job="getSampleJob2()" :is-sample="true" :expanded="true"></guild-job>
-          </div>
+<!--          <div class="flex flex-row-reverse justify-around mt-10 gap-10 items-center">-->
+<!--            <div class="flex flex-col gap">-->
+<!--              <h1 class="text-5xl">Assign a role when <br>any user sends a message!</h1>-->
+<!--              <p class="text-xl" v-pre>-->
+<!--                <span class="text-success">When a user sends a message&nbsp;</span>-->
+<!--                send a message back saying "I'm sorry <span class="text-success">username</span>!", <br>-->
+<!--                then ban the user by <span class="text-success">userId</span>!.-->
+<!--              </p>-->
+<!--            </div>-->
+<!--            <guild-job :job="getSampleJob2()" :is-sample="true" :expanded="true"></guild-job>-->
+<!--          </div>-->
         </div>
         <!--        <div class="hidden flex-col md:flex items-center gap">-->
         <!--          <h1 class="text-4xl">Create cool automations!</h1>-->
