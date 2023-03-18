@@ -13,7 +13,8 @@ export class MatchesRegex extends Condition {
         type: ChainLinkTypes.Param.REGEX
     }]
 
-    description = "Checks if the given text matches a regex"
+    description = "Checks if the given text matches a regex. The regex input must be treated as a string, " +
+        "as it will be used in a match function. Find more here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
 
     async behavior(...args) : Promise<Boolean> {
         let text = this.getResolvedParam("text") || ""

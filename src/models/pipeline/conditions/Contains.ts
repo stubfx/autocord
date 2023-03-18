@@ -13,7 +13,8 @@ export class Contains extends Condition {
         type: ChainLinkTypes.Param.STRING
     }]
 
-    description = "Checks if the given text matches a regex"
+    description = "Checks if the given text contains the 'contains' text. Ex 'hello world' contains 'world' " +
+        "but does not contain 'wood'."
 
     async behavior(...args) : Promise<Boolean> {
         let text = this.getResolvedParam("text") || ""
