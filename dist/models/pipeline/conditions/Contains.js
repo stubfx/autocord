@@ -10,7 +10,8 @@ export class Contains extends Condition {
             name: "contains",
             type: ChainLinkTypes.Param.STRING
         }];
-    description = "Checks if the given text matches a regex";
+    description = "Checks if the given text contains the 'contains' text. Ex 'hello world' contains 'world' " +
+        "but does not contain 'wood'.";
     async behavior(...args) {
         let text = this.getResolvedParam("text") || "";
         // do not resolve regex.
