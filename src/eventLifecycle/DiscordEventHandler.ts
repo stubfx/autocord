@@ -4,6 +4,7 @@ import * as EventHandler from "./EventHandler.js";
 import {ChainLinkTypes} from "../models/pipeline/chain/ChainLinkTypes.js";
 import {discordClient} from "../discordbot.js";
 import * as dbAdapter from "../db/dbAdapter.js";
+import {AppDataHandler} from "../appDataHandler.js";
 
 
 let client = null
@@ -15,6 +16,7 @@ function isMe_id(id) {
 export function init(discordClient: Discord.Client) {
     client = discordClient
     client.on(Discord.Events.GuildCreate, async guild => {
+        AppDataHandler.increaseEventCount()
         try {
             // bot joined a build <3
             LoggerHelper.success(`Joined Guild: ${guild.name}(${guild.id})`)
@@ -25,6 +27,7 @@ export function init(discordClient: Discord.Client) {
     })
 
     client.on(Discord.Events.GuildDelete, async guild => {
+        AppDataHandler.increaseEventCount()
         try {
             // bot left a build
             LoggerHelper.error(`just left: ${guild.id} ${guild.name}`)
@@ -39,6 +42,7 @@ export function init(discordClient: Discord.Client) {
     // })
 
     client.on(Discord.Events.MessageCreate, async data => {
+        AppDataHandler.increaseEventCount()
         try {
             if (isMe_id(data.author.id)) return
             await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.MessageCreate, {
@@ -54,6 +58,7 @@ export function init(discordClient: Discord.Client) {
     })
 
     client.on(Discord.Events.MessageReactionAdd, async (data, user) => {
+        AppDataHandler.increaseEventCount()
         try {
             if (isMe_id(user.id)) return
             await EventHandler.runEventForGuild(data.message.guild.id, ChainLinkTypes.IDs.Event.MessageReactionAdd, {
@@ -67,6 +72,7 @@ export function init(discordClient: Discord.Client) {
 
     // user joins a guild
     client.on(Discord.Events.GuildMemberAdd, async (data: GuildMember) => {
+        AppDataHandler.increaseEventCount()
         try {
             console.log(data)
             await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.GuildMemberAdd, {
@@ -80,6 +86,7 @@ export function init(discordClient: Discord.Client) {
 
     // random user joins voice channel, (we cannot check the user unfortunately.)
     client.on(Discord.Events.VoiceStateUpdate, async (oldState: VoiceState, newState: VoiceState) => {
+        AppDataHandler.increaseEventCount()
         try {
             await EventHandler.runEventForGuild(newState.guild.id, ChainLinkTypes.IDs.Event.VoiceStateUpdate, {
                 channelId: newState.channelId || oldState.channelId,
@@ -96,6 +103,7 @@ export function init(discordClient: Discord.Client) {
     })
 
     client.on(Discord.Events.ChannelCreate, async data => {
+        AppDataHandler.increaseEventCount()
         try {
             await EventHandler.runEventForGuild(data.guild.id, ChainLinkTypes.IDs.Event.ChannelCreate)
         } catch (e) {

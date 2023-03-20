@@ -2,7 +2,6 @@ import * as dbAdapter from "../db/dbAdapter.js";
 import {JobFactory} from "../models/JobFactory.js";
 import {LoggerHelper} from "../loggerHelper.js";
 import {GuildEventsCache} from "../cacheSystem/guildEventsCache.js";
-import {AppDataHandler} from "../appDataHandler.js";
 
 export const skipEventsCache = new GuildEventsCache()
 
@@ -22,7 +21,6 @@ export async function runEventForAllGuilds(eventName: string, eventArgs = {}, in
 
 function runJobEventForGuild(eventName: string, eventArgs: {}, internalArgs) {
     return async guildInterface => {
-        AppDataHandler.increaseEventCount()
         if (!guildInterface) {
             return
         }
