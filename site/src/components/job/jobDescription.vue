@@ -1,7 +1,7 @@
 <template>
   <div class="h-full job-bg z-20 overflow-x-hidden rounded p-6" v-if="item">
     <div :data-linktype="item.type" class="w-job p text-accent data-[linktype=EVENT]:bg-success data-[linktype=EVENT]:text-dark bg-primary rounded">
-      <h1 class="text-4xl">{{parseItemTitle(item.name)}}</h1>
+      <h1 class="text-4xl">{{item.name}}</h1>
       <hr class="h-px my-3 border-2" :class="item.type === 'EVENT' ? 'border-black': 'border-white'" >
       <div class="flex items-center justify-between">
         <h3 class="text-1xl">Type: {{item.type}}</h3>
@@ -59,10 +59,6 @@ export default {
       const {name, type, description} = param
       return {name, type, description}
     },
-    parseItemTitle(title) {
-      // TODO: Temporary solution, to be removed when the API is updated
-      return title.match(/[A-Z][a-z]+/g).join(" ");
-    }
   }
 }
 </script>
