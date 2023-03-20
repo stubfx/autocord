@@ -3,7 +3,7 @@
   </chain-link-parameters-dialog>
   <div class="flex flex-row w-full h-full gap">
     <guild-job :job="job" @onSaveJob="onSaveJob" :show-save="true" mode="EDIT" :expanded="true" :on-link-click-dialog="true"></guild-job>
-    <div class="h-full job-bg z-20 overflow-y-auto overflow-x-hidden">
+    <div class="h-full job-bg z-20 overflow-y-auto overflow-x-hidden rounded">
       <div class="flex flex-col rounded gap py">
         <div class="flex flex-row gap p w-full justify-around">
           <div v-for="listName in ['Events', 'Conditions', 'Tasks', 'SuperTasks']" @click="changeTab(listName)"
@@ -11,12 +11,33 @@
             <div class="cursor-pointer p">{{listName}}</div>
           </div>
         </div>
-        <event-list-selection name="Events" :items="events" @onItemSelected="addLink" v-if="tab === 'Events'"></event-list-selection>
-        <event-list-selection name="Conditions" :items="conditions" @onItemSelected="addLink" v-if="tab === 'Conditions'"></event-list-selection>
-        <event-list-selection name="Tasks" :items="tasks" @onItemSelected="addLink" v-if="tab === 'Tasks'"></event-list-selection>
-        <event-list-selection name="SuperTasks" :items="superTasks" @onItemSelected="addLink" v-if="tab === 'SuperTasks'"></event-list-selection>
+        <event-list-selection name="Events" 
+          :items="events"
+          @onItemSelected="addLink"
+          @onItemHover="onItemHover"
+          v-if="tab === 'Events'">
+        </event-list-selection>
+        <event-list-selection name="Conditions" 
+          :items="conditions"
+          @onItemSelected="addLink"
+          @onItemHover="onItemHover"
+          v-if="tab === 'Conditions'">
+        </event-list-selection>
+        <event-list-selection name="Tasks" 
+          :items="tasks"
+          @onItemSelected="addLink"
+          @onItemHover="onItemHover"
+          v-if="tab === 'Tasks'">
+        </event-list-selection>
+        <event-list-selection name="SuperTasks" 
+          :items="superTasks"
+          @onItemSelected="addLink"
+          @onItemHover="onItemHover"
+          v-if="tab === 'SuperTasks'">
+        </event-list-selection>
       </div>
     </div>
+    <JobDescription :item="hoveringItem" />
   </div>
 </template>
 
@@ -31,6 +52,7 @@ import SimpleDialog from "../dialog/simpleDialog.vue";
 import ChainLinkParametersDialog from "../dialog/chainLinkParametersDialog.vue";
 import ConfirmDeletionDialog from "../dialog/confirmDeletionDialog.vue";
 import {discordPopup} from "../../../popup.js";
+import JobDescription from "./jobDescription.vue";
 
 export default {
   name: "editJobView",
@@ -41,7 +63,8 @@ export default {
   components: {
     ConfirmDeletionDialog,
     ChainLinkParametersDialog,
-    SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob
+    SimpleDialog, Save_rounded, Sensor_rounded, EventListSelection, ChainLinkElement, GuildJob,
+    JobDescription
   },
   data() {
     return {
@@ -53,7 +76,8 @@ export default {
       events: [],
       tasks: [],
       conditions: [],
-      superTasks: []
+      superTasks: [],
+      hoveringItem: null,
     }
   },
   async mounted() {
@@ -73,23 +97,27 @@ export default {
   methods: {
     addLink(rawItem) {
       let item = JSON.parse(JSON.stringify(rawItem));
-      // if (item.type === "EVENT") {
-      //   this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
-      //   // then add the new one :P
-      //   this.job.chain.chainLinks.unshift(item)
-      //   this.onAddLink(item)
-      // } else if (item.type === "TASK" || item.type === "CONDITION" || item.type === "SUPERTASK") {
-        let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
-          if (currentValue.type !== 'EVENT') {
-            return ++accumulator
-          }
-          return accumulator
-        }, 0)
-      // TODO RETRIEVE THIS VALUE FROM THE SERVER
-        if (count < 6) {
-          this.onAddLink(item)
+      if (item.type === "EVENT") {
+        this.job.chain.chainLinks = this.job.chain.chainLinks.filter(el => el.type !== 'EVENT')
+        // then add the new one :P
+        this.job.chain.chainLinks.unshift(item)
+        return;
+        // this.onAddLink(item)
+      }
+      
+      let count = this.job.chain.chainLinks.reduce((accumulator, currentValue) => {
+        if (currentValue.type !== 'EVENT') {
+          return ++accumulator
         }
-      // }
+        return accumulator
+      }, 0)
+    // TODO RETRIEVE THIS VALUE FROM THE SERVER
+      if (count < 6) {
+        this.onAddLink(item)
+      }
+    },
+    onItemHover(item) {
+      this.hoveringItem = item
     },
     onAddLink(item) {
       if (item.acceptParams.length > 0) {

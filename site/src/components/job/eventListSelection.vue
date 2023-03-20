@@ -5,7 +5,13 @@
 <!--                auto-rows-fr">-->
     <div class="flex flex-col gap">
 <!--    <div class="grid auto-rows-fr grid-flow-col gap">-->
-        <chain-link-element :link="item" @click="onItemSelected(item)" v-for="item in items" :expanded="true"></chain-link-element>
+        <chain-link-element
+          :link="item"
+          @click="onItemSelected(item)"
+          @mouseover="onItemHover(item)"
+          v-for="item in items"
+          :expanded="false">
+        </chain-link-element>
     </div>
   </div>
 </template>
@@ -20,10 +26,13 @@ export default {
     name: String,
     items: Array
   },
-  emits: ['onItemSelected'],
+  emits: ['onItemSelected', 'onItemHover'],
   methods: {
     onItemSelected(item) {
       this.$emit("onItemSelected", item)
+    },
+    onItemHover(item) {
+      this.$emit("onItemHover", item)
     }
   }
 }

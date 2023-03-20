@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="flex flex-col">
-      <div class="flex flex-col w-full flex-grow gap overflow-hidden"
+      <div class="flex flex-col w-full flex-grow gap overflow-hidden w-job"
            :class="[link.type === 'EVENT' ? 'text-black' : 'text-accent group-hover:text-accent',
            isElExpanded ? 'h-fit' : 'h-0']">
         <div class="flex flex-row w-full">
