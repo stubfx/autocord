@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import ExposedArgumentString from "../chainLinkElement/exposedArgumentString.vue";
-import Token_rounded from "../../assets/token_rounded.vue";
-import {getPermissionFromDecimal} from "../../utils/discordPermissions";
-import paramsTable from "./paramsTable.vue";
+import ExposedArgumentString from "@/components/chainLinkElement/exposedArgumentString.vue";
+import Token_rounded from "@/assets/token_rounded.vue";
+import {getPermissionFromDecimal} from "@/utils/discordPermissions";
+import paramsTable from "@/components/job/paramsTable.vue";
 
 export default {
   name: "jobDescription",

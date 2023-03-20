@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import ChainLinkElement from "../chainLinkElement/chainLinkElement.vue";
+import ChainLinkElement from "@/components/chainLinkElement/chainLinkElement.vue";
 
 export default {
   name: "eventListSelection",
